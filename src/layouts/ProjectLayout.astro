@@ -1,0 +1,185 @@
+---
+import PageLayout from "./PageLayout.astro";
+import Section from "../components/Section.astro";
+import { buildDateLabel } from "../utils/dates";
+import { withLocalePrefix } from "../i18n/config";
+
+interface Props {
+    title: string;
+    description: string;
+    startDate?: string | Date;
+    endDate?: string | Date;
+    tags?: string[];
+    image?: string;
+    url?: string;
+    lang?: "fr" | "en";
+}
+
+const {
+    title,
+    description,
+    startDate,
+    endDate,
+    tags = [],
+    image,
+    url,
+    lang = "fr",
+} = Astro.props;
+
+const dateLabel = buildDateLabel(startDate, endDate, lang);
+const backLink = withLocalePrefix("/portfolio", lang);
+const backText = lang === "fr" ? "← Retour aux travaux" : "← Back to research & work";
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout title={`${title} - Philippine Villard`} description={description}>
+    <Section class="project-detail-header">
+        <a href={backLink} class="back-link">{backText}</a>
+
+        <div class="project-header-card bento-card">
+            <span class="project-date">{dateLabel}</span>
+            <h1 class="project-title">{title}</h1>
+            <p class="project-lead">{description}</p>
+
+            {tags.length > 0 && (
+                <div class="project-tags">
+                    {tags.map((tag) => (
+                        <span class="tag-pill">{tag}</span>
+                    ))}
+                </div>
+            )}
+        </div>
+    </Section>
+
+    <Section class="project-content-section">
+        <article class="project-prose bento-card">
+            {image && (
+                <div class="project-featured-image">
+                    <img src={image.startsWith("/") ? `${base}${image.replace(/^\//, "")}` : image} alt={title} />
+                </div>
+            )}
+            <div class="markdown-body">
+                <slot />
+            </div>
+        </article>
+    </Section>
+</PageLayout>
+
+<style>
+    .back-link {
+        display: inline-block;
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-primary);
+        margin-bottom: var(--space-4);
+        transition: transform var(--transition-fast);
+    }
+
+    .back-link:hover {
+        transform: translateX(-4px);
+    }
+
+    .project-header-card {
+        padding: var(--space-8);
+        margin-bottom: var(--space-8);
+    }
+
+    .project-date {
+        font-size: var(--text-xs);
+        font-weight: 700;
+        color: var(--color-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: var(--space-2);
+    }
+
+    .project-title {
+        font-size: var(--text-4xl);
+        margin-bottom: var(--space-4);
+        line-height: 1.2;
+    }
+
+    .project-lead {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-6);
+        max-width: none;
+    }
+
+    .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .tag-pill {
+        display: inline-block;
+        padding: 4px 10px;
+        background: hsla(168, 62%, 52%, 0.12);
+        border: 1px solid hsla(168, 62%, 52%, 0.25);
+        color: var(--color-primary);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 600;
+    }
+
+    .project-featured-image {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-bottom: var(--space-8);
+        max-height: 400px;
+    }
+
+    .project-featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .project-prose {
+        padding: var(--space-10);
+    }
+
+    .markdown-body :global(h2) {
+        font-size: var(--text-2xl);
+        margin-top: var(--space-8);
+        margin-bottom: var(--space-4);
+        color: var(--color-text);
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: var(--space-2);
+    }
+
+    .markdown-body :global(h3) {
+        font-size: var(--text-xl);
+        margin-top: var(--space-6);
+        margin-bottom: var(--space-3);
+    }
+
+    .markdown-body :global(p) {
+        margin-bottom: var(--space-4);
+        line-height: 1.8;
+    }
+
+    .markdown-body :global(ul) {
+        list-style: disc;
+        padding-left: var(--space-6);
+        margin-bottom: var(--space-6);
+    }
+
+    .markdown-body :global(li) {
+        margin-bottom: var(--space-2);
+        color: var(--color-text-secondary);
+    }
+
+    .markdown-body :global(blockquote) {
+        border-left: 3px solid var(--color-primary);
+        padding-left: var(--space-4);
+        margin-block: var(--space-6);
+        font-style: italic;
+        color: var(--color-text);
+        background: hsla(168, 62%, 52%, 0.05);
+        padding: var(--space-4);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+</style>

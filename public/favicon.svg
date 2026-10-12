@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="50" r="48" fill="#0f172a" stroke="#2dd4bf" stroke-width="2"/>
+    <path d="M50 22 C34 22 24 35 24 48 C24 64 42 78 50 82 C58 78 76 64 76 48 C76 35 66 22 50 22 Z" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Child sprout / seedling inside -->
+    <path d="M50 68 V42" stroke="#f472b6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M50 50 C44 42 36 44 34 50 C36 56 46 54 50 50 Z" fill="#2dd4bf" opacity="0.8"/>
+    <path d="M50 44 C56 36 64 38 66 44 C64 50 54 48 50 44 Z" fill="#f472b6" opacity="0.8"/>
+    <circle cx="50" cy="34" r="4" fill="#fbbf24"/>
+</svg>

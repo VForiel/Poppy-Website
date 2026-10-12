@@ -1,0 +1,169 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import ProjectTimeline from "../../components/ProjectTimeline.astro";
+import { getCollection } from "astro:content";
+import { dateToTimestamp } from "../../utils/dates";
+
+// Get all projects for French locale
+const allProjects = await getCollection("projects", ({ data }) => {
+    return data.locale === "fr";
+});
+
+// Sort projects: ongoing first, then by date descending
+const projects = allProjects.sort((a, b) => {
+    return dateToTimestamp(b.data["end-date"]) - dateToTimestamp(a.data["end-date"]);
+});
+
+// Group featured and regular
+const featuredProjects = projects.filter((p) => p.data.featured);
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Travaux & Recherche - Philippine Villard | Psychotrauma de l'enfant"
+    description="Projets de recherche doctorale, protocoles cliniques et travaux de plaidoyer de Philippine Villard sur le psychotraumatisme chez les 3 à 6 ans."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="page-header">
+            <span class="status-pill page-pill">
+                <span class="pulse-dot"></span>
+                <span>Recherche Clinique • Hôpital Lenval (CE2P)</span>
+            </span>
+            <h1>Travaux, Recherche & Plaidoyer</h1>
+            <p class="lead">
+                Découvrez mes travaux de thèse doctorale, le développement d'outils d'évaluation précoce et mes actions de sensibilisation auprès du milieu médico-judiciaire pour les 3 à 6 ans.
+            </p>
+        </div>
+    </Section>
+
+    {
+        featuredProjects.length > 0 && (
+            <Section>
+                <div class="section-title-wrap">
+                    <h2 class="section-title">Axes Majeurs de Recherche</h2>
+                    <p class="section-subtitle">Les projets structurants au cœur de ma pratique hospitalière et de ma thèse.</p>
+                </div>
+                <div class="projects-grid">
+                    {featuredProjects.map((project) => {
+                        const cleanSlug = project.slug.replace(/\.?(fr|en)$/, "");
+                        return (
+                            <ProjectCard
+                                title={project.data.title}
+                                description={project.data.description}
+                                startDate={project.data["start-date"]}
+                                endDate={project.data["end-date"]}
+                                tags={project.data.tags}
+                                image={project.data.image}
+                                projectSlug={cleanSlug}
+                                externalUrl={project.data.url}
+                                lang="fr"
+                            />
+                        );
+                    })}
+                </div>
+            </Section>
+        )
+    }
+
+    <Section>
+        <div class="section-title-wrap">
+            <h2 class="section-title">Chronologie Complète des Travaux</h2>
+            <p class="section-subtitle">Filtrage interactif par thématique clinique ou juridique.</p>
+        </div>
+        <ProjectTimeline projects={projects} lang="fr" />
+    </Section>
+
+    <Section class="cta-section">
+        <div class="bento-card cta-box">
+            <h2>Intéressé par ces travaux ou une intervention ?</h2>
+            <p>
+                Je suis disponible pour échanger autour de ces résultats, participer à des colloques ou concevoir des modules de formation adaptés à votre institution.
+            </p>
+            <div class="cta-actions">
+                <a href={`${base}fr/contact`} class="button button--primary">
+                    Prendre contact
+                </a>
+                <a href={`${base}fr/expertise`} class="button button--secondary">
+                    Voir les formations & expertises
+                </a>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .page-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .page-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .page-header h1 {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .section-title-wrap {
+        margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .section-subtitle {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        margin: 0;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-12);
+    }
+
+    .cta-box {
+        max-width: 800px;
+        margin-inline: auto;
+        text-align: center;
+        padding: var(--space-10);
+    }
+
+    .cta-box h2 {
+        font-size: var(--text-3xl);
+        margin-bottom: var(--space-4);
+    }
+
+    .cta-box p {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-8);
+        line-height: 1.7;
+    }
+
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+    }
+</style>

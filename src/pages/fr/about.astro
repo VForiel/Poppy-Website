@@ -1,0 +1,313 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+
+const birthDate = new Date("1996-11-22");
+const today = new Date();
+let age = today.getFullYear() - birthDate.getFullYear();
+const m = today.getMonth() - birthDate.getMonth();
+if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="À propos - Philippine Villard | Psychologue & Doctorante"
+    description="Parcours, vision clinique et engagements de Philippine Villard, doctorante en psychologie clinique spécialisée dans le psychotraumatisme des 3 à 6 ans."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="about-header">
+            <span class="status-pill about-pill">
+                <span class="pulse-dot"></span>
+                <span>Clinique & Recherche • Hôpital Lenval (Nice)</span>
+            </span>
+            <h1 class="about-title">À propos de moi</h1>
+            <p class="lead">
+                Psychologue clinicienne et doctorante dédiée à la compréhension, la détection et la prise en charge du psychotraumatisme précoce chez les enfants de 3 à 6 ans.
+            </p>
+        </div>
+    </Section>
+
+    <Section>
+        <div class="content-grid">
+            <div class="content-main bento-card">
+                <h2>Mon parcours académique et clinique</h2>
+                <p>
+                    Née à Versailles en 1996, j'ai débuté mon cursus d'excellence par une <strong>classe préparatoire littéraire (CPGE) au Lycée Masséna à Nice</strong>, avec une orientation marquée vers les humanités et la psychologie. Cette formation rigoureuse m'a apporté des bases solides d'analyse textuelle, d'esprit critique et d'éthique, indispensables à l'exercice d'une psychologie exigeante.
+                </p>
+
+                <p>
+                    J'ai ensuite poursuivi mon parcours en psychologie clinique et psychopathologie à l'Université Côte d'Azur. Animée par le désir d'allier recherche de pointe et pratique de terrain auprès des populations les plus vulnérables, j'ai engagé à la fin de l'année 2022 une <strong>thèse de doctorat à l'Hôpital pour Enfants Lenval à Nice</strong>, au sein du service <strong>CE2P</strong> (Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale).
+                </p>
+
+                <p>
+                    Actuellement dans ma quatrième année de recherche doctorale, je prépare ma soutenance prévue pour <strong>juin / juillet 2027</strong>. Mon immersion quotidienne auprès d'enfants exposés à des violences, négligences ou événements traumatiques nourrit une démarche scientifique centrée sur le réel du terrain.
+                </p>
+
+                <h2>Ma cause : Donner une voix aux enfants de 3 à 6 ans</h2>
+                <div class="quote-callout">
+                    <p>
+                        « Parce qu'un enfant de 4 ans ne sait pas encore raconter son effroi avec la syntaxe d'un adulte, sa souffrance est trop souvent minimisée ou disqualifiée. Pourtant, son corps, ses jeux et son regard parlent avec une précision clinique indiscutable. »
+                    </p>
+                </div>
+
+                <p>
+                    Historiquement, les très jeunes enfants ont été les grands oubliés de la psychotraumatologie : on présumait soit qu'ils étaient protégés par leur jeune âge, soit qu'en l'absence de verbalisation claire, aucun diagnostic fiable ne pouvait être posé. 
+                </p>
+
+                <p>
+                    Mes travaux démontrent au contraire qu'il existe un ensemble d'<strong>indicateurs cliniques et comportementaux formels</strong> (jeux post-traumatiques figés, réactions dissociatives brèves, ruptures de la courbe de développement, hyper-vigilance sélective). Ces signes doivent impérativement être reconnus et pris en compte par la communauté médicale, les travailleurs sociaux et l'institution judiciaire afin de protéger l'enfant à temps.
+                </p>
+
+                <h2>Piliers & Valeurs de ma pratique</h2>
+                <ul class="values-list">
+                    <li>
+                        <strong>Rigueur & Preuve clinique</strong> — S'appuyer sur des méthodologies validées et des observations standardisées pour garantir des diagnostics inattaquables.
+                    </li>
+                    <li>
+                        <strong>Bienveillance & Sécurisation</strong> — Offrir à chaque enfant un cadre thérapeutique contenance, où la médiation par le jeu et le dessin permet de réparer le lien d'attachement.
+                    </li>
+                    <li>
+                        <strong>Plaidoyer & Engagement sociétal</strong> — Porter la voix des tout-petits auprès des magistrats, avocats et éducateurs pour faire évoluer les pratiques de protection de l'enfance.
+                    </li>
+                    <li>
+                        <strong>Transmission & Pédagogie</strong> — Partager les connaissances scientifiques à travers la formation continue des soignants et la publication d'outils cliniques concrets.
+                    </li>
+                </ul>
+
+                <h2>Perspectives d'avenir</h2>
+                <p>
+                    À l'issue de ma soutenance de doctorat en 2027, je projette :
+                </p>
+                <ul class="perspectives-list">
+                    <li>L'ouverture de mon <strong>cabinet libéral de psychologie clinique à Nice</strong>, dédié aux consultations pour jeunes enfants, aux bilans et à l'accompagnement parental.</li>
+                    <li>La poursuite d'activités de recherche via un <strong>post-doctorat</strong> centré sur l'évaluation précoce du psychotrauma.</li>
+                    <li>Le déploiement de <strong>sessions de formation spécialisée</strong> auprès des équipes hospitalières, scolaires et des acteurs du champ médico-judiciaire.</li>
+                </ul>
+            </div>
+
+            <!-- Aside Sidebar with Info -->
+            <aside class="content-sidebar">
+                <div class="sidebar-card bento-card">
+                    <h3>👤 Profil & Repères</h3>
+                    <ul class="details-list">
+                        <li><strong>Âge :</strong> {age} ans</li>
+                        <li><strong>Discipline :</strong> Psychologie Clinique & Psychopathologie</li>
+                        <li><strong>Spécialité :</strong> Psychotrauma de l'enfant (3-6 ans)</li>
+                        <li><strong>Affiliation :</strong> Hôpital Lenval (Service CE2P)</li>
+                        <li><strong>Origine :</strong> Versailles (Yvelines)</li>
+                        <li><strong>Localisation :</strong> Nice, France</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bento-card">
+                    <h3>🗣️ Langues de travail</h3>
+                    <ul class="languages-list">
+                        <li>
+                            <span class="lang-name">Français</span>
+                            <span class="lang-level">Langue maternelle</span>
+                        </li>
+                        <li>
+                            <span class="lang-name">Anglais</span>
+                            <span class="lang-level">Bilingue / C2 - C1</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bento-card sidebar-card--highlight">
+                    <h3>🎯 Objectifs 2027</h3>
+                    <p class="highlight-text">
+                        Soutenance de doctorat, ouverture de cabinet libéral en région niçoise et opportunités de post-doc en psychologie de la petite enfance.
+                    </p>
+                    <a href={`${base}fr/contact`} class="button button--primary sidebar-btn">
+                        Contacter Philippine
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .about-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .about-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .about-title {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: var(--space-8);
+        align-items: start;
+    }
+
+    .content-main {
+        padding: var(--space-8);
+    }
+
+    .content-main h2 {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-block: var(--space-8) var(--space-4);
+        padding-bottom: var(--space-2);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .content-main h2:first-of-type {
+        margin-block-start: 0;
+    }
+
+    .content-main p {
+        margin-block-end: var(--space-4);
+        color: var(--color-text-secondary);
+        line-height: 1.8;
+    }
+
+    .quote-callout {
+        margin-block: var(--space-6);
+        padding: var(--space-6);
+        background: hsla(168, 62%, 52%, 0.08);
+        border-left: 4px solid var(--color-primary);
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        font-style: italic;
+    }
+
+    .quote-callout p {
+        color: var(--color-text);
+        font-size: var(--text-lg);
+        margin-bottom: 0;
+        line-height: 1.7;
+    }
+
+    .values-list,
+    .perspectives-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        margin-block: var(--space-6);
+        padding-left: 0;
+    }
+
+    .values-list li,
+    .perspectives-list li {
+        padding-inline-start: var(--space-6);
+        position: relative;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .values-list li::before,
+    .perspectives-list li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+
+    .content-sidebar {
+        position: sticky;
+        top: calc(var(--space-16) + 60px);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+    }
+
+    .sidebar-card {
+        padding: var(--space-6);
+    }
+
+    .sidebar-card h3 {
+        font-size: var(--text-lg);
+        margin-block-end: var(--space-4);
+        color: var(--color-text);
+    }
+
+    .details-list,
+    .languages-list {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+    }
+
+    .languages-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: var(--space-2);
+        border-bottom: 1px dashed var(--color-border);
+    }
+
+    .languages-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .lang-name {
+        font-weight: 600;
+        color: var(--color-text);
+    }
+
+    .lang-level {
+        color: var(--color-primary);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        background: hsla(168, 62%, 52%, 0.1);
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+    }
+
+    .sidebar-card--highlight {
+        border-color: hsla(168, 62%, 52%, 0.4);
+        background: hsla(168, 62%, 52%, 0.05);
+    }
+
+    .highlight-text {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+        line-height: 1.6;
+    }
+
+    .sidebar-btn {
+        width: 100%;
+        text-align: center;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-sm);
+    }
+
+    @media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-sidebar {
+            position: static;
+        }
+    }
+</style>

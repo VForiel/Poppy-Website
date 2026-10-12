@@ -1,0 +1,361 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { dateToTimestamp } from "../../utils/dates";
+
+const allServices = await getCollection("services", ({ data }) => data.locale === "en");
+const topServices = allServices.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+
+const allProjects = await getCollection("projects", ({ data }) => data.locale === "en");
+const featuredProjects = allProjects
+    .filter((p) => p.data.featured)
+    .sort((a, b) => dateToTimestamp(b.data["end-date"]) - dateToTimestamp(a.data["end-date"]));
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Philippine Villard - PhD Candidate in Clinical Psychology | Psychotrauma (Ages 3-6)"
+    description="Personal and clinical research website of Philippine Villard. PhD candidate at Lenval Children's Hospital (CE2P department, Nice, France), specialized in early childhood psychotrauma."
+    currentPath={Astro.url.pathname}
+>
+    <!-- Hero Section -->
+    <Section class="hero-section">
+        <div class="hero-content">
+            <div class="status-pill hero-status">
+                <span class="pulse-dot"></span>
+                <span>Lenval Hospital (CE2P) • PhD Ongoing • Future Clinical Practice</span>
+            </div>
+
+            <h1 class="hero-title">
+                PhD Candidate in Psychology<br />
+                <span class="gradient-text">Psychotrauma in Children (Ages 3 to 6)</span>
+            </h1>
+
+            <p class="hero-description">
+                Clinical psychologist and researcher at Lenval Children's Hospital (Nice). Dedicated to establishing rigorous clinical indicators for early trauma identification, fostering restorative clinical care, parental guidance, and forensic recognition.
+            </p>
+
+            <div class="hero-actions">
+                <a href={`${base}en/portfolio`} class="button button--primary">
+                    Explore My Research & Work
+                </a>
+                <a href={`${base}en/contact`} class="button button--secondary">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </Section>
+
+    <!-- Bento Grid Pillars -->
+    <Section class="pillars-section">
+        <h2 class="section-title">Core Pillars & Academic Focus</h2>
+        <p class="section-subtitle">
+            Bridging academic rigor, specialized pediatric clinical immersion, and forensic advocacy.
+        </p>
+
+        <div class="bento-pillars-grid">
+            <div class="bento-card pillar-card pillar-card--featured">
+                <div class="pillar-icon">🏥</div>
+                <span class="pillar-tag">Hospital Research</span>
+                <h3>PhD at CE2P (Lenval Children's Hospital)</h3>
+                <p>
+                    4 years of clinical immersion at the Center for Child Evaluation & Perinatal Psychiatry in Nice, France. Investigating symptom manifestations and developmental trajectories in 3-to-6-year-old trauma victims.
+                </p>
+                <div class="pillar-footer">
+                    <span>Dissertation Defense: June / July 2027</span>
+                </div>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">🧩</div>
+                <span class="pillar-tag">Specialized Clinic</span>
+                <h3>Formal Preverbal Indicators</h3>
+                <p>
+                    At an age when verbal articulation is still emerging, non-verbal behavioral and somatic indicators are formally reliable. Detecting them early prevents children's distress from being overlooked.
+                </p>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">⚖️</div>
+                <span class="pillar-tag">Advocacy & Law</span>
+                <h3>Judicial Sensitization</h3>
+                <p>
+                    Advocating for greater evidentiary recognition of preschool clinical trauma markers within child welfare investigations and family courts.
+                </p>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">🌱</div>
+                <span class="pillar-tag">2027 Horizons</span>
+                <h3>Private Practice & Training</h3>
+                <p>
+                    Preparing private practice launch in Nice for child therapy and parent counseling, coupled with professional seminars for healthcare and education staff.
+                </p>
+            </div>
+        </div>
+    </Section>
+
+    <!-- Services Overview -->
+    <Section class="services-section">
+        <h2 class="section-title">Areas of Expertise</h2>
+        <p class="section-subtitle">
+            From hospital-based assessments to institutional training workshops.
+        </p>
+
+        <div class="services-grid">
+            {topServices.map((service) => (
+                <div class="bento-card service-card">
+                    <div class="service-card__icon">{service.data.icon}</div>
+                    <div class="service-card__header">
+                        <h3 class="service-card__title">{service.data.title}</h3>
+                        {service.data.status && (
+                            <span class="service-status-pill">{service.data.status}</span>
+                        )}
+                    </div>
+                    <p class="service-card__description">{service.data.description}</p>
+                </div>
+            ))}
+        </div>
+
+        <div class="cta-center">
+            <a href={`${base}en/expertise`} class="button button--secondary">
+                View All Areas of Expertise →
+            </a>
+        </div>
+    </Section>
+
+    <!-- Featured Projects -->
+    {featuredProjects.length > 0 && (
+        <Section class="featured-projects-section">
+            <h2 class="section-title">Featured Research & Projects</h2>
+            <p class="section-subtitle">
+                A selection of ongoing clinical protocols and research initiatives.
+            </p>
+
+            <div class="projects-grid">
+                {featuredProjects.map((project) => {
+                    const cleanSlug = project.slug.replace(/(fr|en)$/, "");
+                    return (
+                        <ProjectCard
+                            title={project.data.title}
+                            description={project.data.description}
+                            startDate={project.data["start-date"]}
+                            endDate={project.data["end-date"]}
+                            tags={project.data.tags}
+                            image={project.data.image}
+                            projectSlug={cleanSlug}
+                            lang="en"
+                        />
+                    );
+                })}
+            </div>
+
+            <div class="cta-center">
+                <a href={`${base}en/portfolio`} class="button button--secondary">
+                    View All Research & Work →
+                </a>
+            </div>
+        </Section>
+    )}
+
+    <!-- Call to action -->
+    <Section class="cta-section">
+        <div class="bento-card cta-box">
+            <div class="cta-box__content">
+                <h2>Let's Discuss Collaborations & Inquiries</h2>
+                <p>
+                    Available for discussions regarding doctoral research, post-doctoral opportunities, institutional training seminars, and future clinical consultations.
+                </p>
+                <div class="cta-box__actions">
+                    <a href={`${base}en/contact`} class="button button--primary">
+                        Contact Philippine
+                    </a>
+                    <a href="mailto:philippine.villard@hotmail.com" class="button button--secondary">
+                        ✉️ philippine.villard@hotmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .hero-section {
+        padding-block: var(--space-12) var(--space-8);
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 820px;
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-status {
+        margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: var(--space-6);
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin-bottom: var(--space-8);
+        max-width: 72ch;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bento-pillars-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+    }
+
+    .pillar-card--featured {
+        grid-column: span 3;
+        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
+        border-color: hsla(168, 62%, 52%, 0.3);
+    }
+
+    .pillar-icon {
+        font-size: 2.2rem;
+        margin-bottom: var(--space-3);
+    }
+
+    .pillar-tag {
+        display: inline-block;
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        letter-spacing: 0.05em;
+        margin-bottom: var(--space-2);
+    }
+
+    .pillar-card h3 {
+        font-size: var(--text-xl);
+        margin-bottom: var(--space-3);
+        color: var(--color-text);
+    }
+
+    .pillar-card p {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        max-width: none;
+    }
+
+    .pillar-footer {
+        margin-top: var(--space-4);
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--color-border-subtle);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        font-weight: 600;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+    }
+
+    .service-card__icon {
+        font-size: 2rem;
+        margin-bottom: var(--space-3);
+    }
+
+    .service-card__header {
+        margin-bottom: var(--space-2);
+    }
+
+    .service-card__title {
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .service-status-pill {
+        display: inline-block;
+        padding: 2px 8px;
+        background: hsla(168, 62%, 52%, 0.1);
+        border: 1px solid hsla(168, 62%, 52%, 0.2);
+        color: var(--color-primary);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 600;
+    }
+
+    .service-card__description {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin-top: var(--space-2);
+        max-width: none;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+    }
+
+    .cta-center {
+        text-align: center;
+        margin-top: var(--space-6);
+    }
+
+    .cta-box {
+        text-align: center;
+        padding: var(--space-12) var(--space-8);
+        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
+        border: 1px solid var(--color-primary);
+        box-shadow: var(--glow-primary);
+    }
+
+    .cta-box h2 {
+        font-size: var(--text-3xl);
+        margin-bottom: var(--space-4);
+    }
+
+    .cta-box p {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        margin-inline: auto;
+        margin-bottom: var(--space-8);
+    }
+
+    .cta-box__actions {
+        display: flex;
+        gap: var(--space-4);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+        .bento-pillars-grid {
+            grid-template-columns: 1fr;
+        }
+        .pillar-card--featured {
+            grid-column: span 1;
+        }
+    }
+</style>

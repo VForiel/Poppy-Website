@@ -1,0 +1,309 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import { getCollection } from "astro:content";
+
+const allServices = await getCollection("services", ({ data }) => {
+    return data.locale === "fr";
+});
+const services = allServices.sort((a, b) => a.data.order - b.data.order);
+
+const renderedServices = await Promise.all(
+    services.map(async (service) => ({
+        data: service.data,
+        Content: (await service.render()).Content,
+    })),
+);
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Expertise & Cabinet - Philippine Villard | Psychologue Clinicienne"
+    description="Domaines d'expertise clinique de Philippine Villard : évaluation du psychotraumatisme des 3-6 ans, cabinet libéral en projet à Nice, formations professionnelles et recherche."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="page-header">
+            <span class="status-pill page-pill">
+                <span class="pulse-dot"></span>
+                <span>Clinique • Enseignement • Recherche</span>
+            </span>
+            <h1>Expertise Clinique & Services</h1>
+            <p class="lead">
+                De l'évaluation hospitalière spécialisée à la transmission pédagogique, découvrez mes champs d'intervention clinique auprès des jeunes enfants, de leurs familles et des professionnels.
+            </p>
+        </div>
+    </Section>
+
+    <div class="services-container">
+        {
+            renderedServices.map(({ data, Content }) => {
+                const { title, description, icon, available, status, reason } = data;
+
+                return (
+                    <Section class="service-section">
+                        <div class={`bento-card service-card ${!available ? "service-card--project" : ""}`}>
+                            <div class="service-header">
+                                {icon && <div class="service-icon">{icon}</div>}
+                                <div class="service-title-area">
+                                    <div class="service-status-row">
+                                        {status && (
+                                            <span class={`status-tag ${available ? "status-tag--active" : "status-tag--project"}`}>
+                                                {status}
+                                            </span>
+                                        )}
+                                        {!available && reason && (
+                                            <span class="status-note">{reason}</span>
+                                        )}
+                                    </div>
+                                    <h2 class="service-title">{title}</h2>
+                                    <p class="service-description">{description}</p>
+                                </div>
+                            </div>
+
+                            <div class="service-content prose">
+                                <Content />
+                            </div>
+
+                            <div class="service-footer">
+                                {available ? (
+                                    <a href={`${base}fr/contact`} class="button button--secondary button--sm">
+                                        Demander des informations →
+                                    </a>
+                                ) : (
+                                    <a href={`${base}fr/contact`} class="button button--secondary button--sm">
+                                        Être tenu informé de l'ouverture →
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </Section>
+                );
+            })
+        }
+    </div>
+
+    <Section class="cta-section">
+        <div class="bento-card cta-box">
+            <h2>Une collaboration, une intervention ou un projet de formation ?</h2>
+            <p>
+                Que vous soyez une structure hospitalière, une association de protection de l'enfance, une juridiction ou une institution académique, n'hésitez pas à me contacter pour construire une réponse sur mesure.
+            </p>
+            <div class="cta-actions">
+                <a href={`${base}fr/contact`} class="button button--primary">
+                    Prendre contact
+                </a>
+                <a href={`${base}fr/portfolio`} class="button button--secondary">
+                    Consulter mes travaux & publications
+                </a>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .page-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .page-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .page-header h1 {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .services-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+        max-width: 960px;
+        margin-inline: auto;
+    }
+
+    .service-card {
+        padding: var(--space-8);
+        transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .service-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .service-card--project {
+        border-color: hsla(38, 92%, 50%, 0.3);
+    }
+
+    .service-header {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-6);
+        margin-block-end: var(--space-6);
+        padding-bottom: var(--space-6);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .service-icon {
+        font-size: 3.5rem;
+        flex-shrink: 0;
+        background: hsla(168, 62%, 52%, 0.1);
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-lg);
+        border: 1px solid hsla(168, 62%, 52%, 0.2);
+    }
+
+    .service-title-area {
+        flex: 1;
+    }
+
+    .service-status-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        margin-bottom: var(--space-2);
+        flex-wrap: wrap;
+    }
+
+    .status-tag {
+        font-size: var(--text-xs);
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .status-tag--active {
+        background: hsla(168, 62%, 52%, 0.15);
+        color: var(--color-primary);
+        border: 1px solid hsla(168, 62%, 52%, 0.3);
+    }
+
+    .status-tag--project {
+        background: hsla(38, 92%, 50%, 0.15);
+        color: #d97706;
+        border: 1px solid hsla(38, 92%, 50%, 0.3);
+    }
+
+    .status-note {
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        font-style: italic;
+    }
+
+    .service-title {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .service-description {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .service-content {
+        line-height: 1.8;
+    }
+
+    .service-content :global(h3) {
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        margin-top: var(--space-6);
+        margin-bottom: var(--space-3);
+    }
+
+    .service-content :global(p) {
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+    }
+
+    .service-content :global(ul) {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: var(--space-4);
+    }
+
+    .service-content :global(li) {
+        position: relative;
+        padding-left: var(--space-6);
+        margin-bottom: var(--space-3);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .service-content :global(li::before) {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+
+    .service-footer {
+        margin-top: var(--space-6);
+        padding-top: var(--space-4);
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .button--sm {
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+    }
+
+    .cta-box {
+        max-width: 800px;
+        margin-inline: auto;
+        text-align: center;
+        padding: var(--space-10);
+    }
+
+    .cta-box h2 {
+        font-size: var(--text-3xl);
+        margin-bottom: var(--space-4);
+    }
+
+    .cta-box p {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-8);
+        line-height: 1.7;
+    }
+
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+        .service-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .service-footer {
+            justify-content: flex-start;
+        }
+    }
+</style>

@@ -1,0 +1,169 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import ProjectTimeline from "../../components/ProjectTimeline.astro";
+import { getCollection } from "astro:content";
+import { dateToTimestamp } from "../../utils/dates";
+
+// Get all projects for English locale
+const allProjects = await getCollection("projects", ({ data }) => {
+    return data.locale === "en";
+});
+
+// Sort projects: ongoing first, then by date descending
+const projects = allProjects.sort((a, b) => {
+    return dateToTimestamp(b.data["end-date"]) - dateToTimestamp(a.data["end-date"]);
+});
+
+// Group featured and regular
+const featuredProjects = projects.filter((p) => p.data.featured);
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Research & Work - Philippine Villard | Early Childhood Psychotrauma"
+    description="Doctoral research projects, clinical protocols, and child-advocacy initiatives by Philippine Villard on psychological trauma in ages 3 to 6."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="page-header">
+            <span class="status-pill page-pill">
+                <span class="pulse-dot"></span>
+                <span>Clinical Research • Lenval Hospital (CE2P)</span>
+            </span>
+            <h1>Research, Projects & Advocacy</h1>
+            <p class="lead">
+                Explore my ongoing doctoral dissertation, clinical evaluation methodologies for pre-verbal trauma, and cross-disciplinary initiatives with family courts and child protection systems.
+            </p>
+        </div>
+    </Section>
+
+    {
+        featuredProjects.length > 0 && (
+            <Section>
+                <div class="section-title-wrap">
+                    <h2 class="section-title">Major Research Axes</h2>
+                    <p class="section-subtitle">Core projects at the intersection of hospital practice and doctoral inquiry.</p>
+                </div>
+                <div class="projects-grid">
+                    {featuredProjects.map((project) => {
+                        const cleanSlug = project.slug.replace(/\.?(fr|en)$/, "");
+                        return (
+                            <ProjectCard
+                                title={project.data.title}
+                                description={project.data.description}
+                                startDate={project.data["start-date"]}
+                                endDate={project.data["end-date"]}
+                                tags={project.data.tags}
+                                image={project.data.image}
+                                projectSlug={cleanSlug}
+                                externalUrl={project.data.url}
+                                lang="en"
+                            />
+                        );
+                    })}
+                </div>
+            </Section>
+        )
+    }
+
+    <Section>
+        <div class="section-title-wrap">
+            <h2 class="section-title">Complete Research Timeline</h2>
+            <p class="section-subtitle">Interactive filtering by clinical, assessment, or legal focus.</p>
+        </div>
+        <ProjectTimeline projects={projects} lang="en" />
+    </Section>
+
+    <Section class="cta-section">
+        <div class="bento-card cta-box">
+            <h2>Interested in These Findings or a Lecture?</h2>
+            <p>
+                I am available for scientific exchanges, symposium presentations, and customized training modules for your clinical or educational institution.
+            </p>
+            <div class="cta-actions">
+                <a href={`${base}en/contact`} class="button button--primary">
+                    Get in Touch
+                </a>
+                <a href={`${base}en/expertise`} class="button button--secondary">
+                    View Training & Services
+                </a>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .page-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .page-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .page-header h1 {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .section-title-wrap {
+        margin-bottom: var(--space-8);
+    }
+
+    .section-title {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .section-subtitle {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        margin: 0;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-12);
+    }
+
+    .cta-box {
+        max-width: 800px;
+        margin-inline: auto;
+        text-align: center;
+        padding: var(--space-10);
+    }
+
+    .cta-box h2 {
+        font-size: var(--text-3xl);
+        margin-bottom: var(--space-4);
+    }
+
+    .cta-box p {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-8);
+        line-height: 1.7;
+    }
+
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+    }
+</style>

@@ -1,0 +1,474 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+
+const birthDate = new Date("1996-11-22");
+const today = new Date();
+let age = today.getFullYear() - birthDate.getFullYear();
+const m = today.getMonth() - birthDate.getMonth();
+if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Curriculum Vitae - Philippine Villard | Clinical Psychologist & PhD Candidate"
+    description="Curriculum Vitae of Philippine Villard: PhD candidate in Clinical Psychology at Lenval Children's Hospital (CE2P), CPGE Lycée Masséna, expertise in early psychotrauma (ages 3–6)."
+    currentPath={Astro.url.pathname}
+>
+    <Section class="cv-section">
+        <div class="cv-header bento-card">
+            <h1>Philippine Villard</h1>
+            <div class="cv-subtitle">
+                Clinical Psychologist & Doctoral Researcher in Early Childhood Psychotrauma
+            </div>
+            <div class="cv-objective">
+                <strong>2027 Goals:</strong> PhD Dissertation Defense (June/July 2027) • Opening Private Clinical Practice in Nice • Post-Doctoral Fellowship & Professional Training
+            </div>
+            <div class="cv-contact">
+                <span>{age} years old</span>
+                <span>•</span>
+                <span>Born in Versailles, France</span>
+                <span>•</span>
+                <span>philippine.villard@hotmail.com</span>
+                <span>•</span>
+                <span>Nice, France</span>
+            </div>
+            <div class="cv-badges">
+                <span class="badge-tag">Lenval Hospital (CE2P)</span>
+                <span class="badge-tag">Université Côte d'Azur</span>
+                <span class="badge-tag">CPGE Lycée Masséna</span>
+                <span class="badge-tag">English C2/C1</span>
+            </div>
+        </div>
+
+        <div class="cv-content">
+            <!-- Academic Background -->
+            <div class="cv-block bento-card">
+                <h2 class="cv-block__title">Education & Academic Qualifications</h2>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Ph.D. in Clinical Psychology & Psychopathology
+                        </h3>
+                        <span class="cv-item__date">Late 2022 — Defense Expected June/July 2027</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Lenval Children's Hospital (CE2P Department) & Université Côte d'Azur (UniCA), Nice
+                    </div>
+                    <p class="cv-item__description">
+                        4th-year doctoral thesis: <em>Characterization and Clinical Modeling of Formal Indicators of Psychological Trauma in Children Aged 3 to 6: From Behavioral Observation to Forensic and Child Protection Implications.</em>
+                    </p>
+                    <ul class="cv-item__list">
+                        <li>Continuous clinical research residency at the Child Evaluation and Perinatal Psychiatry Unit (CE2P).</li>
+                        <li>Cohort study tracking preschool children exposed to single and complex trauma.</li>
+                        <li>Design and validation of non-verbal observational grids (repetitive play, transient dissociation, attachment insecurity).</li>
+                    </ul>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Master of Science in Clinical Psychology & Psychopathology
+                        </h3>
+                        <span class="cv-item__date">2020 — 2022</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Université Côte d'Azur (UniCA), Nice
+                    </div>
+                    <p class="cv-item__description">
+                        Child and adolescent clinical specialization, attachment theory, perinatal trauma, and qualitative/quantitative clinical research methodology.
+                    </p>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Bachelor of Science in Psychology
+                        </h3>
+                        <span class="cv-item__date">2018 — 2020</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Université Côte d'Azur (UniCA), Nice
+                    </div>
+                    <p class="cv-item__description">
+                        Developmental psychology, cognitive neuroscience, social psychology, and clinical psychometrics.
+                    </p>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            CPGE (Classes Préparatoires aux Grandes Écoles) — Humanities & Psychology
+                        </h3>
+                        <span class="cv-item__date">2015 — 2018</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Lycée Masséna, Nice
+                    </div>
+                    <p class="cv-item__description">
+                        Highly competitive preparatory curriculum in literature, moral philosophy, classical languages, and social sciences. Built strong analytical rigor, text critique, and ethical foundations.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Clinical Experience -->
+            <div class="cv-block bento-card">
+                <h2 class="cv-block__title">Clinical & Hospital Experience</h2>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Doctoral Clinical Psychologist — Specialized Psychotrauma Consultation
+                        </h3>
+                        <span class="cv-item__date">Late 2022 — Present</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Lenval Children's Hospital, CE2P Department (Child Evaluation and Perinatal Psychiatry), Nice
+                    </div>
+                    <p class="cv-item__description">
+                        Diagnostic evaluations and trauma consultations for preschool children (ages 3–6) who have witnessed or suffered domestic violence, severe neglect, or acute adverse incidents.
+                    </p>
+                    <ul class="cv-item__list">
+                        <li>Comprehensive psychometric and developmental assessments.</li>
+                        <li>Symbolic play therapy sessions and clinical drawings.</li>
+                        <li>Parental guidance and early attachment stabilization consultations.</li>
+                        <li>Active participation in multidisciplinary case conferences (child psychiatrists, pediatricians, forensic specialists, child protective caseworkers).</li>
+                    </ul>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Clinical Traineeships in Pediatric & Psychiatric Units
+                        </h3>
+                        <span class="cv-item__date">2020 — 2022</span>
+                    </div>
+                    <div class="cv-item__subtitle">
+                        Child Medical-Psychological Centers (CMP) & Pediatric Departments, Nice
+                    </div>
+                    <p class="cv-item__description">
+                        Psychological intake, diagnostic testing, and therapeutic mediation groups for young children and their caregivers.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Skills & Psychometrics -->
+            <div class="cv-block bento-card">
+                <h2 class="cv-block__title">Clinical Assessment Tools & Skills</h2>
+
+                <div class="cv-skills">
+                    <div class="cv-skill-group">
+                        <h3>Early Trauma Evaluation</h3>
+                        <p>
+                            Formal non-verbal indicators observational grid, standardized preschool trauma protocols, TESI screening, peritraumatic dissociation identification.
+                        </p>
+                    </div>
+
+                    <div class="cv-skill-group">
+                        <h3>Psychometric & Projective Testing</h3>
+                        <p>
+                            WPPSI-IV (Wechsler Preschool and Primary Scale of Intelligence), WISC-V, Vineland-II (Adaptive Behavior), Blacky Pictures Test (Patte-Noire), Sceno-Test.
+                        </p>
+                    </div>
+
+                    <div class="cv-skill-group">
+                        <h3>Therapeutic Mediations</h3>
+                        <p>
+                            Symbolic play therapy (Play Therapy), emotional regulation tools, attachment-based narrative approaches, positive parental guidance.
+                        </p>
+                    </div>
+
+                    <div class="cv-skill-group">
+                        <h3>Working Languages</h3>
+                        <p>
+                            <strong>French:</strong> Native speaker (expert writing & publication)<br />
+                            <strong>English:</strong> C2 / C1 Proficiency (fluent scientific discussions, conference presentations, international literature)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advocacy, Publications & Writing -->
+            <div class="cv-block bento-card">
+                <h2 class="cv-block__title">Advocacy, Publications & Clinical Writing</h2>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Judicial System & Child Welfare Advocacy
+                        </h3>
+                    </div>
+                    <p class="cv-item__description">
+                        Advocating for the formal recognition of somatic, behavioral, and play markers in pre-verbal young children within family courts and child protection decisions.
+                    </p>
+                </div>
+
+                <div class="cv-item">
+                    <div class="cv-item__header">
+                        <h3 class="cv-item__title">
+                            Scientific Publications & Clinical Book Projects
+                        </h3>
+                    </div>
+                    <ul class="cv-item__list">
+                        <li>Peer-reviewed articles in progress analyzing post-traumatic repetitive play as a reliable diagnostic indicator in 3–6 year-olds.</li>
+                        <li>Monograph and clinical practice guide projects aimed at pediatric healthcare practitioners and legal professionals.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Clinical Qualities -->
+            <div class="cv-block bento-card">
+                <h2 class="cv-block__title">Core Clinical Qualities</h2>
+                <div class="cv-qualities">
+                    <span class="cv-quality">Diagnostic Rigor</span>
+                    <span class="cv-quality">Empathy & Containment</span>
+                    <span class="cv-quality">Child-Centered Advocacy</span>
+                    <span class="cv-quality">Deontological Integrity</span>
+                    <span class="cv-quality">Interdisciplinary Collaboration</span>
+                    <span class="cv-quality">Pedagogical Clarity</span>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="cv-footer">
+                <a href={`${base}en/contact`} class="button button--primary">
+                    Get in Touch with Philippine
+                </a>
+                <button onclick="window.print()" class="button button--secondary">
+                    🖨️ Print / Save as PDF
+                </button>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .cv-section {
+        max-width: 920px;
+        margin-inline: auto;
+    }
+
+    .cv-header {
+        text-align: center;
+        margin-block-end: var(--space-8);
+        padding: var(--space-8);
+    }
+
+    .cv-header h1 {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-2);
+        color: var(--color-text);
+    }
+
+    .cv-subtitle {
+        font-size: var(--text-lg);
+        color: var(--color-primary);
+        font-weight: 600;
+        margin-block-end: var(--space-4);
+    }
+
+    .cv-objective {
+        max-width: 700px;
+        margin-inline: auto;
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        background: hsla(168, 62%, 52%, 0.08);
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-md);
+        margin-block-end: var(--space-4);
+        border-left: 3px solid var(--color-primary);
+        line-height: 1.6;
+    }
+
+    .cv-contact {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        flex-wrap: wrap;
+        margin-block-end: var(--space-4);
+    }
+
+    .cv-badges {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+    }
+
+    .badge-tag {
+        font-size: var(--text-xs);
+        padding: 3px 10px;
+        border-radius: var(--radius-full);
+        background: var(--color-background-secondary);
+        border: 1px solid var(--color-border);
+        color: var(--color-text-secondary);
+        font-weight: 500;
+    }
+
+    .cv-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+
+    .cv-block {
+        padding: var(--space-8);
+    }
+
+    .cv-block__title {
+        font-size: var(--text-2xl);
+        color: var(--color-primary);
+        margin-block-end: var(--space-6);
+        padding-block-end: var(--space-2);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .cv-item {
+        margin-block-end: var(--space-8);
+    }
+
+    .cv-item:last-child {
+        margin-block-end: 0;
+    }
+
+    .cv-item__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: var(--space-4);
+        margin-block-end: var(--space-1);
+    }
+
+    .cv-item__title {
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--color-text);
+    }
+
+    .cv-item__date {
+        font-size: var(--text-xs);
+        color: var(--color-primary);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .cv-item__subtitle {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        font-style: italic;
+        margin-block-end: var(--space-2);
+    }
+
+    .cv-item__description {
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin-block-end: var(--space-2);
+        font-size: var(--text-sm);
+    }
+
+    .cv-item__list {
+        list-style: none;
+        padding-left: 0;
+        color: var(--color-text-secondary);
+        font-size: var(--text-sm);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .cv-item__list li {
+        position: relative;
+        padding-left: var(--space-5);
+        line-height: 1.6;
+    }
+
+    .cv-item__list li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+
+    .cv-skills {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: var(--space-6);
+    }
+
+    .cv-skill-group h3 {
+        font-size: var(--text-sm);
+        font-weight: 700;
+        color: var(--color-text);
+        margin-block-end: var(--space-2);
+    }
+
+    .cv-skill-group p {
+        font-size: var(--text-xs);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+
+    .cv-qualities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .cv-quality {
+        padding: var(--space-2) var(--space-4);
+        background: hsla(168, 62%, 52%, 0.08);
+        border: 1px solid hsla(168, 62%, 52%, 0.2);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+
+    .cv-footer {
+        display: flex;
+        justify-content: center;
+        gap: var(--space-4);
+        margin-block-start: var(--space-4);
+        flex-wrap: wrap;
+    }
+
+    @media print {
+        .cv-footer,
+        :global(header),
+        :global(footer),
+        :global(.opportunity-banner) {
+            display: none !important;
+        }
+
+        .cv-section {
+            max-width: 100%;
+        }
+
+        .bento-card {
+            border: 1px solid #ccc !important;
+            box-shadow: none !important;
+            background: #fff !important;
+            color: #000 !important;
+        }
+
+        body {
+            background: #fff !important;
+            color: #000 !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .cv-item__header {
+            flex-direction: column;
+            gap: 2px;
+        }
+    }
+</style>

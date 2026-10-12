@@ -1,0 +1,313 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+
+const birthDate = new Date("1996-11-22");
+const today = new Date();
+let age = today.getFullYear() - birthDate.getFullYear();
+const m = today.getMonth() - birthDate.getMonth();
+if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+}
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="About - Philippine Villard | Clinical Psychologist & PhD Candidate"
+    description="Background, clinical philosophy, and academic advocacy of Philippine Villard, PhD researcher specialized in early childhood psychotrauma (ages 3 to 6)."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="about-header">
+            <span class="status-pill about-pill">
+                <span class="pulse-dot"></span>
+                <span>Clinical Practice & Research • Lenval Children's Hospital (Nice)</span>
+            </span>
+            <h1 class="about-title">About Me</h1>
+            <p class="lead">
+                Clinical psychologist and PhD researcher dedicated to understanding, assessing, and treating pre-verbal and early childhood psychotrauma in children aged 3 to 6.
+            </p>
+        </div>
+    </Section>
+
+    <Section>
+        <div class="content-grid">
+            <div class="content-main bento-card">
+                <h2>Academic & Clinical Journey</h2>
+                <p>
+                    Born in Versailles in 1996, I began my academic training with competitive <strong>literature and humanities preparatory classes (CPGE) at Lycée Masséna in Nice</strong>, with a specialized focus on psychology. This intensive background provided rigorous analytical methodology, ethical depth, and critical inquiry that continue to inform my clinical thinking.
+                </p>
+
+                <p>
+                    I completed my Master’s degree in Clinical Psychology and Psychopathology at Université Côte d'Azur. Driven by the desire to combine high-level scientific research with direct clinical field practice for vulnerable children, I started my <strong>doctoral research in late 2022 at Lenval Children's Hospital in Nice</strong>, within the specialized <strong>CE2P department</strong> (Child Evaluation and Perinatal Psychiatry Unit).
+                </p>
+
+                <p>
+                    Currently in my fourth year of doctoral research, I am preparing for my doctoral dissertation defense in <strong>June / July 2027</strong>. My daily clinical immersion alongside young patients facing severe early life adversity continuously fuels an evidence-based approach grounded in real-world clinical realities.
+                </p>
+
+                <h2>My Advocacy: Giving a Voice to 3 to 6-Year-Olds</h2>
+                <div class="quote-callout">
+                    <p>
+                        "Because a 4-year-old child cannot yet articulate terror with adult syntax, their distress is frequently overlooked or minimized. Yet their bodies, their play, and their behavioral shifts speak with indisputable clinical precision."
+                    </p>
+                </div>
+
+                <p>
+                    Historically, young children were the overlooked population in psychological trauma research: professionals often assumed either that their young age shielded them, or that in the absence of explicit verbal narratives, no reliable diagnosis could be established.
+                </p>
+
+                <p>
+                    My research proves the contrary: young children exhibit <strong>formal clinical and behavioral indicators</strong> (repetitive post-traumatic play, transient dissociative episodes, developmental curve disruptions, selective hypervigilance). These markers must be systematically recognized by pediatricians, mental health practitioners, child protection teams, and family courts to protect children before irreversible developmental impacts take place.
+                </p>
+
+                <h2>Pillars & Values of My Practice</h2>
+                <ul class="values-list">
+                    <li>
+                        <strong>Evidence-Based Clinical Precision</strong> — Relying on validated psychometric and observational tools to establish unequivocal assessments.
+                    </li>
+                    <li>
+                        <strong>Compassionate Containment & Safety</strong> — Providing a deeply secure therapeutic space using play, drawing, and attachment stabilization.
+                    </li>
+                    <li>
+                        <strong>Advocacy & Judicial Engagement</strong> — Elevating the child's perspective within legal, social, and court proceedings to improve child protection outcomes.
+                    </li>
+                    <li>
+                        <strong>Knowledge Transfer & Training</strong> — Empowering front-line professionals through workshops, lectures, and practical clinical guides.
+                    </li>
+                </ul>
+
+                <h2>Looking Forward (2027 & Beyond)</h2>
+                <p>
+                    Following the defense of my doctoral thesis in 2027, my next professional milestones include:
+                </p>
+                <ul class="perspectives-list">
+                    <li>Opening my <strong>private clinical practice in Nice</strong>, focusing on early childhood consultations, psychological assessments, and parental guidance.</li>
+                    <li>Pursuing research through a <strong>post-doctoral fellowship</strong> centered on early trauma assessment tools.</li>
+                    <li>Delivering <strong>accredited professional training</strong> to hospital teams, early childhood educators, and judicial officers.</li>
+                </ul>
+            </div>
+
+            <!-- Aside Sidebar with Info -->
+            <aside class="content-sidebar">
+                <div class="sidebar-card bento-card">
+                    <h3>👤 Key Information</h3>
+                    <ul class="details-list">
+                        <li><strong>Age:</strong> {age} years old</li>
+                        <li><strong>Discipline:</strong> Clinical Psychology & Psychopathology</li>
+                        <li><strong>Specialty:</strong> Early Childhood Psychotrauma (Ages 3–6)</li>
+                        <li><strong>Hospital Affiliation:</strong> Lenval Hospital (CE2P Department)</li>
+                        <li><strong>Hometown:</strong> Versailles, France</li>
+                        <li><strong>Current Location:</strong> Nice, French Riviera</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bento-card">
+                    <h3>🗣️ Working Languages</h3>
+                    <ul class="languages-list">
+                        <li>
+                            <span class="lang-name">French</span>
+                            <span class="lang-level">Native</span>
+                        </li>
+                        <li>
+                            <span class="lang-name">English</span>
+                            <span class="lang-level">Fluent / C2 - C1</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card bento-card sidebar-card--highlight">
+                    <h3>🎯 2027 Goals</h3>
+                    <p class="highlight-text">
+                        PhD Dissertation Defense, launching private practice in Nice, and prospective post-doc appointments in early childhood developmental psychology.
+                    </p>
+                    <a href={`${base}en/contact`} class="button button--primary sidebar-btn">
+                        Get in Touch
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .about-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .about-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .about-title {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: var(--space-8);
+        align-items: start;
+    }
+
+    .content-main {
+        padding: var(--space-8);
+    }
+
+    .content-main h2 {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-block: var(--space-8) var(--space-4);
+        padding-bottom: var(--space-2);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .content-main h2:first-of-type {
+        margin-block-start: 0;
+    }
+
+    .content-main p {
+        margin-block-end: var(--space-4);
+        color: var(--color-text-secondary);
+        line-height: 1.8;
+    }
+
+    .quote-callout {
+        margin-block: var(--space-6);
+        padding: var(--space-6);
+        background: hsla(168, 62%, 52%, 0.08);
+        border-left: 4px solid var(--color-primary);
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        font-style: italic;
+    }
+
+    .quote-callout p {
+        color: var(--color-text);
+        font-size: var(--text-lg);
+        margin-bottom: 0;
+        line-height: 1.7;
+    }
+
+    .values-list,
+    .perspectives-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        margin-block: var(--space-6);
+        padding-left: 0;
+    }
+
+    .values-list li,
+    .perspectives-list li {
+        padding-inline-start: var(--space-6);
+        position: relative;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .values-list li::before,
+    .perspectives-list li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+
+    .content-sidebar {
+        position: sticky;
+        top: calc(var(--space-16) + 60px);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+    }
+
+    .sidebar-card {
+        padding: var(--space-6);
+    }
+
+    .sidebar-card h3 {
+        font-size: var(--text-lg);
+        margin-block-end: var(--space-4);
+        color: var(--color-text);
+    }
+
+    .details-list,
+    .languages-list {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+    }
+
+    .languages-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: var(--space-2);
+        border-bottom: 1px dashed var(--color-border);
+    }
+
+    .languages-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .lang-name {
+        font-weight: 600;
+        color: var(--color-text);
+    }
+
+    .lang-level {
+        color: var(--color-primary);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        background: hsla(168, 62%, 52%, 0.1);
+        padding: 2px 8px;
+        border-radius: var(--radius-full);
+    }
+
+    .sidebar-card--highlight {
+        border-color: hsla(168, 62%, 52%, 0.4);
+        background: hsla(168, 62%, 52%, 0.05);
+    }
+
+    .highlight-text {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-4);
+        line-height: 1.6;
+    }
+
+    .sidebar-btn {
+        width: 100%;
+        text-align: center;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-sm);
+    }
+
+    @media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .content-sidebar {
+            position: static;
+        }
+    }
+</style>

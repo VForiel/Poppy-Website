@@ -1,0 +1,365 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { dateToTimestamp } from "../../utils/dates";
+
+const allServices = await getCollection("services", ({ data }) => data.locale === "fr");
+const topServices = allServices.sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+
+const allProjects = await getCollection("projects", ({ data }) => data.locale === "fr");
+const featuredProjects = allProjects
+    .filter((p) => p.data.featured)
+    .sort((a, b) => dateToTimestamp(b.data["end-date"]) - dateToTimestamp(a.data["end-date"]));
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+
+<PageLayout
+    title="Philippine Villard - Doctorante en Psychologie Clinique | Psychotrauma 3-6 ans"
+    description="Site personnel et de recherche de Philippine Villard. Doctorante en psychologie à l'Hôpital Lenval (service CE2P, Nice), spécialiste du psychotraumatisme chez les 3 à 6 ans."
+    currentPath={Astro.url.pathname}
+>
+    <!-- Hero Section -->
+    <Section class="hero-section">
+        <div class="hero-content">
+            <div class="status-pill hero-status">
+                <span class="pulse-dot"></span>
+                <span>Doctorat Lenval (CE2P) • Soutenance 2027 • Cabinet Libéral en projet</span>
+            </div>
+
+            <h1 class="hero-title">
+                Doctorante en Psychologie<br />
+                <span class="gradient-text">Psychotraumatisme chez les 3 à 6 ans</span>
+            </h1>
+
+            <p class="hero-description">
+                Psychologue clinicienne et chercheuse à l'Hôpital Lenval (Nice). J'œuvre pour une reconnaissance rigoureuse et précoce des indicateurs cliniques du traumatisme chez le jeune enfant, au bénéfice du soin, de la famille et des décisions de justice.
+            </p>
+
+            <div class="hero-actions">
+                <a href={`${base}fr/portfolio`} class="button button--primary">
+                    Découvrir mes travaux
+                </a>
+                <a href={`${base}fr/contact`} class="button button--secondary">
+                    Prendre contact
+                </a>
+            </div>
+        </div>
+    </Section>
+
+    <!-- Bento Grid Pillars -->
+    <Section class="pillars-section">
+        <h2 class="section-title">Axes d'engagement & Recherche</h2>
+        <p class="section-subtitle">
+            Une approche croisant rigueur académique, pratique hospitalière spécialisée et plaidoyer médico-légal.
+        </p>
+
+        <div class="bento-pillars-grid">
+            <div class="bento-card pillar-card pillar-card--featured">
+                <div class="pillar-icon">🏥</div>
+                <span class="pillar-tag">Recherche Hospitalière</span>
+                <h3>Thèse au CE2P (Hôpital Lenval, Nice)</h3>
+                <p>
+                    4 ans d'immersion clinique au Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale. Étude approfondie des manifestations symptomatiques et développementales chez les 3-6 ans exposés à des événements traumatiques.
+                </p>
+                <div class="pillar-footer">
+                    <span>Soutenance prévue : Juin / Juillet 2027</span>
+                </div>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">🧩</div>
+                <span class="pillar-tag">Clinique Spécialisée</span>
+                <h3>Indicateurs Préverbaux Formels</h3>
+                <p>
+                    À un âge où la verbalisation est encore limitée, certains indicateurs comportementaux, relationnels et somatiques sont formels. Il est capital de les reconnaître pour ne plus passer à côté de la souffrance des tout-petits.
+                </p>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">⚖️</div>
+                <span class="pillar-tag">Plaidoyer & Droits</span>
+                <h3>Sensibilisation de la Justice</h3>
+                <p>
+                    Défense d'une meilleure prise en compte des marqueurs cliniques du trauma précoce dans les décisions judiciaires et les protocoles de protection de l'enfance.
+                </p>
+            </div>
+
+            <div class="bento-card pillar-card">
+                <div class="pillar-icon">🌱</div>
+                <span class="pillar-tag">Perspectives 2027</span>
+                <h3>Cabinet Libéral & Formations</h3>
+                <p>
+                    Projet d'installation en cabinet libéral à Nice pour consultations, bilans et thérapie de l'enfant, associé à des missions de formation pour les équipes soignantes et éducatives.
+                </p>
+            </div>
+        </div>
+    </Section>
+
+    <!-- Services Overview -->
+    <Section class="services-section">
+        <h2 class="section-title">Domaines d'expertise</h2>
+        <p class="section-subtitle">
+            De l'évaluation hospitalière aux modules de formation professionnelle.
+        </p>
+
+        <div class="services-grid">
+            {topServices.map((service) => (
+                <div class="bento-card service-card">
+                    <div class="service-card__icon">{service.data.icon}</div>
+                    <div class="service-card__header">
+                        <h3 class="service-card__title">{service.data.title}</h3>
+                        {service.data.status && (
+                            <span class="service-status-pill">{service.data.status}</span>
+                        )}
+                    </div>
+                    <p class="service-card__description">{service.data.description}</p>
+                </div>
+            ))}
+        </div>
+
+        <div class="cta-center">
+            <a href={`${base}fr/expertise`} class="button button--secondary">
+                Consulter le détail des expertises →
+            </a>
+        </div>
+    </Section>
+
+    <!-- Featured Projects -->
+    {featuredProjects.length > 0 && (
+        <Section class="featured-projects-section">
+            <h2 class="section-title">Travaux & Recherches en vedette</h2>
+            <p class="section-subtitle">
+                Aperçu des protocoles cliniques et travaux de thèse en cours.
+            </p>
+
+            <div class="projects-grid">
+                {featuredProjects.map((project) => {
+                    const cleanSlug = project.slug.replace(/(fr|en)$/, "");
+                    return (
+                        <ProjectCard
+                            title={project.data.title}
+                            description={project.data.description}
+                            startDate={project.data["start-date"]}
+                            endDate={project.data["end-date"]}
+                            tags={project.data.tags}
+                            image={project.data.image}
+                            projectSlug={cleanSlug}
+                            lang="fr"
+                        />
+                    );
+                })}
+            </div>
+
+            <div class="cta-center">
+                <a href={`${base}fr/portfolio`} class="button button--secondary">
+                    Voir l'ensemble des travaux et publications →
+                </a>
+            </div>
+        </Section>
+    )}
+
+    <!-- Call to action -->
+    <Section class="cta-section">
+        <div class="bento-card cta-box">
+            <div class="cta-box__content">
+                <h2>Échangeons autour d'un projet ou d'une collaboration</h2>
+                <p>
+                    Disponible pour échanger autour de thématiques de recherche doctorale, de propositions de post-doctorat, d'interventions en formation ou de futures prises en charge cliniques.
+                </p>
+                <div class="cta-box__actions">
+                    <a href={`${base}fr/contact`} class="button button--primary">
+                        Prendre contact avec Philippine
+                    </a>
+                    <a href="mailto:philippine.villard@hotmail.com" class="button button--secondary">
+                        ✉️ philippine.villard@hotmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .hero-section {
+        padding-block: var(--space-12) var(--space-8);
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 820px;
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-status {
+        margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: var(--space-6);
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        font-size: var(--text-lg);
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin-bottom: var(--space-8);
+        max-width: 72ch;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: var(--space-4);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Pillars Bento Grid */
+    .bento-pillars-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+    }
+
+    .pillar-card--featured {
+        grid-column: span 3;
+        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
+        border-color: hsla(168, 62%, 52%, 0.3);
+    }
+
+    .pillar-icon {
+        font-size: 2.2rem;
+        margin-bottom: var(--space-3);
+    }
+
+    .pillar-tag {
+        display: inline-block;
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        letter-spacing: 0.05em;
+        margin-bottom: var(--space-2);
+    }
+
+    .pillar-card h3 {
+        font-size: var(--text-xl);
+        margin-bottom: var(--space-3);
+        color: var(--color-text);
+    }
+
+    .pillar-card p {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        max-width: none;
+    }
+
+    .pillar-footer {
+        margin-top: var(--space-4);
+        padding-top: var(--space-3);
+        border-top: 1px solid var(--color-border-subtle);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        font-weight: 600;
+    }
+
+    /* Services Grid */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+    }
+
+    .service-card__icon {
+        font-size: 2rem;
+        margin-bottom: var(--space-3);
+    }
+
+    .service-card__header {
+        margin-bottom: var(--space-2);
+    }
+
+    .service-card__title {
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .service-status-pill {
+        display: inline-block;
+        padding: 2px 8px;
+        background: hsla(168, 62%, 52%, 0.1);
+        border: 1px solid hsla(168, 62%, 52%, 0.2);
+        color: var(--color-primary);
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 600;
+    }
+
+    .service-card__description {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin-top: var(--space-2);
+        max-width: none;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+    }
+
+    .cta-center {
+        text-align: center;
+        margin-top: var(--space-6);
+    }
+
+    /* CTA Section */
+    .cta-box {
+        text-align: center;
+        padding: var(--space-12) var(--space-8);
+        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
+        border: 1px solid var(--color-primary);
+        box-shadow: var(--glow-primary);
+    }
+
+    .cta-box h2 {
+        font-size: var(--text-3xl);
+        margin-bottom: var(--space-4);
+    }
+
+    .cta-box p {
+        font-size: var(--text-base);
+        color: var(--color-text-secondary);
+        margin-inline: auto;
+        margin-bottom: var(--space-8);
+    }
+
+    .cta-box__actions {
+        display: flex;
+        gap: var(--space-4);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+        .bento-pillars-grid {
+            grid-template-columns: 1fr;
+        }
+        .pillar-card--featured {
+            grid-column: span 1;
+        }
+    }
+</style>

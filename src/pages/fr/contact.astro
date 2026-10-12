@@ -1,0 +1,318 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+
+const email = "philippine.villard@hotmail.com";
+---
+
+<PageLayout
+    title="Contact - Philippine Villard | Psychologue Clinicienne"
+    description="Prenez contact avec Philippine Villard pour un projet de post-doc, des informations sur le futur cabinet libéral à Nice ou des missions de formation."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <div class="contact-header">
+            <span class="status-pill contact-pill">
+                <span class="pulse-dot"></span>
+                <span>Échanges & Collaborations</span>
+            </span>
+            <h1>Contact</h1>
+            <p class="lead">
+                Pour discuter d'une opportunité de recherche post-doctorale, d'une intervention de formation, de la future ouverture du cabinet ou d'un échange confraternel.
+            </p>
+        </div>
+    </Section>
+
+    <Section>
+        <div class="contact-grid">
+            <!-- Main Contact Info & Presets -->
+            <div class="contact-main bento-card">
+                <h2>Prendre attache</h2>
+                <p>
+                    Que vous soyez confrère psychologue, médecin, professionnel de l'enfance, magistrat ou responsable d'une équipe de recherche, je serai ravie d'échanger avec vous.
+                </p>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-method__icon">✉️</div>
+                        <div class="contact-method__details">
+                            <span class="contact-method__label">Courriel professionnel</span>
+                            <a href={`mailto:${email}`} class="contact-method__link">
+                                {email}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method__icon">📍</div>
+                        <div class="contact-method__details">
+                            <span class="contact-method__label">Localisation</span>
+                            <span class="contact-method__text">
+                                Hôpital Lenval (Service CE2P), 57 Avenue de la Californie, 06200 Nice
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-method__icon">⏱️</div>
+                        <div class="contact-method__details">
+                            <span class="contact-method__label">Délai indicatif de réponse</span>
+                            <span class="contact-method__text">
+                                Généralement sous 48 à 72 heures ouvrées
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-mail-section">
+                    <h3>Modèles d'objet de message rapide :</h3>
+                    <div class="quick-mail-pills">
+                        <a
+                            href={`mailto:${email}?subject=${encodeURIComponent("[Post-Doc] Opportunité de recherche / Collaboration")}`}
+                            class="mail-pill"
+                        >
+                            🎓 Recherche Post-Doc
+                        </a>
+                        <a
+                            href={`mailto:${email}?subject=${encodeURIComponent("[Formation] Demande d'intervention pour notre équipe")}`}
+                            class="mail-pill"
+                        >
+                            📚 Formation Spécialisée
+                        </a>
+                        <a
+                            href={`mailto:${email}?subject=${encodeURIComponent("[Cabinet Nice] Demande d'information consultations 2027")}`}
+                            class="mail-pill"
+                        >
+                            🧸 Cabinet Libéral (Nice)
+                        </a>
+                        <a
+                            href={`mailto:${email}?subject=${encodeURIComponent("[Échange] Prise de contact clinique ou recherche")}`}
+                            class="mail-pill"
+                        >
+                            💬 Échange Scientifique
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar with Opportunities & Status -->
+            <aside class="contact-sidebar">
+                <div class="bento-card info-card info-card--opportunity">
+                    <div class="opportunity-pill">
+                        <span class="pulse-dot"></span>
+                        <span>Opportunités 2027</span>
+                    </div>
+                    <h3>Recherche & Post-Doctorat</h3>
+                    <p>
+                        À l'issue de ma soutenance de doctorat prévue mi-2027, je suis activement intéressée par un <strong>poste de post-doctorat</strong> dans une équipe de recherche spécialisée en psychotrauma précoce, psychopathologie du développement ou neuropsychologie pédiatrique (France / International).
+                    </p>
+                </div>
+
+                <div class="bento-card info-card">
+                    <h3>Cabinet Libéral & Consultations</h3>
+                    <p>
+                        Mon installation en cabinet libéral à Nice est programmée pour <strong>2027</strong>. Les prises de contact préliminaires pour partenariats de réseau pédiatrique et orientation de patients sont les bienvenues.
+                    </p>
+                </div>
+
+                <div class="bento-card info-card">
+                    <h3>Sensibilisation & Juridictions</h3>
+                    <p>
+                        Disponible pour des conférences et modules de formation auprès des magistrats de la jeunesse, avocats d'enfants, éducateurs de l'ASE et soignants de PMI.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </Section>
+</PageLayout>
+
+<style>
+    .contact-header {
+        max-width: 75ch;
+        margin-inline: auto;
+        text-align: center;
+        margin-block-end: var(--space-12);
+    }
+
+    .contact-pill {
+        margin-bottom: var(--space-4);
+    }
+
+    .contact-header h1 {
+        font-size: var(--text-4xl);
+        margin-block-end: var(--space-4);
+    }
+
+    .lead {
+        font-size: var(--text-xl);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: var(--space-8);
+        align-items: start;
+    }
+
+    .contact-main {
+        padding: var(--space-8);
+    }
+
+    .contact-main h2 {
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+    }
+
+    .contact-main > p {
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+        margin-bottom: var(--space-8);
+    }
+
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-8);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .contact-method {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-4);
+    }
+
+    .contact-method__icon {
+        font-size: 2rem;
+        background: hsla(168, 62%, 52%, 0.1);
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-lg);
+        border: 1px solid hsla(168, 62%, 52%, 0.2);
+        flex-shrink: 0;
+    }
+
+    .contact-method__details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .contact-method__label {
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
+    .contact-method__link {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
+    .contact-method__link:hover {
+        text-decoration: underline;
+    }
+
+    .contact-method__text {
+        font-size: var(--text-base);
+        color: var(--color-text);
+        line-height: 1.5;
+    }
+
+    .quick-mail-section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-4);
+        color: var(--color-text);
+    }
+
+    .quick-mail-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+    }
+
+    .mail-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: var(--space-3) var(--space-4);
+        background: var(--color-background-secondary);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-text);
+        text-decoration: none;
+        transition: all var(--transition-fast);
+    }
+
+    .mail-pill:hover {
+        background: hsla(168, 62%, 52%, 0.12);
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        transform: translateY(-2px);
+    }
+
+    .contact-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+        position: sticky;
+        top: calc(var(--space-16) + 60px);
+    }
+
+    .info-card {
+        padding: var(--space-6);
+    }
+
+    .info-card--opportunity {
+        border-color: hsla(168, 62%, 52%, 0.4);
+        background: hsla(168, 62%, 52%, 0.05);
+    }
+
+    .opportunity-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        color: var(--color-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: var(--space-3);
+    }
+
+    .info-card h3 {
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        margin-bottom: var(--space-2);
+    }
+
+    .info-card p {
+        font-size: var(--text-sm);
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 1024px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-sidebar {
+            position: static;
+        }
+    }
+</style>

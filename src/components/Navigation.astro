@@ -1,0 +1,93 @@
+---
+import { strings } from "../i18n/strings";
+import { withLocalePrefix } from "../i18n/config";
+
+interface Props {
+  currentPath?: string;
+  lang?: 'fr' | 'en';
+}
+
+const { currentPath, lang = 'fr' } = Astro.props;
+const t = strings[lang].nav;
+
+const navItems = [
+  { href: withLocalePrefix('/', lang), label: t.home },
+  { href: withLocalePrefix('/about', lang), label: t.about },
+  { href: withLocalePrefix('/expertise', lang), label: t.expertise },
+  { href: withLocalePrefix('/portfolio', lang), label: t.portfolio },
+  { href: withLocalePrefix('/cv', lang), label: t.cv },
+  { href: withLocalePrefix('/contact', lang), label: t.contact },
+];
+
+const isActiveLink = (href: string) => {
+  const normalizedCurrent = (currentPath?.replace(/\/$/, '') || '');
+  const normalizedHref = href.replace(/\/$/, '');
+  
+  if (normalizedHref.endsWith('/fr') || normalizedHref.endsWith('/en')) {
+    return normalizedCurrent === normalizedHref || normalizedCurrent === `${normalizedHref}/`;
+  }
+  return normalizedCurrent.startsWith(normalizedHref);
+};
+---
+
+<nav class="nav" aria-label="Navigation principale">
+  <ul class="nav__list">
+    {navItems.map((item) => (
+      <li>
+        <a 
+          href={item.href} 
+          class:list={['nav__link', { 'nav__link--active': isActiveLink(item.href) }]}
+          aria-current={isActiveLink(item.href) ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .nav__link {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    position: relative;
+  }
+
+  .nav__link:hover {
+    color: var(--color-text);
+    background: hsla(168, 62%, 52%, 0.08);
+  }
+
+  .nav__link--active {
+    color: var(--color-primary);
+    font-weight: 600;
+    background: hsla(168, 62%, 52%, 0.12);
+  }
+
+  @media (max-width: 900px) {
+    .nav__list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+      width: 100%;
+    }
+
+    .nav__link {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-base);
+    }
+  }
+</style>
