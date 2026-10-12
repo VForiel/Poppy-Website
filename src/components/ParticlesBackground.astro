@@ -39,13 +39,16 @@
         private scrollTimeout: number = 0;
         private lastTime: number = 0;
         private hasPointerFine: boolean = true;
+        private viewportWidth: number = 0;
+        private viewportHeight: number = 0;
+        private filamentOpacity: number = 1;
 
         constructor(canvas: HTMLCanvasElement) {
             this.canvas = canvas;
             this.ctx = canvas.getContext('2d', { alpha: true })!;
             this.hasPointerFine = window.matchMedia('(pointer: fine)').matches;
             this.checkTheme();
-            this.resize();
+            this.resize(true);
             this.initNodes();
             this.bindEvents();
             this.lastTime = performance.now();
@@ -56,18 +59,47 @@
             this.isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         }
 
-        private resize() {
+        private resize(force: boolean = false): boolean {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            // On mobile, scrolling collapses/expands the browser address bar, triggering resize events
+            // with zero width change and small height changes (<120px). Reallocating the canvas buffer
+            // on those events clears the screen and causes particles to vanish/jump. We ignore them here.
+            const widthDiff = Math.abs(w - this.viewportWidth);
+            const heightDiff = Math.abs(h - this.viewportHeight);
+
+            if (!force && widthDiff < 25 && heightDiff < 140 && this.viewportWidth > 0) {
+                return false;
+            }
+
+            const oldW = this.viewportWidth || w;
+            const oldH = this.viewportHeight || h;
+            this.viewportWidth = w;
+            this.viewportHeight = h;
+
             // Cap DPR at 1 for background canvas: visually indistinguishable for diffuse particles,
             // but saves up to 4x GPU fill-rate on Retina / 4K displays
             const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
-            const w = window.innerWidth;
-            const h = window.innerHeight;
             this.canvas.width = Math.floor(w * dpr);
             this.canvas.height = Math.floor(h * dpr);
             this.ctx.setTransform(1, 0, 0, 1, 0, 0);
             this.ctx.scale(dpr, dpr);
             this.canvas.style.width = `${w}px`;
             this.canvas.style.height = `${h}px`;
+
+            // On genuine layout shifts (e.g. orientation rotation), proportionally reposition
+            // existing nodes instead of re-randomizing and destroying them!
+            if (this.nodes.length > 0 && oldW > 0 && oldH > 0 && (oldW !== w || oldH !== h)) {
+                const scaleX = w / oldW;
+                const scaleY = h / oldH;
+                for (let i = 0; i < this.nodes.length; i++) {
+                    this.nodes[i].x = Math.max(10, Math.min(w - 10, this.nodes[i].x * scaleX));
+                    this.nodes[i].y = Math.max(10, Math.min(h - 10, this.nodes[i].y * scaleY));
+                }
+            }
+
+            return true;
         }
 
         private initNodes() {
@@ -135,19 +167,17 @@
                 resizeTimeout = window.setTimeout(() => {
                     this.hasPointerFine = window.matchMedia('(pointer: fine)').matches;
                     this.resize();
-                    this.initNodes();
                 }, 150);
             }, { passive: true });
 
-            // Scroll throttle: skip heavy synaptic lines & throttle canvas during scroll
-            // for uncompromised 120 FPS butter-smooth document scrolling
+            // Scroll throttle: gracefully ease out filaments during scroll so particles keep drifting smoothly
+            // with near-zero CPU/GPU budget and zero navigation lag
             window.addEventListener('scroll', () => {
                 this.isScrolling = true;
                 clearTimeout(this.scrollTimeout);
                 this.scrollTimeout = window.setTimeout(() => {
                     this.isScrolling = false;
-                    this.lastTime = performance.now();
-                }, 60);
+                }, 90);
             }, { passive: true });
 
             if (this.hasPointerFine) {
@@ -181,12 +211,6 @@
         private animate = (now: number) => {
             if (!this.isVisible) return;
 
-            // During active scrolling, pause canvas redraw to guarantee 100% GPU compositor budget for 120 FPS scrolling
-            if (this.isScrolling) {
-                this.animationFrameId = requestAnimationFrame(this.animate);
-                return;
-            }
-
             const delta = Math.min((now - this.lastTime) / 16.66, 2.0);
             this.lastTime = now;
 
@@ -200,7 +224,7 @@
             const mouseMaxDist = 140;
             const mouseMaxDistSq = mouseMaxDist * mouseMaxDist;
 
-            // 1. Update particle positions
+            // 1. Update particle positions (Always keeps moving, even while scrolling!)
             for (let i = 0; i < this.nodes.length; i++) {
                 const node = this.nodes[i];
                 const speedSin = Math.sin(now * node.speedRate + node.speedPhase);
@@ -209,8 +233,8 @@
 
                 node.angle += (Math.sin(timeSec * 0.6 + node.curveOffset) * 0.015 + node.angularDrift) * delta;
 
-                // Gentle mouse attraction (desktop only)
-                if (this.mouse.active && this.hasPointerFine) {
+                // Gentle mouse attraction (desktop only, skipped during active scroll for 0-latency scrolling)
+                if (!this.isScrolling && this.mouse.active && this.hasPointerFine) {
                     const mdx = this.mouse.x - node.x;
                     const mdy = this.mouse.y - node.y;
                     const mDistSq = mdx * mdx + mdy * mdy;
@@ -241,8 +265,16 @@
 
             const n = this.nodes.length;
 
-            // 2. Synaptic Filaments with Batched 2-Pass Stroke (Skipped during active scroll for 120 FPS fluid scrolling)
-            if (!this.isScrolling) {
+            // Smoothly ease filament opacity: fades out quickly during active scroll (saving >95% CPU/GPU work),
+            // and gently re-appears when stationary.
+            if (this.isScrolling) {
+                this.filamentOpacity = Math.max(0, this.filamentOpacity - delta * 0.12);
+            } else {
+                this.filamentOpacity = Math.min(1, this.filamentOpacity + delta * 0.06);
+            }
+
+            // 2. Synaptic Filaments with Batched 2-Pass Stroke (Only computed when visible)
+            if (this.filamentOpacity > 0.03) {
                 const baseColor = this.isDark ? '168, 62%, 52%' : '168, 72%, 28%';
                 const strongLines: number[] = [];
                 const faintLines: number[] = [];
@@ -274,7 +306,8 @@
                         this.ctx.moveTo(strongLines[k], strongLines[k + 1]);
                         this.ctx.lineTo(strongLines[k + 2], strongLines[k + 3]);
                     }
-                    this.ctx.strokeStyle = `hsla(${baseColor}, ${this.isDark ? 0.16 : 0.14})`;
+                    const strongAlpha = (this.isDark ? 0.16 : 0.14) * this.filamentOpacity;
+                    this.ctx.strokeStyle = `hsla(${baseColor}, ${strongAlpha})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.stroke();
                 }
@@ -285,7 +318,8 @@
                         this.ctx.moveTo(faintLines[k], faintLines[k + 1]);
                         this.ctx.lineTo(faintLines[k + 2], faintLines[k + 3]);
                     }
-                    this.ctx.strokeStyle = `hsla(${baseColor}, ${this.isDark ? 0.07 : 0.05})`;
+                    const faintAlpha = (this.isDark ? 0.07 : 0.05) * this.filamentOpacity;
+                    this.ctx.strokeStyle = `hsla(${baseColor}, ${faintAlpha})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.stroke();
                 }
