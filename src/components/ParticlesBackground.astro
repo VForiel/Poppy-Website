@@ -22,7 +22,7 @@
         curveOffset: number;
         radius: number;
         colorType: 'sage' | 'rose' | 'amber';
-        shapeType: 'dot' | 'flower' | 'heart' | 'bear';
+        shapeType: 'dot' | 'flower' | 'heart' | 'bear' | 'rainbow' | 'butterfly';
         pulsePhase: number;
         pulseSpeed: number;
     }
@@ -83,23 +83,31 @@
                 const type = types[i % types.length];
                 const radius = Math.random() * 1.6 + 1.8;
 
-                // Exactly 1 flower, 1 heart, 1 teddy bear, all other particles remain dots
-                let shapeType: 'dot' | 'flower' | 'heart' | 'bear' = 'dot';
+                // Exactly 1 flower, 1 heart, 1 bear, 1 rainbow, 1 butterfly; all other particles remain dots
+                let shapeType: 'dot' | 'flower' | 'heart' | 'bear' | 'rainbow' | 'butterfly' = 'dot';
                 let startX = Math.random() * w;
                 let startY = Math.random() * h;
 
                 if (i === 1) {
                     shapeType = 'flower';
-                    startX = w * 0.25 + (Math.random() - 0.5) * 120;
-                    startY = h * 0.35 + (Math.random() - 0.5) * 100;
+                    startX = w * 0.20 + (Math.random() - 0.5) * 120;
+                    startY = h * 0.32 + (Math.random() - 0.5) * 100;
                 } else if (i === 2) {
                     shapeType = 'heart';
-                    startX = w * 0.75 + (Math.random() - 0.5) * 120;
-                    startY = h * 0.40 + (Math.random() - 0.5) * 100;
+                    startX = w * 0.80 + (Math.random() - 0.5) * 120;
+                    startY = h * 0.36 + (Math.random() - 0.5) * 100;
                 } else if (i === 3) {
                     shapeType = 'bear';
                     startX = w * 0.50 + (Math.random() - 0.5) * 120;
-                    startY = h * 0.70 + (Math.random() - 0.5) * 100;
+                    startY = h * 0.75 + (Math.random() - 0.5) * 100;
+                } else if (i === 4) {
+                    shapeType = 'rainbow';
+                    startX = w * 0.50 + (Math.random() - 0.5) * 120;
+                    startY = h * 0.22 + (Math.random() - 0.5) * 80;
+                } else if (i === 5) {
+                    shapeType = 'butterfly';
+                    startX = w * 0.25 + (Math.random() - 0.5) * 120;
+                    startY = h * 0.65 + (Math.random() - 0.5) * 100;
                 }
 
                 this.nodes.push({
@@ -298,6 +306,10 @@
                     this.drawHeart(this.ctx, node.x, node.y, 7.0 + pulse * 0.5, node.angle, this.isDark);
                 } else if (node.shapeType === 'bear') {
                     this.drawBear(this.ctx, node.x, node.y, 6.0 + pulse * 0.5, node.angle, this.isDark);
+                } else if (node.shapeType === 'rainbow') {
+                    this.drawRainbow(this.ctx, node.x, node.y, 5.8 + pulse * 0.4, node.angle, this.isDark);
+                } else if (node.shapeType === 'butterfly') {
+                    this.drawButterfly(this.ctx, node.x, node.y, 6.2 + pulse * 0.4, node.angle, this.isDark);
                 } else {
                     const r = Math.max(1.2, node.radius + pulse);
                     if (node.colorType === 'sage') sageDots.push([node.x, node.y, r]);
@@ -444,6 +456,98 @@
             ctx.beginPath();
             ctx.arc(r * 0.36, -r * 0.12, r * 0.14, 0, Math.PI * 2);
             ctx.fill();
+
+            ctx.restore();
+        }
+
+        private drawRainbow(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, angle: number, isDark: boolean) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(Math.sin(angle * 0.6) * 0.12);
+
+            // 3 radiant concentric bands matching Philippine's palette: Rose, Amber, Sage Pine
+            const colors = isDark
+                ? [
+                    'hsla(348, 85%, 72%, 0.88)',
+                    'hsla(42, 95%, 68%, 0.90)',
+                    'hsla(168, 65%, 60%, 0.88)',
+                  ]
+                : [
+                    'hsla(348, 76%, 52%, 0.85)',
+                    'hsla(42, 95%, 48%, 0.90)',
+                    'hsla(168, 75%, 32%, 0.85)',
+                  ];
+
+            const bandWidth = r * 0.32;
+            const baseRadius = r * 0.80;
+
+            ctx.lineCap = 'round';
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                const currentRadius = baseRadius + (2 - i) * bandWidth;
+                ctx.arc(0, r * 0.28, currentRadius, Math.PI, 0, false);
+                ctx.strokeStyle = colors[i];
+                ctx.lineWidth = bandWidth * 0.92;
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        private drawButterfly(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, angle: number, isDark: boolean) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle * 0.35);
+
+            const topColor = isDark ? 'hsla(348, 85%, 74%, 0.88)' : 'hsla(348, 76%, 54%, 0.85)';
+            const bottomColor = isDark ? 'hsla(168, 65%, 62%, 0.85)' : 'hsla(168, 72%, 34%, 0.82)';
+            const bodyColor = isDark ? 'hsla(220, 20%, 88%, 0.95)' : 'hsla(222, 30%, 20%, 0.95)';
+
+            // Both wings (left and right)
+            for (const side of [-1, 1]) {
+                ctx.save();
+                ctx.scale(side, 1);
+
+                // Forewing (upper petal)
+                ctx.beginPath();
+                ctx.moveTo(0, -r * 0.1);
+                ctx.bezierCurveTo(r * 0.6, -r * 1.1, r * 1.45, -r * 0.85, r * 1.2, -r * 0.1);
+                ctx.bezierCurveTo(r * 1.0, r * 0.35, r * 0.4, r * 0.25, 0, 0);
+                ctx.fillStyle = topColor;
+                ctx.fill();
+
+                // Hindwing (lower petal)
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(r * 0.5, r * 0.2, r * 1.05, r * 0.45, r * 0.8, r * 0.95);
+                ctx.bezierCurveTo(r * 0.5, r * 1.15, r * 0.2, r * 0.75, 0, r * 0.25);
+                ctx.fillStyle = bottomColor;
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            // Slender body
+            ctx.beginPath();
+            ctx.ellipse(0, 0, r * 0.14, r * 0.55, 0, 0, Math.PI * 2);
+            ctx.fillStyle = bodyColor;
+            ctx.fill();
+
+            // Head
+            ctx.beginPath();
+            ctx.arc(0, -r * 0.55, r * 0.16, 0, Math.PI * 2);
+            ctx.fillStyle = bodyColor;
+            ctx.fill();
+
+            // Antennae
+            ctx.strokeStyle = bodyColor;
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(-r * 0.06, -r * 0.65);
+            ctx.quadraticCurveTo(-r * 0.30, -r * 1.05, -r * 0.45, -r * 0.98);
+            ctx.moveTo(r * 0.06, -r * 0.65);
+            ctx.quadraticCurveTo(r * 0.30, -r * 1.05, r * 0.45, -r * 0.98);
+            ctx.stroke();
 
             ctx.restore();
         }
