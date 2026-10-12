@@ -87,7 +87,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
 <!-- Lightbox Modal for profile picture -->
 <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox__close" id="lightboxClose" aria-label="Fermer">&times;</button>
+    <button class="lightbox__close" id="lightboxClose" aria-label="Fermer" title="Fermer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
     <picture>
         <source srcset={`${base}profile-picture.webp`} type="image/webp" />
         <img
@@ -165,24 +170,33 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             }, { passive: true });
         }
 
-        // Profile Picture Lightbox with Smooth Animations
+        // Profile Picture Lightbox with Smooth Entrance & Graceful Exit
         const profilePic = document.getElementById("profilePicture");
         const lightbox = document.getElementById("lightbox");
         const closeBtn = document.getElementById("lightboxClose");
         const lightboxImg = lightbox?.querySelector(".lightbox__image");
+        let isClosing = false;
 
         function openLightbox() {
-            if (!lightbox) return;
+            if (!lightbox || isClosing) return;
+            lightbox.classList.remove("is-closing");
             lightbox.classList.add("active");
             lightbox.setAttribute("aria-hidden", "false");
             document.body.classList.add("lightbox-open");
         }
 
         function closeLightbox() {
-            if (!lightbox) return;
-            lightbox.classList.remove("active");
+            if (!lightbox || isClosing || !lightbox.classList.contains("active")) return;
+            isClosing = true;
+            lightbox.classList.add("is-closing");
             lightbox.setAttribute("aria-hidden", "true");
             document.body.classList.remove("lightbox-open");
+
+            setTimeout(() => {
+                lightbox.classList.remove("active");
+                lightbox.classList.remove("is-closing");
+                isClosing = false;
+            }, 300);
         }
 
         if (profilePic && lightbox) {
@@ -193,7 +207,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             });
 
             lightbox.addEventListener("click", (e) => {
-                if (e.target === lightbox || e.target === closeBtn) {
+                if (e.target === lightbox || e.target === closeBtn || closeBtn?.contains(e.target as Node)) {
                     closeLightbox();
                 }
             });
@@ -440,7 +454,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         }
     }
 
-    /* Lightbox Modal with Smooth Entrance / Exit Animations */
+    /* Lightbox Modal with Smooth Entrance / Graceful Exit Animations */
     .lightbox {
         position: fixed;
         inset: 0;
@@ -455,7 +469,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s;
     }
 
     .lightbox.active {
@@ -464,21 +478,33 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         pointer-events: auto;
     }
 
+    .lightbox.active.is-closing {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     .lightbox__image {
         max-width: 90vw;
         max-height: 85vh;
         border-radius: var(--radius-xl);
         box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), 0 0 35px hsla(168, 62%, 52%, 0.25);
         border: 2px solid hsla(168, 62%, 52%, 0.3);
-        transform: scale(0.90) translateY(12px);
+        transform: scale(0.92) translateY(12px);
         opacity: 0;
-        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         cursor: default;
     }
 
     .lightbox.active .lightbox__image {
         transform: scale(1) translateY(0);
         opacity: 1;
+    }
+
+    .lightbox.active.is-closing .lightbox__image {
+        transform: scale(0.92) translateY(10px);
+        opacity: 0;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .lightbox__close {
@@ -491,15 +517,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         background: rgba(255, 255, 255, 0.12);
         border: 1px solid rgba(255, 255, 255, 0.25);
         color: white;
-        font-size: 1.6rem;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        line-height: 1;
+        padding: 0;
         opacity: 0;
         transform: scale(0.8);
-        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color var(--transition-fast);
+        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color var(--transition-fast), border-color var(--transition-fast);
         -webkit-tap-highlight-color: transparent;
     }
 
@@ -508,9 +533,28 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         transform: scale(1);
     }
 
+    .lightbox.active.is-closing .lightbox__close {
+        opacity: 0;
+        transform: scale(0.85);
+        transition: opacity 0.25s ease-in, transform 0.25s ease-in;
+    }
+
     .lightbox__close:hover,
     .lightbox__close:focus-visible {
         background: rgba(255, 255, 255, 0.28);
+        border-color: rgba(255, 255, 255, 0.5);
         transform: scale(1.08) rotate(90deg);
+    }
+
+    .lightbox__close svg {
+        display: block;
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+        margin: 0;
     }
 </style>
