@@ -301,7 +301,7 @@
                 orb.el.style.transform = `translate3d(${orb.x - orb.radius}px, ${orb.y - orb.radius}px, 0)`;
             }
 
-            const maxDist = 115;
+            const maxDist = 140;
             const maxDistSq = maxDist * maxDist;
             const mouseMaxDist = 170;
             const mouseMaxDistSq = mouseMaxDist * mouseMaxDist;
@@ -349,8 +349,11 @@
                 else if (node.y > h + margin) node.y = -margin;
             }
 
-            // 3. High-Performance Batched Synaptic Filaments
-            this.ctx.beginPath();
+            // 3. Dynamic Synaptic Filaments with Silky Hermite Smoothstep Fade Transition (No connection limits)
+            const maxAlpha = this.isDark ? 0.22 : 0.20;
+            const baseColor = this.isDark ? '168, 62%, 52%' : '168, 72%, 28%';
+            this.ctx.lineWidth = 1;
+
             const n = this.nodes.length;
             for (let i = 0; i < n; i++) {
                 const node = this.nodes[i];
@@ -365,17 +368,22 @@
 
                     const distSq = dx * dx + dy * dy;
                     if (distSq < maxDistSq) {
+                        const dist = Math.sqrt(distSq);
+                        // Hermite smoothstep for soft, gradual appearance & fade-out
+                        const t = 1 - dist / maxDist;
+                        const smooth = t * t * (3 - 2 * t);
+                        const alpha = smooth * maxAlpha;
+
+                        if (alpha < 0.006) continue;
+
+                        this.ctx.beginPath();
                         this.ctx.moveTo(node.x, node.y);
                         this.ctx.lineTo(other.x, other.y);
+                        this.ctx.strokeStyle = `hsla(${baseColor}, ${alpha.toFixed(3)})`;
+                        this.ctx.stroke();
                     }
                 }
             }
-
-            this.ctx.lineWidth = 1;
-            this.ctx.strokeStyle = this.isDark 
-                ? 'hsla(168, 62%, 52%, 0.16)' 
-                : 'hsla(168, 70%, 30%, 0.14)';
-            this.ctx.stroke();
 
             // 4. Draw colorful glowing nodes & special custom childhood emblems (flower, heart, bear)
             for (let i = 0; i < n; i++) {
