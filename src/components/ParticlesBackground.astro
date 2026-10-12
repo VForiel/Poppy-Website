@@ -4,6 +4,7 @@
 ---
 
 <div class="synapses-bg" id="synapses-bg" aria-hidden="true">
+    <div class="synapses-grain" id="synapses-grain"></div>
     <div class="ambient-glow ambient-glow--green ambient-glow--g1" id="ambient-glow-g1"></div>
     <div class="ambient-glow ambient-glow--green ambient-glow--g2" id="ambient-glow-g2"></div>
     <div class="ambient-glow ambient-glow--green ambient-glow--g3" id="ambient-glow-g3"></div>
@@ -55,7 +56,6 @@
         orbitEccentricity: number;
         wobblePhase: number;
         radius: number;
-        coreRadius: number;
     }
 
     class SynapticNetwork {
@@ -116,22 +116,34 @@
             const w = window.innerWidth;
             const h = window.innerHeight;
 
-            // Generous outer radius for diffusion + distinct solid core radius
-            const outerRadius = Math.max(Math.min(w, h) * 0.46, 340);
-            const coreRadius = outerRadius * 0.22; // ~75-85px
-            const diameter = outerRadius * 2;
+            // Green halos are slightly larger than Rose halos
+            const minDim = Math.min(w, h);
+            const greenRadius = Math.max(minDim * 0.48, 380);
+            const roseRadius = Math.max(minDim * 0.40, 315);
 
-            [...gEls, ...rEls].forEach((el) => {
+            gEls.forEach((el) => {
                 if (el) {
-                    el.style.width = `${diameter}px`;
-                    el.style.height = `${diameter}px`;
+                    el.style.width = `${greenRadius * 2}px`;
+                    el.style.height = `${greenRadius * 2}px`;
+                }
+            });
+
+            rEls.forEach((el) => {
+                if (el) {
+                    el.style.width = `${roseRadius * 2}px`;
+                    el.style.height = `${roseRadius * 2}px`;
                 }
             });
 
             if (this.cgs.length === 2 && this.clusterHalos.length === 6) {
-                for (const halo of this.clusterHalos) {
-                    halo.radius = outerRadius;
-                    halo.coreRadius = coreRadius;
+                for (let i = 0; i < this.clusterHalos.length; i++) {
+                    const halo = this.clusterHalos[i];
+                    const isGreen = halo.cgIndex === 0;
+                    const r = isGreen ? greenRadius : roseRadius;
+                    halo.radius = r;
+                    const idx = i % 3;
+                    const distRatio = idx === 0 ? 0.32 : idx === 1 ? 0.42 : 0.36;
+                    halo.orbitRadius = r * distRatio;
                 }
                 return;
             }
@@ -169,16 +181,11 @@
 
             this.clusterHalos = [];
 
-            // Max offset from CG: coreRadius * 0.45 ensures that for any 2 halos:
-            // dist(H1, H2) <= 2 * 0.45 * coreRadius = 0.90 * coreRadius < coreRadius!
-            // Thus, every halo's core disk always touches the center of the other halos in its cluster!
-            const maxOrb = coreRadius * 0.45;
-
-            // Green Halos (cgIndex: 0)
+            // Green Halos (cgIndex: 0) - Separated center offsets creating an organic, breathing "patatoïde"
             const gConfigs = [
-                { angle: 0, speed: 0.07, dist: maxOrb * 0.35, ecc: 1.0, phase: 0 },
-                { angle: (Math.PI * 2) / 3, speed: -0.055, dist: maxOrb * 0.82, ecc: 1.2, phase: 2.1 },
-                { angle: (Math.PI * 4) / 3, speed: 0.05, dist: maxOrb * 0.72, ecc: 0.85, phase: 4.2 },
+                { angle: 0, speed: 0.045, dist: greenRadius * 0.32, ecc: 1.15, phase: 0 },
+                { angle: (Math.PI * 2) / 3, speed: -0.038, dist: greenRadius * 0.42, ecc: 1.25, phase: 2.1 },
+                { angle: (Math.PI * 4) / 3, speed: 0.034, dist: greenRadius * 0.36, ecc: 0.90, phase: 4.2 },
             ];
 
             for (let i = 0; i < 3; i++) {
@@ -194,16 +201,15 @@
                     orbitRadius: cfg.dist,
                     orbitEccentricity: cfg.ecc,
                     wobblePhase: cfg.phase,
-                    radius: outerRadius,
-                    coreRadius,
+                    radius: greenRadius,
                 });
             }
 
-            // Rose Halos (cgIndex: 1)
+            // Rose Halos (cgIndex: 1) - Separated center offsets creating an organic, breathing "patatoïde"
             const rConfigs = [
-                { angle: Math.PI * 0.5, speed: -0.065, dist: maxOrb * 0.38, ecc: 1.0, phase: 1.0 },
-                { angle: Math.PI * 0.5 + (Math.PI * 2) / 3, speed: 0.055, dist: maxOrb * 0.80, ecc: 1.15, phase: 3.1 },
-                { angle: Math.PI * 0.5 + (Math.PI * 4) / 3, speed: -0.045, dist: maxOrb * 0.70, ecc: 0.9, phase: 5.2 },
+                { angle: Math.PI * 0.5, speed: -0.042, dist: roseRadius * 0.32, ecc: 1.12, phase: 1.0 },
+                { angle: Math.PI * 0.5 + (Math.PI * 2) / 3, speed: 0.036, dist: roseRadius * 0.42, ecc: 1.22, phase: 3.1 },
+                { angle: Math.PI * 0.5 + (Math.PI * 4) / 3, speed: -0.032, dist: roseRadius * 0.36, ecc: 0.92, phase: 5.2 },
             ];
 
             for (let i = 0; i < 3; i++) {
@@ -219,8 +225,7 @@
                     orbitRadius: cfg.dist,
                     orbitEccentricity: cfg.ecc,
                     wobblePhase: cfg.phase,
-                    radius: outerRadius,
-                    coreRadius,
+                    radius: roseRadius,
                 });
             }
 
@@ -388,21 +393,21 @@
                 cg.y = Math.max(25, Math.min(h - 25, cg.y));
             }
 
-            // Update individual halos relative to their cluster CG
+            // Update individual halos relative to their cluster CG to form dynamic morphing "patatoïde"
             for (let i = 0; i < this.clusterHalos.length; i++) {
                 const halo = this.clusterHalos[i];
                 const cg = this.cgs[halo.cgIndex];
 
                 halo.orbitAngle += halo.orbitSpeed * 0.015 * delta;
 
-                const breath = 1 + Math.sin(timeSec * 0.25 + halo.wobblePhase) * 0.15;
+                const breath = 1 + Math.sin(timeSec * 0.22 + halo.wobblePhase) * 0.16;
                 const currentDist = halo.orbitRadius * breath;
 
                 halo.offsetX = Math.cos(halo.orbitAngle) * currentDist * halo.orbitEccentricity;
                 halo.offsetY = Math.sin(halo.orbitAngle) * currentDist;
 
-                // Ensure distance constraint: cores always touch center of at least one other halo in cluster
-                const maxAllowedDist = halo.coreRadius * 0.46;
+                // Ensure continuous overlap at cluster center while preserving pronounced lobes
+                const maxAllowedDist = halo.radius * 0.48;
                 const distFromCG = Math.hypot(halo.offsetX, halo.offsetY);
                 if (distFromCG > maxAllowedDist) {
                     const scale = maxAllowedDist / distFromCG;
@@ -665,6 +670,22 @@
         transform: translateZ(0);
     }
 
+    /* Subtle micro-dither / grain overlay to completely eliminate 8-bit color banding */
+    .synapses-grain {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.032;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    :global([data-theme="dark"]) .synapses-grain {
+        opacity: 0.042;
+    }
+
     #synapses-canvas {
         position: absolute;
         inset: 0;
@@ -674,28 +695,30 @@
         z-index: 2;
     }
 
-    /* Ambient soft background glowing gradients (Zero-blur GPU optimized) */
+    /* Ambient soft background glowing gradients (silky Gaussian blurred & hardware accelerated) */
     .ambient-glow {
         position: absolute;
         top: 0;
         left: 0;
         border-radius: 50%;
         pointer-events: none;
-        z-index: 1;
+        z-index: 0;
         will-change: transform;
+        filter: blur(48px);
+        transform: translateZ(0);
     }
 
-    /* Light Theme (Default) - visible, delicate watercolor auras with solid core + 100% transparent edge */
+    /* Light Theme (Default) - subtle, diffuse watercolor auras */
     .ambient-glow--green {
         background: radial-gradient(
             circle,
-            hsla(168, 76%, 42%, 0.14) 0%,
-            hsla(168, 76%, 42%, 0.14) 22%,
-            hsla(168, 74%, 44%, 0.10) 38%,
-            hsla(168, 72%, 46%, 0.065) 54%,
-            hsla(168, 70%, 48%, 0.03) 70%,
-            hsla(168, 68%, 50%, 0.008) 84%,
-            hsla(168, 68%, 50%, 0) 95%,
+            hsla(168, 68%, 38%, 0.072) 0%,
+            hsla(168, 68%, 38%, 0.065) 15%,
+            hsla(168, 68%, 39%, 0.052) 30%,
+            hsla(168, 67%, 40%, 0.038) 46%,
+            hsla(168, 66%, 42%, 0.024) 62%,
+            hsla(168, 65%, 44%, 0.012) 78%,
+            hsla(168, 64%, 46%, 0.003) 90%,
             transparent 100%
         );
     }
@@ -703,28 +726,28 @@
     .ambient-glow--rose {
         background: radial-gradient(
             circle,
-            hsla(348, 82%, 62%, 0.13) 0%,
-            hsla(348, 82%, 62%, 0.13) 22%,
-            hsla(348, 80%, 64%, 0.09) 38%,
-            hsla(348, 78%, 66%, 0.058) 54%,
-            hsla(348, 76%, 68%, 0.026) 70%,
-            hsla(348, 74%, 70%, 0.007) 84%,
-            hsla(348, 74%, 70%, 0) 95%,
+            hsla(348, 72%, 58%, 0.064) 0%,
+            hsla(348, 72%, 58%, 0.057) 15%,
+            hsla(348, 71%, 60%, 0.046) 30%,
+            hsla(348, 70%, 62%, 0.033) 46%,
+            hsla(348, 69%, 64%, 0.020) 62%,
+            hsla(348, 68%, 66%, 0.010) 78%,
+            hsla(348, 67%, 68%, 0.003) 90%,
             transparent 100%
         );
     }
 
-    /* Dark Theme Overrides - rich atmospheric glow on deep dark surface */
+    /* Dark Theme Overrides - velvety, subtle, discrete atmospheric glow with zero banding */
     :global([data-theme="dark"]) .ambient-glow--green {
         background: radial-gradient(
             circle,
-            hsla(168, 65%, 48%, 0.13) 0%,
-            hsla(168, 65%, 48%, 0.13) 22%,
-            hsla(168, 65%, 48%, 0.09) 38%,
-            hsla(168, 65%, 48%, 0.055) 54%,
-            hsla(168, 65%, 48%, 0.025) 70%,
-            hsla(168, 65%, 48%, 0.006) 84%,
-            hsla(168, 65%, 48%, 0) 95%,
+            hsla(168, 58%, 48%, 0.075) 0%,
+            hsla(168, 58%, 48%, 0.067) 15%,
+            hsla(168, 58%, 48%, 0.053) 30%,
+            hsla(168, 58%, 48%, 0.038) 46%,
+            hsla(168, 58%, 48%, 0.023) 62%,
+            hsla(168, 58%, 48%, 0.011) 78%,
+            hsla(168, 58%, 48%, 0.003) 90%,
             transparent 100%
         );
     }
@@ -732,13 +755,13 @@
     :global([data-theme="dark"]) .ambient-glow--rose {
         background: radial-gradient(
             circle,
-            hsla(348, 75%, 68%, 0.12) 0%,
-            hsla(348, 75%, 68%, 0.12) 22%,
-            hsla(348, 75%, 68%, 0.08) 38%,
-            hsla(348, 75%, 68%, 0.048) 54%,
-            hsla(348, 75%, 68%, 0.022) 70%,
-            hsla(348, 75%, 68%, 0.005) 84%,
-            hsla(348, 75%, 68%, 0) 95%,
+            hsla(348, 68%, 65%, 0.065) 0%,
+            hsla(348, 68%, 65%, 0.058) 15%,
+            hsla(348, 68%, 65%, 0.045) 30%,
+            hsla(348, 68%, 65%, 0.032) 46%,
+            hsla(348, 68%, 65%, 0.019) 62%,
+            hsla(348, 68%, 65%, 0.009) 78%,
+            hsla(348, 68%, 65%, 0.002) 90%,
             transparent 100%
         );
     }

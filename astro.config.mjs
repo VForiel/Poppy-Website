@@ -3,8 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://vforiel.github.io',
-    base: '/Poppy-Website',
+    site: 'https://philippine.villard.pro',
     build: {
         assets: '_assets'
     },
