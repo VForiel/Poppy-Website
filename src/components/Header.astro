@@ -484,9 +484,21 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .lightbox picture {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
     .lightbox__image {
-        max-width: 90vw;
-        max-height: 85vh;
+        width: min(85vw, 85vh, 640px);
+        height: min(85vw, 85vh, 640px);
+        max-width: min(85vw, 85vh, 640px);
+        max-height: min(85vw, 85vh, 640px);
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
         border-radius: var(--radius-xl);
         box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), 0 0 35px hsla(168, 62%, 52%, 0.25);
         border: 2px solid hsla(168, 62%, 52%, 0.3);
