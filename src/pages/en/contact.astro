@@ -12,10 +12,6 @@ const email = "philippine.villard@hotmail.com";
 >
     <Section>
         <div class="contact-header">
-            <span class="status-pill contact-pill">
-                <span class="pulse-dot"></span>
-                <span>Inquiries & Collaborations</span>
-            </span>
             <h1>Contact</h1>
             <p class="lead">
                 To discuss a post-doctoral research opportunity, a professional training request, private practice updates in Nice, or collegial clinical exchange.
@@ -98,10 +94,7 @@ const email = "philippine.villard@hotmail.com";
             <!-- Sidebar with Opportunities & Status -->
             <aside class="contact-sidebar">
                 <div class="bento-card info-card info-card--opportunity">
-                    <div class="opportunity-pill">
-                        <span class="pulse-dot"></span>
-                        <span>2027 Opportunities</span>
-                    </div>
+                    <span class="badge-tag">2027 Opportunities</span>
                     <h3>Research & Post-Doc</h3>
                     <p>
                         Following my doctoral dissertation defense in mid-2027, I am actively seeking a <strong>post-doctoral fellowship</strong> in developmental psychopathology, early psychotrauma assessment, or pediatric neuropsychology (France or internationally).
@@ -132,10 +125,6 @@ const email = "philippine.villard@hotmail.com";
         margin-inline: auto;
         text-align: center;
         margin-block-end: var(--space-12);
-    }
-
-    .contact-pill {
-        margin-bottom: var(--space-4);
     }
 
     .contact-header h1 {
@@ -279,16 +268,22 @@ const email = "philippine.villard@hotmail.com";
         background: hsla(168, 62%, 52%, 0.05);
     }
 
-    .opportunity-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
+    .badge-tag {
+        display: inline-block;
         font-size: var(--text-xs);
+        padding: 3px 10px;
+        border-radius: var(--radius-full);
+        background: hsla(168, 75%, 28%, 0.08);
+        border: 1px solid hsla(168, 75%, 28%, 0.22);
+        color: hsl(168, 85%, 23%);
         font-weight: 700;
-        color: var(--color-primary);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
         margin-bottom: var(--space-3);
+    }
+
+    :global([data-theme="dark"]) .badge-tag {
+        background: hsla(168, 62%, 52%, 0.12);
+        border-color: hsla(168, 62%, 52%, 0.3);
+        color: var(--color-primary);
     }
 
     .info-card h3 {
