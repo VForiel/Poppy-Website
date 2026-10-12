@@ -150,24 +150,52 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             }, { passive: true });
         }
 
-        // Profile Picture Lightbox
+        // Profile Picture Lightbox with Smooth Animations
         const profilePic = document.getElementById("profilePicture");
         const lightbox = document.getElementById("lightbox");
         const closeBtn = document.getElementById("lightboxClose");
+        const lightboxImg = lightbox?.querySelector(".lightbox__image");
+
+        function openLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.add("active");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.classList.add("lightbox-open");
+        }
+
+        function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.remove("active");
+            lightbox.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("lightbox-open");
+        }
 
         if (profilePic && lightbox) {
             profilePic.addEventListener("click", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                lightbox.classList.add("active");
+                openLightbox();
             });
 
-            lightbox.addEventListener("click", () => {
-                lightbox.classList.remove("active");
+            lightbox.addEventListener("click", (e) => {
+                if (e.target === lightbox || e.target === closeBtn) {
+                    closeLightbox();
+                }
             });
 
-            closeBtn?.addEventListener("click", () => {
-                lightbox.classList.remove("active");
+            lightboxImg?.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+
+            closeBtn?.addEventListener("click", (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && lightbox.classList.contains("active")) {
+                    closeLightbox();
+                }
             });
         }
     });
@@ -397,40 +425,77 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         }
     }
 
-    /* Lightbox */
+    /* Lightbox Modal with Smooth Entrance / Exit Animations */
     .lightbox {
-        display: none;
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.82);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         z-index: 1000;
+        display: flex;
         align-items: center;
         justify-content: center;
         padding: var(--space-8);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .lightbox.active {
-        display: flex;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .lightbox__image {
         max-width: 90vw;
         max-height: 85vh;
         border-radius: var(--radius-xl);
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
-        border: 2px solid var(--color-border);
+        box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), 0 0 35px hsla(168, 62%, 52%, 0.25);
+        border: 2px solid hsla(168, 62%, 52%, 0.3);
+        transform: scale(0.90) translateY(12px);
+        opacity: 0;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: default;
+    }
+
+    .lightbox.active .lightbox__image {
+        transform: scale(1) translateY(0);
+        opacity: 1;
     }
 
     .lightbox__close {
         position: absolute;
         top: var(--space-6);
         right: var(--space-6);
-        background: transparent;
-        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-full);
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         color: white;
-        font-size: 2.5rem;
+        font-size: 1.6rem;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         line-height: 1;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color var(--transition-fast);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .lightbox.active .lightbox__close {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .lightbox__close:hover,
+    .lightbox__close:focus-visible {
+        background: rgba(255, 255, 255, 0.28);
+        transform: scale(1.08) rotate(90deg);
     }
 </style>

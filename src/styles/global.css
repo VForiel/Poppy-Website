@@ -174,7 +174,8 @@ body {
     transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-body.menu-open {
+body.menu-open,
+body.lightbox-open {
     overflow: hidden;
 }
 
