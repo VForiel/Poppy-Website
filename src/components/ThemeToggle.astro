@@ -3,7 +3,6 @@
 ---
 
 <button
-    id="theme-toggle"
     class="theme-toggle"
     aria-label="Basculer le thème"
     title="Changer de thème"
@@ -49,20 +48,20 @@
 <script is:inline>
     (function () {
         function setupTheme() {
-            const toggle = document.getElementById("theme-toggle");
-            if (!toggle) return;
-
-            toggle.onclick = () => {
-                const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
-                const nextTheme = currentTheme === "dark" ? "light" : "dark";
-                document.documentElement.setAttribute("data-theme", nextTheme);
-                if (nextTheme === "light") {
-                    document.documentElement.classList.add("light-theme");
-                } else {
-                    document.documentElement.classList.remove("light-theme");
-                }
-                localStorage.setItem("theme", nextTheme);
-            };
+            const toggles = document.querySelectorAll(".theme-toggle");
+            toggles.forEach((toggle) => {
+                toggle.onclick = () => {
+                    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+                    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+                    document.documentElement.setAttribute("data-theme", nextTheme);
+                    if (nextTheme === "light") {
+                        document.documentElement.classList.add("light-theme");
+                    } else {
+                        document.documentElement.classList.remove("light-theme");
+                    }
+                    localStorage.setItem("theme", nextTheme);
+                };
+            });
         }
         setupTheme();
         document.addEventListener("astro:after-swap", setupTheme);

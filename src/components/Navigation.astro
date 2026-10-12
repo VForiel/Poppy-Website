@@ -5,12 +5,15 @@ import { withLocalePrefix } from "../i18n/config";
 interface Props {
   currentPath?: string;
   lang?: 'fr' | 'en';
+  isMobile?: boolean;
 }
 
-const { currentPath, lang = 'fr' } = Astro.props;
+const { currentPath, lang = 'fr', isMobile = false } = Astro.props;
 const t = strings[lang].nav;
 
+// On mobile, include Home as the first item so users have an obvious way to navigate back
 const navItems = [
+  ...(isMobile ? [{ href: withLocalePrefix('/', lang), label: t.home }] : []),
   { href: withLocalePrefix('/about', lang), label: t.about },
   { href: withLocalePrefix('/expertise', lang), label: t.expertise },
   { href: withLocalePrefix('/portfolio', lang), label: t.portfolio },
@@ -29,39 +32,57 @@ const isActiveLink = (href: string) => {
 };
 ---
 
-<nav class="nav" aria-label="Navigation principale">
+<nav class:list={['nav', { 'nav--mobile': isMobile }]} aria-label="Navigation principale">
   <ul class="nav__list">
-    {navItems.map((item) => (
-      <li>
-        <a 
-          href={item.href} 
-          class:list={['nav__link', { 'nav__link--active': isActiveLink(item.href) }]}
-          aria-current={isActiveLink(item.href) ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      </li>
-    ))}
+    {navItems.map((item) => {
+      const active = isActiveLink(item.href);
+      return (
+        <li class="nav__item">
+          <a 
+            href={item.href} 
+            class:list={['nav__link', { 'nav__link--active': active }]}
+            aria-current={active ? 'page' : undefined}
+          >
+            <span class="nav__label">{item.label}</span>
+            {isMobile && active && <span class="nav__active-pill" aria-hidden="true">●</span>}
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>
 
 <style>
+  .nav {
+    width: 100%;
+  }
+
   .nav__list {
     display: flex;
     align-items: center;
     gap: var(--space-2);
     flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__item {
+    display: inline-flex;
   }
 
   .nav__link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
     padding: var(--space-2) var(--space-4);
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-text-secondary);
     border-radius: var(--radius-full);
     transition: all var(--transition-fast);
-    position: relative;
+    text-decoration: none;
+    line-height: 1.3;
   }
 
   .nav__link:hover {
@@ -75,18 +96,47 @@ const isActiveLink = (href: string) => {
     background: hsla(168, 62%, 52%, 0.12);
   }
 
-  @media (max-width: 900px) {
-    .nav__list {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-3);
-      width: 100%;
-    }
+  /* Specific styles for Mobile Drawer navigation */
+  .nav--mobile .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    width: 100%;
+  }
 
-    .nav__link {
-      width: 100%;
-      padding: var(--space-3) var(--space-4);
-      font-size: var(--text-base);
-    }
+  .nav--mobile .nav__item {
+    width: 100%;
+    display: block;
+  }
+
+  .nav--mobile .nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 500;
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+  }
+
+  .nav--mobile .nav__link:hover,
+  .nav--mobile .nav__link:active {
+    background: hsla(168, 62%, 52%, 0.08);
+    color: var(--color-text);
+  }
+
+  .nav--mobile .nav__link--active {
+    background: hsla(168, 62%, 52%, 0.12);
+    border-color: hsla(168, 62%, 52%, 0.25);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .nav__active-pill {
+    font-size: 0.65rem;
+    color: var(--color-primary);
+    margin-left: var(--space-2);
   }
 </style>
