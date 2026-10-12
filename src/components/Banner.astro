@@ -7,24 +7,24 @@ const { lang } = Astro.props;
 
 const content = {
     fr: {
-        badge: "Actualité & Perspectives 2026-2027",
-        title: "Projets de Cabinet Libéral, Formations & Recherche de Post-Doc",
-        description: "En fin de thèse au CE2P de l'Hôpital Lenval (soutenance été 2027), je prépare l'ouverture de mon cabinet libéral à Nice et suis ouverte aux propositions de post-doctorat et missions de formation sur le psychotrauma chez les 3-6 ans.",
-        cta: "Me contacter",
+        badge: "Recherche & Enseignement",
+        title: "Recherche de Post-Doctorat & Missions de Formation",
+        description: "En 4ᵉ année de doctorat au CE2P de l'Hôpital Lenval (soutenance mi-2027), je suis à l'écoute d'opportunités de post-doctorat et disponible pour concevoir des formations spécialisées sur le psychotrauma des 3–6 ans (TCC & EMDR).",
+        cta: "Prendre contact",
         contactUrl: "/fr/contact",
     },
     en: {
-        badge: "News & Outlook 2026-2027",
-        title: "Private Practice Launch, Training & Post-Doctoral Research",
-        description: "Completing my PhD at Lenval Hospital's CE2P (defense planned for summer 2027), I am preparing the opening of my private clinical practice in Nice and welcoming post-doctoral research collaborations and professional training inquiries on early childhood trauma.",
+        badge: "Research & Training",
+        title: "Post-Doctoral Opportunities & Professional Training",
+        description: "In the 4th year of doctoral research at Lenval Children's Hospital (defense mid-2027), I am actively exploring post-doctoral positions and available for specialized clinical training modules on early childhood psychotrauma (CBT & EMDR).",
         cta: "Get in touch",
         contactUrl: "/en/contact",
     },
 }[lang as "fr" | "en"] || {
-    badge: "Actualité & Perspectives",
-    title: "Projets de Cabinet Libéral & Recherche de Post-Doc",
-    description: "Doctorante Lenval CE2P, ouverte aux opportunités de post-doctorat, missions de formation et ouverture prochaine de cabinet libéral.",
-    cta: "Me contacter",
+    badge: "Recherche & Enseignement",
+    title: "Recherche de Post-Doctorat & Missions de Formation",
+    description: "Doctorante Lenval CE2P, ouverte aux opportunités de post-doctorat et aux missions de formation spécialisées.",
+    cta: "Prendre contact",
     contactUrl: "/fr/contact",
 };
 

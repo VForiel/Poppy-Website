@@ -33,7 +33,7 @@ export const strings: Record<Locale, {
 }> = {
     fr: {
         fullName: "Philippine Villard",
-        headerTagline: "Doctorante en Psychologie • Psychotrauma 3-6 ans",
+        headerTagline: "Doctorante en psychologie",
         nav: {
             home: "Accueil",
             about: "À propos",
@@ -43,18 +43,18 @@ export const strings: Record<Locale, {
             contact: "Contact",
         },
         hero: {
-            badge: "Hôpital Lenval (CE2P) • Thèse en cours • Cabinet libéral à venir",
+            badge: "Hôpital Lenval (CE2P) • Soutenance 2027 • Comparaison TCC & EMDR (3-6 ans)",
             title1: "Doctorante en Psychologie",
             title2: "Psychotraumatisme chez les 3 à 6 ans",
-            description: "Psychologue clinicienne et chercheuse dédiée à l'évaluation, la prise en charge et la reconnaissance précoce du psychotrauma chez les tout-petits (3-6 ans). Défense de marqueurs cliniques fiables auprès des professionnels et de la justice.",
+            description: "Psychologue clinicienne et chercheuse à l'Hôpital Lenval (Nice). Ma thèse compare l'efficacité des approches TCC et EMDR dans la prise en charge du psychotraumatisme chez l'enfant de 3 à 6 ans, tout en œuvrant pour la reconnaissance précoce des indicateurs formels auprès du soin et de la justice.",
             ctaProjects: "Découvrir mes travaux",
             ctaContact: "Prendre contact",
         },
         banner: {
-            badge: "Perspectives & Opportunités",
-            title: "Projets de Cabinet Libéral & Recherche de Post-Doc",
-            description: "Actuellement en 4ᵉ année de doctorat à l'Hôpital Lenval (soutenance 2027), je prépare l'ouverture de mon cabinet libéral et reste à l'écoute d'opportunités de post-doctorat et de missions de formation.",
-            cta: "Me contacter",
+            badge: "Recherche & Enseignement",
+            title: "Recherche de Post-Doctorat & Missions de Formation",
+            description: "En 4ᵉ année de doctorat à l'Hôpital Lenval (soutenance mi-2027), je suis à l'écoute d'opportunités de post-doctorat et disponible pour dispenser des formations spécialisées (psychotrauma des 3-6 ans, TCC & EMDR) pour soignants, éducateurs et magistrats.",
+            cta: "Prendre contact",
         },
         footer: {
             affiliations: "Hôpital pour Enfants Lenval (Nice) • Service CE2P • Université Côte d'Azur",
@@ -64,7 +64,7 @@ export const strings: Record<Locale, {
     },
     en: {
         fullName: "Philippine Villard",
-        headerTagline: "PhD Candidate in Psychology • Psychotrauma (Ages 3-6)",
+        headerTagline: "Doctorante en psychologie",
         nav: {
             home: "Home",
             about: "About",
@@ -74,18 +74,18 @@ export const strings: Record<Locale, {
             contact: "Contact",
         },
         hero: {
-            badge: "Lenval Children's Hospital (CE2P) • Ongoing PhD • Future Private Practice",
-            title1: "PhD Candidate in Psychology",
+            badge: "Lenval Children's Hospital (CE2P) • PhD Defense 2027 • CBT vs EMDR (Ages 3-6)",
+            title1: "Doctoral Researcher in Psychology",
             title2: "Early Childhood Psychotrauma (3-6 years)",
-            description: "Clinical psychologist and doctoral researcher dedicated to the early evaluation, therapeutic care, and institutional recognition of psychological trauma in young children (ages 3 to 6). Advocating for rigorous pre-verbal clinical indicators in judicial and clinical settings.",
+            description: "Clinical psychologist and doctoral researcher at Lenval Children's Hospital (Nice, France). My doctoral thesis compares the efficacy of CBT and EMDR in treating trauma among 3-to-6-year-old children, advocating for early recognition of non-verbal clinical markers in healthcare and judicial systems.",
             ctaProjects: "Explore my work",
             ctaContact: "Get in touch",
         },
         banner: {
-            badge: "Opportunities & Outlook",
-            title: "Private Practice Project & Post-Doc Seeking",
-            description: "Currently a 4th-year PhD candidate at Lenval Hospital (defense planned for 2027), preparing the launch of my private clinical practice and open to post-doctoral research opportunities and training missions.",
-            cta: "Contact me",
+            badge: "Research & Training",
+            title: "Post-Doctoral Opportunities & Professional Training",
+            description: "In the 4th year of doctoral research at Lenval Hospital (defense planned for mid-2027), I am actively seeking post-doctoral appointments and available to deliver specialized professional training (early trauma, CBT & EMDR in young children).",
+            cta: "Get in touch",
         },
         footer: {
             affiliations: "Lenval Children's Hospital (Nice) • CE2P Department • Université Côte d'Azur",

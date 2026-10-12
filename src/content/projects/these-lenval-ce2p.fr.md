@@ -1,11 +1,13 @@
 ---
 locale: fr
-title: "Thèse de doctorat : Évaluation et prise en charge du psychotraumatisme chez les 3–6 ans"
-description: "Recherche clinique menée au service CE2P de l'Hôpital Lenval (Nice) visant à identifier et valider des marqueurs formels du psychotrauma chez l'enfant d'âge préscolaire."
+title: "Thèse de doctorat : Prise en charge du psychotraumatisme chez les 3–6 ans (TCC vs EMDR)"
+description: "Recherche clinique menée au service CE2P de l'Hôpital Lenval comparant l'efficacité des approches TCC et EMDR dans le traitement du psychotraumatisme précoce."
 start-date: "2022-10"
 end-date: "2027-06"
 tags:
   - "Doctorat"
+  - "TCC"
+  - "EMDR"
   - "Hôpital Lenval"
   - "CE2P"
   - "Psychotrauma"
@@ -13,20 +15,27 @@ tags:
 featured: true
 ---
 
-## Contexte de la recherche
+## Contexte & Sujet de Recherche
 
-La tranche d'âge de 3 à 6 ans correspond à une phase déterminante du développement cognitif, affectif et relationnel. Cependant, lorsqu'un événement potentiellement traumatisant survient (violences intrafamiliales, négligences graves, accidents, séparations violentes), l'enfant de cet âge ne dispose pas encore de l'appareil psychique et linguistique suffisant pour construire un récit verbal structuré et chronologique.
+La tranche d'âge de 3 à 6 ans correspond à une phase déterminante du développement cérébral, affectif et relationnel. Lorsqu'un événement potentiellement traumatisant survient (violences intrafamiliales, négligences graves, accidents, séparations hautement conflictuelles), l'enfant ne dispose pas encore de l'appareil psychique et linguistique pour élaborer un récit verbal structuré. 
 
-Trop souvent, cette incapacité à verbaliser est interprétée à tort comme une absence d'impact ou une amnésie bienveillante, retardant dramatiquement la prise en charge.
+Trop souvent, cette incapacité à verbaliser a conduit à sous-estimer la détresse du tout-petit et à retarder des interventions psychothérapeutiques ciblées.
 
-## Objectifs de la thèse
+## Objet de la thèse : Comparaison des approches TCC et EMDR
 
-* **Formalisation des indicateurs cliniques :** Recenser, catégoriser et valider empiriquement les manifestations cliniques formelles propres aux 3-6 ans (jeux post-traumatiques figés, troubles de la régulation émotionnelle, comportements régressifs, somatisations, dissociation motrice).
-* **Validation d'un protocole d'évaluation :** Mettre à disposition des équipes soignantes un canevas diagnostique fiable, respectueux du rythme de l'enfant et de son développement.
-* **Portée médico-légale :** Fournir des repères indiscutables pour éclairer les décisions judiciaires dans les dossiers de protection de l'enfance.
+Au cœur de cette recherche doctorale se trouve une **étude comparative rigoureuse de l'efficacité de deux approches thérapeutiques majeures** adaptées aux très jeunes enfants :
 
-## Cadre hospitalier : Le service CE2P de Lenval
+* **Les Thérapies Cognitivo-Comportementales (TCC adaptées à la petite enfance) :** Travail sur l'habituation, la psycho-éducation des émotions, la restructuration comportementale progressive à travers des scénarios ludiques et l'implication active des figures d'attachement.
+* **L'EMDR (Eye Movement Desensitization and Reprocessing adapté aux 3–6 ans) :** Retraitement de l'information traumatique par stimulations bilatérales alternées (tappings, sons, stimulations tactiles douces) médiatisé par le jeu symbolique, le dessin et la métaphore thérapeutique.
 
-Les recherches s'inscrivent au cœur du **CE2P (Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale)** de l'Hôpital pour Enfants Lenval à Nice, sous la direction de pédopsychiatres et d'enseignants-chercheurs renommés.
+## Objectifs et retombées cliniques
+
+* **Mesure comparative de l'efficacité :** Évaluer l'atténuation des symptômes post-traumatiques (régressions motrices, troubles du sommeil, anxiété de séparation, irritabilité) selon le protocole appliqué.
+* **Identification des profils d'indication :** Déterminer quelles caractéristiques cliniques ou contextuelles prédisposent à une meilleure réponse thérapeutique à la TCC ou à l'EMDR chez le jeune enfant.
+* **Formalisation des indicateurs de suivi :** Établir des grilles d'observation objectives des marqueurs non-verbaux pour outiller les soignants, les experts et l'institution judiciaire.
+
+## Cadre hospitalier : Le service CE2P de l'Hôpital Lenval
+
+Ces travaux sont menés au sein du **CE2P (Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale)** de l'Hôpital pour Enfants Lenval à Nice, en lien avec l'Université Côte d'Azur (UniCA). 
 
 La soutenance de thèse est prévue pour **juin / juillet 2027**.

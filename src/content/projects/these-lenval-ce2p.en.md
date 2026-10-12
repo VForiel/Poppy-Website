@@ -1,11 +1,13 @@
 ---
 locale: en
-title: "Doctoral Dissertation: Assessment & Management of Psychotrauma in 3-to-6-Year-Olds"
-description: "Clinical research conducted at the CE2P department of Lenval Children's Hospital (Nice, France) aiming to identify and validate formal pre-verbal markers of psychotrauma in preschool children."
+title: "Doctoral Dissertation: Psychotrauma in Preschoolers (CBT vs. EMDR)"
+description: "Clinical research at Lenval Children's Hospital's CE2P department comparing the efficacy of Cognitive Behavioral Therapy (CBT) and EMDR in treating trauma in 3-to-6-year-olds."
 start-date: "2022-10"
 end-date: "2027-06"
 tags:
   - "PhD Thesis"
+  - "CBT"
+  - "EMDR"
   - "Lenval Hospital"
   - "CE2P"
   - "Psychotrauma"
@@ -13,20 +15,27 @@ tags:
 featured: true
 ---
 
-## Research Context
+## Research Context & Core Question
 
-The developmental stage from 3 to 6 years old is pivotal for cognitive, emotional, and social development. When exposed to potentially traumatic events (domestic abuse, neglect, severe medical interventions, high-conflict separations), young children lack the complex semantic apparatus required to produce coherent, chronological verbal testimonies.
+The developmental window from 3 to 6 years is critical for neural connectivity, emotional regulation, and attachment security. When preschool children face severe adverse events (family violence, acute neglect, traumatic accidents, high-conflict separations), they cannot articulate their trauma using complex adult syntax.
 
-Historically, this inability to articulate trauma verbally has led to under-diagnosis and delayed psychological interventions.
+Historically, this verbal limitation has contributed to significant diagnostic delays and undertreatment.
 
-## Core Objectives
+## Thesis Topic: Comparing CBT and EMDR Approaches
 
-* **Formalizing Clinical Pre-Verbal Markers:** Cataloging, categorizing, and validating behavioral and somatic markers specific to 3-6 year-olds (compulsive reenactment play, sensory hyper-reactivity, somatic manifestations, attachment disruptions).
-* **Validating a Clinical Assessment Protocol:** Offering healthcare professionals a reliable, non-intrusive diagnostic tool aligned with preschool developmental psychology.
-* **Judicial & Forensic Impact:** Establishing objective clinical criteria to inform child protection decisions in court hearings.
+The core inquiry of this doctoral research is an **in-depth comparative evaluation of two leading psychotherapy modalities** adapted specifically for preschool children:
 
-## Institutional Setting: Lenval Hospital (CE2P)
+* **Cognitive Behavioral Therapy (adapted for early childhood):** Trauma-focused behavioral exposure, emotional psychoeducation, gradual habituation through symbolic scenarios, and collaborative caregiver involvement.
+* **EMDR (Eye Movement Desensitization and Reprocessing for ages 3–6):** Bilateral sensory stimulation (gentle tapping, audio, tactile rhythms) woven into play therapy, narrative storytelling, and metaphorical therapeutic containment.
 
-This research is conducted within the **CE2P (Center for Child Evaluation & Perinatal Psychiatry)** at Lenval Children's Hospital in Nice, France, under leading child psychiatrists and clinical researchers.
+## Objectives & Clinical Outcomes
 
-Dissertation defense is anticipated for **June / July 2027**.
+* **Comparative Outcome Measurement:** Tracking reductions in trauma symptoms (post-traumatic reenactment play, motor regressions, sleep disturbances, separation anxiety) across both modalities.
+* **Clinical Profiling:** Identifying patient and context indicators that indicate preferential response to CBT or EMDR in preschool populations.
+* **Standardized Observational Grids:** Equipping clinical teams, child welfare authorities, and judicial experts with concrete, validated behavioral indicators.
+
+## Hospital Setting: Lenval Hospital (CE2P)
+
+This research is conducted within the **CE2P (Child Evaluation & Perinatal Psychiatry Unit)** at Lenval Children's Hospital in Nice, affiliated with Université Côte d'Azur (UniCA).
+
+Dissertation defense is scheduled for **June / July 2027**.

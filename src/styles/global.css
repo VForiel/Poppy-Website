@@ -4,48 +4,48 @@
 
 :root {
     /* Primary: Sage & Emerald (Calm, Healing, Neuroscience) */
-    --color-primary: hsl(168, 62%, 52%);
-    --color-primary-light: hsl(168, 72%, 66%);
-    --color-primary-dark: hsl(168, 65%, 40%);
-    --color-primary-rgb: 45, 212, 191;
+    --color-primary: hsl(168, 68%, 34%);
+    --color-primary-light: hsl(168, 62%, 46%);
+    --color-primary-dark: hsl(168, 75%, 26%);
+    --color-primary-rgb: 20, 153, 137;
 
     /* Accent: Gentle Rose & Terracotta (Childhood, Empathy, Warmth) */
-    --color-accent: hsl(348, 78%, 70%);
-    --color-accent-light: hsl(348, 85%, 78%);
-    --color-accent-dark: hsl(348, 70%, 55%);
-    --color-accent-rgb: 244, 114, 182;
+    --color-accent: hsl(348, 65%, 52%);
+    --color-accent-light: hsl(348, 70%, 65%);
+    --color-accent-dark: hsl(348, 70%, 42%);
+    --color-accent-rgb: 219, 48, 92;
 
     /* Secondary Support: Soft Amber */
-    --color-amber: hsl(42, 90%, 62%);
+    --color-amber: hsl(42, 90%, 52%);
 
-    /* Dark Theme Neutrals (Default) */
-    --color-neutral-50: hsl(220, 16%, 96%);
-    --color-neutral-100: hsl(220, 14%, 88%);
-    --color-neutral-200: hsl(220, 12%, 75%);
-    --color-neutral-300: hsl(220, 10%, 60%);
-    --color-neutral-400: hsl(220, 10%, 45%);
-    --color-neutral-500: hsl(220, 12%, 30%);
-    --color-neutral-600: hsl(220, 16%, 22%);
-    --color-neutral-700: hsl(222, 20%, 16%);
-    --color-neutral-800: hsl(224, 25%, 12%);
-    --color-neutral-900: hsl(224, 28%, 9%);
+    /* Light Theme Neutrals (Default) */
+    --color-neutral-50: hsl(220, 20%, 10%);
+    --color-neutral-100: hsl(220, 16%, 20%);
+    --color-neutral-200: hsl(220, 14%, 32%);
+    --color-neutral-300: hsl(220, 12%, 48%);
+    --color-neutral-400: hsl(220, 10%, 62%);
+    --color-neutral-500: hsl(220, 10%, 75%);
+    --color-neutral-600: hsl(220, 14%, 86%);
+    --color-neutral-700: hsl(220, 16%, 92%);
+    --color-neutral-800: hsl(220, 20%, 96%);
+    --color-neutral-900: hsl(40, 25%, 98%);
 
-    /* Semantic - Dark Theme */
-    --color-text: hsl(220, 20%, 95%);
-    --color-text-secondary: hsl(220, 14%, 72%);
-    --color-text-muted: hsl(220, 10%, 54%);
-    --color-background: hsl(224, 28%, 9%);
-    --color-background-secondary: hsl(224, 22%, 13%);
-    --color-background-card: hsla(224, 22%, 14%, 0.85);
-    --color-background-card-hover: hsla(224, 24%, 18%, 0.95);
-    --color-border: hsl(222, 16%, 20%);
-    --color-border-subtle: hsl(222, 18%, 15%);
-    --color-border-glow: hsla(168, 62%, 52%, 0.35);
+    /* Semantic - Light Theme (Default) */
+    --color-text: hsl(222, 30%, 14%);
+    --color-text-secondary: hsl(222, 14%, 36%);
+    --color-text-muted: hsl(222, 10%, 54%);
+    --color-background: hsl(40, 30%, 98%);
+    --color-background-secondary: hsl(40, 20%, 95%);
+    --color-background-card: hsla(0, 0%, 100%, 0.90);
+    --color-background-card-hover: hsla(0, 0%, 100%, 0.98);
+    --color-border: hsl(218, 16%, 86%);
+    --color-border-subtle: hsl(218, 18%, 92%);
+    --color-border-glow: hsla(168, 68%, 34%, 0.25);
 
     /* Aceternity UI Glows */
-    --glow-primary: 0 0 35px hsla(168, 62%, 52%, 0.25);
-    --glow-accent: 0 0 30px hsla(348, 78%, 70%, 0.2);
-    --glow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glow-primary: 0 0 35px hsla(168, 68%, 34%, 0.15);
+    --glow-accent: 0 0 30px hsla(348, 65%, 52%, 0.12);
+    --glow-card: 0 8px 30px 0 rgba(0, 0, 0, 0.06);
 
     /* Typography Scale */
     --text-xs: 0.75rem;
@@ -91,54 +91,56 @@
     --transition-slow: 450ms cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
-}
-
-/* Light Theme */
-.light-theme, [data-theme="light"] {
-    --color-primary: hsl(168, 68%, 34%);
-    --color-primary-light: hsl(168, 62%, 46%);
-    --color-primary-dark: hsl(168, 75%, 26%);
-    --color-primary-rgb: 20, 153, 137;
-
-    --color-accent: hsl(348, 65%, 52%);
-    --color-accent-light: hsl(348, 70%, 65%);
-    --color-accent-dark: hsl(348, 70%, 42%);
-    --color-accent-rgb: 219, 48, 92;
-
-    --color-neutral-50: hsl(220, 20%, 10%);
-    --color-neutral-100: hsl(220, 16%, 20%);
-    --color-neutral-200: hsl(220, 14%, 32%);
-    --color-neutral-300: hsl(220, 12%, 48%);
-    --color-neutral-400: hsl(220, 10%, 62%);
-    --color-neutral-500: hsl(220, 10%, 75%);
-    --color-neutral-600: hsl(220, 14%, 86%);
-    --color-neutral-700: hsl(220, 16%, 92%);
-    --color-neutral-800: hsl(220, 20%, 96%);
-    --color-neutral-900: hsl(40, 25%, 98%);
-
-    --color-text: hsl(222, 30%, 14%);
-    --color-text-secondary: hsl(222, 14%, 36%);
-    --color-text-muted: hsl(222, 10%, 54%);
-    --color-background: hsl(40, 30%, 98%);
-    --color-background-secondary: hsl(40, 20%, 95%);
-    --color-background-card: hsla(0, 0%, 100%, 0.88);
-    --color-background-card-hover: hsla(0, 0%, 100%, 0.98);
-    --color-border: hsl(218, 16%, 88%);
-    --color-border-subtle: hsl(218, 18%, 93%);
-    --color-border-glow: hsla(168, 68%, 34%, 0.25);
-
-    --glow-primary: 0 0 35px hsla(168, 68%, 34%, 0.15);
-    --glow-accent: 0 0 30px hsla(348, 65%, 52%, 0.12);
-    --glow-card: 0 8px 30px 0 rgba(0, 0, 0, 0.06);
-
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Theme Override */
+[data-theme="dark"] {
+    --color-primary: hsl(168, 62%, 52%);
+    --color-primary-light: hsl(168, 72%, 66%);
+    --color-primary-dark: hsl(168, 65%, 40%);
+    --color-primary-rgb: 45, 212, 191;
+
+    --color-accent: hsl(348, 78%, 70%);
+    --color-accent-light: hsl(348, 85%, 78%);
+    --color-accent-dark: hsl(348, 70%, 55%);
+    --color-accent-rgb: 244, 114, 182;
+
+    --color-amber: hsl(42, 90%, 62%);
+
+    --color-neutral-50: hsl(220, 16%, 96%);
+    --color-neutral-100: hsl(220, 14%, 88%);
+    --color-neutral-200: hsl(220, 12%, 75%);
+    --color-neutral-300: hsl(220, 10%, 60%);
+    --color-neutral-400: hsl(220, 10%, 45%);
+    --color-neutral-500: hsl(220, 12%, 30%);
+    --color-neutral-600: hsl(220, 16%, 22%);
+    --color-neutral-700: hsl(222, 20%, 16%);
+    --color-neutral-800: hsl(224, 25%, 12%);
+    --color-neutral-900: hsl(224, 28%, 9%);
+
+    --color-text: hsl(220, 20%, 95%);
+    --color-text-secondary: hsl(220, 14%, 72%);
+    --color-text-muted: hsl(220, 10%, 54%);
+    --color-background: hsl(224, 28%, 9%);
+    --color-background-secondary: hsl(224, 22%, 13%);
+    --color-background-card: hsla(224, 22%, 14%, 0.85);
+    --color-background-card-hover: hsla(224, 24%, 18%, 0.95);
+    --color-border: hsl(222, 16%, 20%);
+    --color-border-subtle: hsl(222, 18%, 15%);
+    --color-border-glow: hsla(168, 62%, 52%, 0.35);
+
+    --glow-primary: 0 0 35px hsla(168, 62%, 52%, 0.25);
+    --glow-accent: 0 0 30px hsla(348, 78%, 70%, 0.2);
+    --glow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
 }
 
 /* Base Styles */

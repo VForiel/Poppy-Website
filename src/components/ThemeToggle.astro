@@ -52,9 +52,9 @@
             const toggle = document.getElementById("theme-toggle");
             if (!toggle) return;
 
-            toggle.addEventListener("click", () => {
-                const isLight = document.documentElement.getAttribute("data-theme") === "light";
-                const nextTheme = isLight ? "dark" : "light";
+            toggle.onclick = () => {
+                const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+                const nextTheme = currentTheme === "dark" ? "light" : "dark";
                 document.documentElement.setAttribute("data-theme", nextTheme);
                 if (nextTheme === "light") {
                     document.documentElement.classList.add("light-theme");
@@ -62,7 +62,7 @@
                     document.documentElement.classList.remove("light-theme");
                 }
                 localStorage.setItem("theme", nextTheme);
-            });
+            };
         }
         setupTheme();
         document.addEventListener("astro:after-swap", setupTheme);
@@ -91,7 +91,7 @@
         transform: scale(1.05);
     }
 
-    /* Icons display logic */
+    /* By default (Light Theme), show Moon icon so user can switch to dark */
     .sun-icon {
         display: none;
     }
@@ -99,13 +99,20 @@
         display: block;
     }
 
-    :global([data-theme="light"]) .sun-icon,
-    :global(.light-theme) .sun-icon {
+    /* In Dark Theme, show Sun icon so user can switch to light */
+    :global([data-theme="dark"]) .sun-icon {
         display: block;
     }
+    :global([data-theme="dark"]) .moon-icon {
+        display: none;
+    }
 
+    :global([data-theme="light"]) .sun-icon,
+    :global(.light-theme) .sun-icon {
+        display: none;
+    }
     :global([data-theme="light"]) .moon-icon,
     :global(.light-theme) .moon-icon {
-        display: none;
+        display: block;
     }
 </style>
