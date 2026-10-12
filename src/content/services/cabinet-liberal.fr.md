@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Pratique clinique en cabinet libéral (Nice)
-description: Consultations psychologiques spécialisées pour les tout-petits et leurs familles, guidance parentale et psychothérapie intégrative du trauma précoce.
+title: "Pratique clinique en cabinet libéral (Nice)"
+description: "Consultations psychologiques spécialisées pour les tout-petits et leurs familles, guidance parentale et psychothérapie intégrative du trauma précoce."
 icon: "🧸"
 order: 2
 available: false

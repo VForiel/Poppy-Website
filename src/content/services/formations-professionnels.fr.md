@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Formations & Conférences Professionnelles
-description: Modules pédagogiques et interventions pour soignants, magistrats, avocats d'enfants et professionnels de la petite enfance.
+title: "Formations & Conférences Professionnelles"
+description: "Modules pédagogiques et interventions pour soignants, magistrats, avocats d'enfants et professionnels de la petite enfance."
 icon: "🎓"
 order: 3
 available: true

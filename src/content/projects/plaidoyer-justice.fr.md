@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Plaidoyer médico-légal & Reconnaissance judiciaire des 3–6 ans
-description: Sensibilisation des magistrats, experts judiciaires et soignants pour une prise en compte légitime et précoce des indicateurs de trauma chez l'enfant préscolaire.
+title: "Plaidoyer médico-légal & Reconnaissance judiciaire des 3–6 ans"
+description: "Sensibilisation des magistrats, experts judiciaires et soignants pour une prise en compte légitime et précoce des indicateurs de trauma chez l'enfant préscolaire."
 start-date: "2024-03"
 tags:
   - "Justice"

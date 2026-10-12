@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Évaluation clinique du psychotraumatisme (3-6 ans)
-description: Détection fine et rigoureuse des marqueurs cliniques, moteurs et comportementaux du trauma chez le jeune enfant, au-delà du seul langage verbal.
+title: "Évaluation clinique du psychotraumatisme (3-6 ans)"
+description: "Détection fine et rigoureuse des marqueurs cliniques, moteurs et comportementaux du trauma chez le jeune enfant, au-delà du seul langage verbal."
 icon: "🧠"
 order: 1
 available: true

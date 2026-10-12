@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Cartographie des indicateurs cliniques et comportementaux formels chez le jeune enfant
-description: Outil clinique standardisé conçu pour identifier avec certitude les signes de stress post-traumatique chez l'enfant avant l'accès complet à la parole élaborée.
+title: "Cartographie des indicateurs cliniques et comportementaux formels chez le jeune enfant"
+description: "Outil clinique standardisé conçu pour identifier avec certitude les signes de stress post-traumatique chez l'enfant avant l'accès complet à la parole élaborée."
 start-date: "2023-01"
 tags:
   - "Outils cliniques"

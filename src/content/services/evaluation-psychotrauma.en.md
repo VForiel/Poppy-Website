@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Clinical Assessment of Psychotrauma (Ages 3-6)
-description: In-depth and rigorous detection of behavioral, somatic, and relational trauma indicators in preschool children, beyond verbal speech.
+title: "Clinical Assessment of Psychotrauma (Ages 3-6)"
+description: "In-depth and rigorous detection of behavioral, somatic, and relational trauma indicators in preschool children, beyond verbal speech."
 icon: "🧠"
 order: 1
 available: true

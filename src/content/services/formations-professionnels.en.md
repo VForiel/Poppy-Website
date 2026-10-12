@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Professional Training & Seminars
-description: Specialized workshops and training sessions for clinicians, magistrates, child advocates, and early childhood professionals.
+title: "Professional Training & Seminars"
+description: "Specialized workshops and training sessions for clinicians, magistrates, child advocates, and early childhood professionals."
 icon: "🎓"
 order: 3
 available: true

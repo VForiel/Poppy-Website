@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Translational Research & Scientific Writing
-description: Design of clinical research protocols, peer-reviewed publications, and evidence-based dissemination on early childhood psychotrauma.
+title: "Translational Research & Scientific Writing"
+description: "Design of clinical research protocols, peer-reviewed publications, and evidence-based dissemination on early childhood psychotrauma."
 icon: "📚"
 order: 4
 available: true

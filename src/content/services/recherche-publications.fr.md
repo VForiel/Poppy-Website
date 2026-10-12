@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Recherche translationnelle & Rédaction scientifique
-description: Élaboration de protocoles de recherche, publications d'articles cliniques et vulgarisation scientifique de pointe sur le trauma précoce.
+title: "Recherche translationnelle & Rédaction scientifique"
+description: "Élaboration de protocoles de recherche, publications d'articles cliniques et vulgarisation scientifique de pointe sur le trauma précoce."
 icon: "📚"
 order: 4
 available: true

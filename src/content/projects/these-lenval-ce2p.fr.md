@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Thèse de doctorat : Évaluation et prise en charge du psychotraumatisme chez les 3–6 ans
-description: Recherche clinique menée au service CE2P de l'Hôpital Lenval (Nice) visant à identifier et valider des marqueurs formels du psychotrauma chez l'enfant d'âge préscolaire.
+title: "Thèse de doctorat : Évaluation et prise en charge du psychotraumatisme chez les 3–6 ans"
+description: "Recherche clinique menée au service CE2P de l'Hôpital Lenval (Nice) visant à identifier et valider des marqueurs formels du psychotrauma chez l'enfant d'âge préscolaire."
 start-date: "2022-10"
 end-date: "2027-06"
 tags:

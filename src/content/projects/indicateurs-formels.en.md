@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Mapping Formal Clinical & Behavioral Indicators in Preschool Children
-description: A standardized diagnostic tool designed to unequivocally identify post-traumatic distress signs before children attain fully articulated verbal speech.
+title: "Mapping Formal Clinical & Behavioral Indicators in Preschool Children"
+description: "A standardized diagnostic tool designed to unequivocally identify post-traumatic distress signs before children attain fully articulated verbal speech."
 start-date: "2023-01"
 tags:
   - "Clinical Tools"

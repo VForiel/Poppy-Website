@@ -1,7 +1,7 @@
 ---
 locale: en
 title: "Doctoral Dissertation: Assessment & Management of Psychotrauma in 3-to-6-Year-Olds"
-description: Clinical research conducted at the CE2P department of Lenval Children's Hospital (Nice, France) aiming to identify and validate formal pre-verbal markers of psychotrauma in preschool children.
+description: "Clinical research conducted at the CE2P department of Lenval Children's Hospital (Nice, France) aiming to identify and validate formal pre-verbal markers of psychotrauma in preschool children."
 start-date: "2022-10"
 end-date: "2027-06"
 tags:

@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Private Clinical Practice (Nice, France)
-description: Specialized psychological consultations for young children and families, parental guidance, and integrative psychotherapy for early trauma.
+title: "Private Clinical Practice (Nice, France)"
+description: "Specialized psychological consultations for young children and families, parental guidance, and integrative psychotherapy for early trauma."
 icon: "🧸"
 order: 2
 available: false

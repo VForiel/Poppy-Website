@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Multidisciplinary Clinical Practice at Lenval CE2P
-description: Clinical immersion at the Center for Child Evaluation & Perinatal Psychiatry, conducting specialized assessments and therapeutic family guidance.
+title: "Multidisciplinary Clinical Practice at Lenval CE2P"
+description: "Clinical immersion at the Center for Child Evaluation & Perinatal Psychiatry, conducting specialized assessments and therapeutic family guidance."
 start-date: "2022-11"
 tags:
   - "Lenval Hospital"

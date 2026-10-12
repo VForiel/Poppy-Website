@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Serveur Local (Astro Dev)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "Serveur Local + Ouvrir Navigateur",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev -- --open"
+    }
+  ]
+}

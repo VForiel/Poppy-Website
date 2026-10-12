@@ -1,7 +1,7 @@
 ---
 locale: en
-title: Forensic Advocacy & Judicial Recognition of Trauma in Young Children
-description: Sensitizing magistrates, forensic experts, and healthcare professionals to give legitimate evidentiary value to preschool trauma signs.
+title: "Forensic Advocacy & Judicial Recognition of Trauma in Young Children"
+description: "Sensitizing magistrates, forensic experts, and healthcare professionals to give legitimate evidentiary value to preschool trauma signs."
 start-date: "2024-03"
 tags:
   - "Justice"

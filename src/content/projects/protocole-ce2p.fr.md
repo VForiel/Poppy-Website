@@ -1,7 +1,7 @@
 ---
 locale: fr
-title: Pratique clinique et évaluation pluridisciplinaire au CE2P (Hôpital Lenval)
-description: Immersion clinique au Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale, associant bilans psychologiques approfondis et accompagnement des familles.
+title: "Pratique clinique et évaluation pluridisciplinaire au CE2P (Hôpital Lenval)"
+description: "Immersion clinique au Centre d'Évaluation de l'Enfant et Psychiatrie Périnatale, associant bilans psychologiques approfondis et accompagnement des familles."
 start-date: "2022-11"
 tags:
   - "Hôpital Lenval"
