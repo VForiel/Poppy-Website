@@ -138,7 +138,8 @@
                 clearTimeout(this.scrollTimeout);
                 this.scrollTimeout = window.setTimeout(() => {
                     this.isScrolling = false;
-                }, 70);
+                    this.lastTime = performance.now();
+                }, 60);
             }, { passive: true });
 
             if (this.hasPointerFine) {
@@ -171,6 +172,12 @@
 
         private animate = (now: number) => {
             if (!this.isVisible) return;
+
+            // During active scrolling, pause canvas redraw to guarantee 100% GPU compositor budget for 120 FPS scrolling
+            if (this.isScrolling) {
+                this.animationFrameId = requestAnimationFrame(this.animate);
+                return;
+            }
 
             const delta = Math.min((now - this.lastTime) / 16.66, 2.0);
             this.lastTime = now;

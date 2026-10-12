@@ -7,9 +7,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "benchmark": "node scripts/benchmark.mjs",
+    "audit": "node scripts/audit-all-pages.mjs",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^5.16.11"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.0"
   }
 }
