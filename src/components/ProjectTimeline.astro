@@ -99,6 +99,19 @@ const labels = {
         const filterBtns = document.querySelectorAll(".filter-btn");
         const items = document.querySelectorAll(".timeline-item");
 
+        function updateTimelineLines() {
+            const visibleItems = Array.from(items).filter(
+                (item) => (item as HTMLElement).style.display !== "none"
+            );
+
+            visibleItems.forEach((item, index) => {
+                const line = item.querySelector(".marker-line") as HTMLElement | null;
+                if (line) {
+                    line.style.display = index === visibleItems.length - 1 ? "none" : "";
+                }
+            });
+        }
+
         filterBtns.forEach((btn) => {
             btn.addEventListener("click", () => {
                 const targetTag = btn.getAttribute("data-tag");
@@ -116,8 +129,12 @@ const labels = {
                         (item as HTMLElement).style.display = "none";
                     }
                 });
+
+                updateTimelineLines();
             });
         });
+
+        updateTimelineLines();
     });
 </script>
 
@@ -204,6 +221,7 @@ const labels = {
         align-items: center;
         flex-shrink: 0;
         width: 24px;
+        position: relative;
     }
 
     .marker-dot {
@@ -212,15 +230,46 @@ const labels = {
         border-radius: 50%;
         background: var(--color-primary);
         border: 2px solid var(--color-background);
-        box-shadow: 0 0 10px var(--color-primary);
+        box-shadow: 0 0 0 2px hsla(168, 75%, 28%, 0.2), 0 2px 8px hsla(168, 75%, 28%, 0.15);
         margin-top: var(--space-6);
+        position: relative;
+        z-index: 2;
+        flex-shrink: 0;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    :global([data-theme="dark"]) .marker-dot {
+        box-shadow: 0 0 0 2px hsla(168, 62%, 52%, 0.3), 0 0 10px hsla(168, 62%, 52%, 0.4);
+    }
+
+    .timeline-item:hover .marker-dot {
+        transform: scale(1.15);
     }
 
     .marker-line {
-        flex: 1;
+        position: absolute;
+        top: calc(var(--space-6) + 7px);
+        bottom: calc(-2 * var(--space-6) - 7px);
+        left: 50%;
+        transform: translateX(-50%);
         width: 2px;
-        background: linear-gradient(to bottom, var(--color-primary), var(--color-border));
-        margin-top: 4px;
+        background: linear-gradient(
+            to bottom,
+            var(--color-primary) 0%,
+            var(--color-border) 45%,
+            var(--color-border) 55%,
+            var(--color-primary) 100%
+        );
+        z-index: 1;
+    }
+
+    :global([data-theme="dark"]) .marker-line {
+        background: linear-gradient(
+            to bottom,
+            var(--color-primary) 0%,
+            hsla(168, 62%, 52%, 0.35) 50%,
+            var(--color-primary) 100%
+        );
     }
 
     .timeline-item:last-child .marker-line {
