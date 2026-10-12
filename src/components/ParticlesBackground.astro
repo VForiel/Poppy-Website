@@ -42,6 +42,9 @@
         private viewportWidth: number = 0;
         private viewportHeight: number = 0;
         private filamentOpacity: number = 1;
+        private lastFilamentCalcTime: number = 0;
+        private cachedStrongPairs: [number, number][] = [];
+        private cachedFaintPairs: [number, number][] = [];
 
         constructor(canvas: HTMLCanvasElement) {
             this.canvas = canvas;
@@ -104,9 +107,12 @@
 
         private initNodes() {
             this.nodes = [];
+            this.cachedStrongPairs = [];
+            this.cachedFaintPairs = [];
+            this.lastFilamentCalcTime = 0;
             const isMobile = window.innerWidth < 768;
-            // Optimal count: 18 nodes on desktop, 10 on mobile
-            const count = isMobile ? 10 : Math.min(Math.floor(window.innerWidth / 70), 20);
+            // +10 particles: 20 nodes on mobile, up to 30 on desktop
+            const count = isMobile ? 20 : Math.min(Math.floor(window.innerWidth / 45), 30);
             const types: ('sage' | 'rose' | 'amber')[] = ['sage', 'sage', 'rose', 'amber'];
             const w = window.innerWidth;
             const h = window.innerHeight;
@@ -208,6 +214,89 @@
             });
         }
 
+        // Throttled synaptic pair finder: runs at 10 Hz with localized spatial grid bucketing
+        // Completely avoids pure O(N^2) pairwise comparisons and conserves CPU cycles
+        private updateSynapticPairs(now: number, maxDist: number, maxDistSq: number) {
+            if (now - this.lastFilamentCalcTime < 100) return;
+            this.lastFilamentCalcTime = now;
+
+            const n = this.nodes.length;
+            const cellSize = maxDist;
+            const strongThreshSq = maxDistSq * 0.36;
+
+            // Spatial Partitioning Grid (O(1) localized bucket lookup)
+            const grid = new Map<string, number[]>();
+            for (let i = 0; i < n; i++) {
+                const node = this.nodes[i];
+                const key = `${Math.floor(node.x / cellSize)},${Math.floor(node.y / cellSize)}`;
+                const bucket = grid.get(key);
+                if (bucket) {
+                    bucket.push(i);
+                } else {
+                    grid.set(key, [i]);
+                }
+            }
+
+            const strong: [number, number][] = [];
+            const faint: [number, number][] = [];
+
+            // Forward neighbor cell offsets: same cell (0,0) + 4 directional neighbors
+            const neighborOffsets = [
+                [0, 0],
+                [1, 0],
+                [-1, 1],
+                [0, 1],
+                [1, 1]
+            ];
+
+            for (const [cellKey, members] of grid) {
+                const commaIdx = cellKey.indexOf(',');
+                const col = parseInt(cellKey.substring(0, commaIdx), 10);
+                const row = parseInt(cellKey.substring(commaIdx + 1), 10);
+                const memberCount = members.length;
+
+                for (let a = 0; a < memberCount; a++) {
+                    const i = members[a];
+                    const nodeA = this.nodes[i];
+
+                    // Test within same cell
+                    for (let b = a + 1; b < memberCount; b++) {
+                        const j = members[b];
+                        const nodeB = this.nodes[j];
+                        const dx = nodeB.x - nodeA.x;
+                        const dy = nodeB.y - nodeA.y;
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < maxDistSq) {
+                            if (distSq < strongThreshSq) strong.push([i, j]);
+                            else faint.push([i, j]);
+                        }
+                    }
+
+                    // Test in 4 forward neighboring cells
+                    for (let o = 1; o < 5; o++) {
+                        const neighborKey = `${col + neighborOffsets[o][0]},${row + neighborOffsets[o][1]}`;
+                        const neighborBucket = grid.get(neighborKey);
+                        if (!neighborBucket) continue;
+
+                        for (let k = 0; k < neighborBucket.length; k++) {
+                            const j = neighborBucket[k];
+                            const nodeB = this.nodes[j];
+                            const dx = nodeB.x - nodeA.x;
+                            const dy = nodeB.y - nodeA.y;
+                            const distSq = dx * dx + dy * dy;
+                            if (distSq < maxDistSq) {
+                                if (distSq < strongThreshSq) strong.push([i, j]);
+                                else faint.push([i, j]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.cachedStrongPairs = strong;
+            this.cachedFaintPairs = faint;
+        }
+
         private animate = (now: number) => {
             if (!this.isVisible) return;
 
@@ -273,38 +362,21 @@
                 this.filamentOpacity = Math.min(1, this.filamentOpacity + delta * 0.06);
             }
 
-            // 2. Synaptic Filaments with Batched 2-Pass Stroke (Only computed when visible)
+            // 2. Synaptic Filaments: 10 Hz spatial partitioning & cached pair drawing
             if (this.filamentOpacity > 0.03) {
+                this.updateSynapticPairs(now, maxDist, maxDistSq);
+
                 const baseColor = this.isDark ? '168, 62%, 52%' : '168, 72%, 28%';
-                const strongLines: number[] = [];
-                const faintLines: number[] = [];
 
-                for (let i = 0; i < n; i++) {
-                    const node = this.nodes[i];
-                    for (let j = i + 1; j < n; j++) {
-                        const other = this.nodes[j];
-
-                        const dx = other.x - node.x;
-                        if (dx > maxDist || dx < -maxDist) continue;
-                        const dy = other.y - node.y;
-                        if (dy > maxDist || dy < -maxDist) continue;
-
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < maxDistSq) {
-                            if (distSq < maxDistSq * 0.36) {
-                                strongLines.push(node.x, node.y, other.x, other.y);
-                            } else {
-                                faintLines.push(node.x, node.y, other.x, other.y);
-                            }
-                        }
-                    }
-                }
-
-                if (strongLines.length > 0) {
+                if (this.cachedStrongPairs.length > 0) {
                     this.ctx.beginPath();
-                    for (let k = 0; k < strongLines.length; k += 4) {
-                        this.ctx.moveTo(strongLines[k], strongLines[k + 1]);
-                        this.ctx.lineTo(strongLines[k + 2], strongLines[k + 3]);
+                    for (let k = 0; k < this.cachedStrongPairs.length; k++) {
+                        const [i, j] = this.cachedStrongPairs[k];
+                        const p1 = this.nodes[i];
+                        const p2 = this.nodes[j];
+                        if (!p1 || !p2) continue;
+                        this.ctx.moveTo(p1.x, p1.y);
+                        this.ctx.lineTo(p2.x, p2.y);
                     }
                     const strongAlpha = (this.isDark ? 0.16 : 0.14) * this.filamentOpacity;
                     this.ctx.strokeStyle = `hsla(${baseColor}, ${strongAlpha})`;
@@ -312,11 +384,15 @@
                     this.ctx.stroke();
                 }
 
-                if (faintLines.length > 0) {
+                if (this.cachedFaintPairs.length > 0) {
                     this.ctx.beginPath();
-                    for (let k = 0; k < faintLines.length; k += 4) {
-                        this.ctx.moveTo(faintLines[k], faintLines[k + 1]);
-                        this.ctx.lineTo(faintLines[k + 2], faintLines[k + 3]);
+                    for (let k = 0; k < this.cachedFaintPairs.length; k++) {
+                        const [i, j] = this.cachedFaintPairs[k];
+                        const p1 = this.nodes[i];
+                        const p2 = this.nodes[j];
+                        if (!p1 || !p2) continue;
+                        this.ctx.moveTo(p1.x, p1.y);
+                        this.ctx.lineTo(p2.x, p2.y);
                     }
                     const faintAlpha = (this.isDark ? 0.07 : 0.05) * this.filamentOpacity;
                     this.ctx.strokeStyle = `hsla(${baseColor}, ${faintAlpha})`;
