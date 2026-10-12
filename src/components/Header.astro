@@ -128,7 +128,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .header {
         position: sticky;
         top: 0;
-        background-color: hsla(224, 28%, 9%, 0.88);
+        background-color: hsla(40, 24%, 98%, 0.92);
         border-bottom: 1px solid var(--color-border);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
@@ -136,9 +136,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         transition: background-color var(--transition-base), border-color var(--transition-base);
     }
 
-    :global(.light-theme) .header,
-    [data-theme="light"] .header {
-        background-color: hsla(40, 30%, 98%, 0.88);
+    :global([data-theme="dark"]) .header {
+        background-color: hsla(224, 28%, 9%, 0.90);
     }
 
     .header__content {

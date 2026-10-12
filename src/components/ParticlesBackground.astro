@@ -13,12 +13,9 @@
     interface SynapticNode {
         x: number;
         y: number;
-        baseSpeed: number;
         angle: number;
         angularDrift: number;
         curveOffset: number;
-        saccadePhase: number;
-        saccadeSpeed: number;
         radius: number;
         colorType: 'sage' | 'rose' | 'amber';
         pulsePhase: number;
@@ -50,7 +47,7 @@
         }
 
         private resize() {
-            // Cap DPR at 1.25 for crisp rendering with 4x less GPU pixel fill overhead
+            // Cap DPR at 1.25 for crisp rendering with minimal GPU fill overhead
             const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
             const w = window.innerWidth;
             const h = window.innerHeight;
@@ -64,22 +61,18 @@
 
         private initNodes() {
             this.nodes = [];
-            // 35 to 45 nodes is visually rich, lightweight, and requires 70% fewer connection checks
-            const count = Math.min(Math.floor(window.innerWidth / 35), 42);
+            const count = Math.min(Math.floor(window.innerWidth / 35), 40);
             const types: ('sage' | 'rose' | 'amber')[] = ['sage', 'sage', 'rose', 'amber'];
 
             for (let i = 0; i < count; i++) {
                 const type = types[i % types.length];
-                const radius = Math.random() * 2 + 1.8;
+                const radius = Math.random() * 1.8 + 1.8;
                 this.nodes.push({
                     x: Math.random() * window.innerWidth,
                     y: Math.random() * window.innerHeight,
-                    baseSpeed: Math.random() * 0.35 + 0.35,
                     angle: Math.random() * Math.PI * 2,
-                    angularDrift: (Math.random() - 0.5) * 0.015,
+                    angularDrift: (Math.random() - 0.5) * 0.012,
                     curveOffset: Math.random() * 100,
-                    saccadePhase: Math.random() * Math.PI * 2,
-                    saccadeSpeed: Math.random() * 0.0015 + 0.0015,
                     radius,
                     colorType: type,
                     pulsePhase: Math.random() * Math.PI * 2,
@@ -127,7 +120,7 @@
         private animate = (now: number) => {
             if (!this.isVisible) return;
 
-            const delta = Math.min((now - this.lastTime) / 16.66, 2.5);
+            const delta = Math.min((now - this.lastTime) / 16.66, 2.2);
             this.lastTime = now;
 
             const w = window.innerWidth;
@@ -141,19 +134,23 @@
 
             const timeSec = now * 0.001;
 
-            // 1. Update positions with organic non-linear curves & saccadic surges
+            // 1. Shared synchronous acceleration/deceleration pulse across ALL particles
+            // Every node accelerates and decelerates at the exact same moment with the exact same speed
+            const cyclePeriod = 4000; // 4.0s pulse cycle
+            const cycleProgress = (now % cyclePeriod) / cyclePeriod;
+            // Smooth sinusoidal breath curve (starts slow at 0, peaks at 0.5, returns to slow at 1.0)
+            const wave = 0.5 - 0.5 * Math.cos(cycleProgress * Math.PI * 2);
+            const surge = Math.pow(wave, 2.4);
+            const currentSpeed = (0.30 + surge * 1.35) * delta;
+
+            // Update particle positions
             for (let i = 0; i < this.nodes.length; i++) {
                 const node = this.nodes[i];
 
-                // Biological wave pulse (saccade): periods of slow gentle drift punctuated by brief energetic accelerations
-                const saccadeSin = Math.sin(now * node.saccadeSpeed + node.saccadePhase);
-                const surge = Math.pow(Math.max(0, saccadeSin), 2.5) * 2.2;
-                const currentSpeed = node.baseSpeed * (0.65 + surge) * delta;
+                // Organic curvature: gentle heading alteration per node
+                node.angle += (Math.sin(timeSec * 0.7 + node.curveOffset) * 0.02 + node.angularDrift) * delta;
 
-                // Organic curvature: gentle sine-based heading alteration
-                node.angle += (Math.sin(timeSec * 0.8 + node.curveOffset) * 0.025 + node.angularDrift) * delta;
-
-                // Mouse interaction: organic gravitational pull toward cursor
+                // Mouse gravitational attraction
                 if (this.mouse.active) {
                     const mdx = this.mouse.x - node.x;
                     const mdy = this.mouse.y - node.y;
@@ -162,7 +159,6 @@
                     if (mDistSq < mouseMaxDistSq && mDistSq > 10) {
                         const mDist = Math.sqrt(mDistSq);
                         const mAngle = Math.atan2(mdy, mdx);
-                        // Blend current direction toward mouse smoothly
                         let angleDiff = mAngle - node.angle;
                         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
                         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
@@ -172,13 +168,13 @@
                     }
                 }
 
-                // Move node
+                // Move node with synchronous speed
                 node.x += Math.cos(node.angle) * currentSpeed;
                 node.y += Math.sin(node.angle) * currentSpeed;
                 node.pulsePhase += node.pulseSpeed * delta;
 
-                // Smooth soft screen boundaries
-                const margin = 40;
+                // Soft screen boundary wrapping
+                const margin = 35;
                 if (node.x < -margin) node.x = w + margin;
                 else if (node.x > w + margin) node.x = -margin;
                 if (node.y < -margin) node.y = h + margin;
@@ -186,7 +182,6 @@
             }
 
             // 2. High-Performance Batched Synaptic Filaments
-            // Use single path per theme style to eliminate hundreds of draw calls per frame
             this.ctx.beginPath();
             const n = this.nodes.length;
             for (let i = 0; i < n; i++) {
@@ -194,7 +189,7 @@
                 for (let j = i + 1; j < n; j++) {
                     const other = this.nodes[j];
 
-                    // Ultra-fast bounding box rejection (eliminates 95% of pairs with 2 simple subtractions)
+                    // Bounding box early rejection
                     const dx = other.x - node.x;
                     if (dx > maxDist || dx < -maxDist) continue;
                     const dy = other.y - node.y;
@@ -211,11 +206,10 @@
             this.ctx.lineWidth = 1;
             this.ctx.strokeStyle = this.isDark 
                 ? 'hsla(168, 62%, 52%, 0.16)' 
-                : 'hsla(168, 68%, 34%, 0.12)';
+                : 'hsla(168, 70%, 30%, 0.14)';
             this.ctx.stroke();
 
             // 3. Draw colorful glowing nodes
-            // Group node rendering by color type to minimize context state switches
             for (let i = 0; i < n; i++) {
                 const node = this.nodes[i];
                 const pulse = Math.sin(node.pulsePhase) * 0.5;
@@ -225,13 +219,13 @@
                 this.ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
 
                 if (this.isDark) {
-                    if (node.colorType === 'sage') this.ctx.fillStyle = 'hsla(168, 65%, 60%, 0.75)';
-                    else if (node.colorType === 'rose') this.ctx.fillStyle = 'hsla(348, 80%, 75%, 0.75)';
-                    else this.ctx.fillStyle = 'hsla(42, 95%, 68%, 0.75)';
+                    if (node.colorType === 'sage') this.ctx.fillStyle = 'hsla(168, 65%, 60%, 0.8)';
+                    else if (node.colorType === 'rose') this.ctx.fillStyle = 'hsla(348, 80%, 75%, 0.8)';
+                    else this.ctx.fillStyle = 'hsla(42, 95%, 68%, 0.8)';
                 } else {
-                    if (node.colorType === 'sage') this.ctx.fillStyle = 'hsla(168, 68%, 36%, 0.65)';
-                    else if (node.colorType === 'rose') this.ctx.fillStyle = 'hsla(348, 70%, 52%, 0.65)';
-                    else this.ctx.fillStyle = 'hsla(42, 90%, 46%, 0.7)';
+                    if (node.colorType === 'sage') this.ctx.fillStyle = 'hsla(168, 75%, 32%, 0.75)';
+                    else if (node.colorType === 'rose') this.ctx.fillStyle = 'hsla(348, 72%, 48%, 0.75)';
+                    else this.ctx.fillStyle = 'hsla(42, 90%, 42%, 0.8)';
                 }
 
                 this.ctx.fill();
@@ -257,6 +251,9 @@
         pointer-events: none;
         z-index: 0;
         overflow: hidden;
+        contain: strict;
+        transform: translateZ(0);
+        will-change: transform;
     }
 
     #synapses-canvas {
@@ -265,33 +262,35 @@
         display: block;
     }
 
-    /* Ambient soothing glowing orbs (Aceternity Aurora / Glow style) */
+    /* Ambient soft background glowing gradients (Zero-blur GPU optimized) */
     .ambient-glow {
         position: absolute;
         border-radius: 50%;
-        filter: blur(120px);
-        opacity: 0.15;
         pointer-events: none;
-        transition: opacity var(--transition-slow);
+        transform: translateZ(0);
     }
 
     .ambient-glow--1 {
-        top: -10%;
-        left: 15%;
-        width: 45vw;
-        height: 45vw;
-        background: radial-gradient(circle, hsla(168, 65%, 48%, 0.35), transparent 70%);
+        top: -15%;
+        left: 10%;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, hsla(168, 65%, 48%, 0.16) 0%, hsla(168, 65%, 48%, 0.07) 35%, hsla(168, 65%, 48%, 0.015) 55%, transparent 70%);
     }
 
     .ambient-glow--2 {
-        bottom: 10%;
-        right: 5%;
-        width: 40vw;
-        height: 40vw;
-        background: radial-gradient(circle, hsla(348, 75%, 68%, 0.25), transparent 70%);
+        bottom: 5%;
+        right: 0%;
+        width: 45vw;
+        height: 45vw;
+        background: radial-gradient(circle, hsla(348, 75%, 68%, 0.13) 0%, hsla(348, 75%, 68%, 0.05) 35%, hsla(348, 75%, 68%, 0.01) 55%, transparent 70%);
     }
 
-    :global([data-theme="dark"]) .ambient-glow {
-        opacity: 0.25;
+    :global([data-theme="dark"]) .ambient-glow--1 {
+        background: radial-gradient(circle, hsla(168, 65%, 48%, 0.22) 0%, hsla(168, 65%, 48%, 0.10) 35%, transparent 70%);
+    }
+
+    :global([data-theme="dark"]) .ambient-glow--2 {
+        background: radial-gradient(circle, hsla(348, 75%, 68%, 0.18) 0%, hsla(348, 75%, 68%, 0.08) 35%, transparent 70%);
     }
 </style>

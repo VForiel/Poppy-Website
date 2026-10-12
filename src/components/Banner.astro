@@ -124,22 +124,20 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "");
         transform: translate(-50%, 150%);
         width: calc(100% - var(--space-8));
         max-width: 820px;
-        background: hsla(224, 25%, 12%, 0.94);
-        border: 1px solid var(--color-primary);
-        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), var(--glow-primary);
+        background: #ffffff;
+        border: 1px solid hsla(168, 80%, 28%, 0.3);
+        box-shadow: 0 16px 45px -10px rgba(15, 23, 42, 0.16), 0 0 25px hsla(168, 80%, 28%, 0.12);
         border-radius: var(--radius-xl);
         padding: var(--space-5) var(--space-6);
         z-index: 99;
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
         transition: transform var(--transition-slow), opacity var(--transition-slow);
         opacity: 0;
     }
 
-    :global(.light-theme) .availability-banner,
-    [data-theme="light"] .availability-banner {
-        background: hsla(0, 0%, 100%, 0.94);
-        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15), var(--glow-primary);
+    :global([data-theme="dark"]) .availability-banner {
+        background: hsla(224, 25%, 12%, 0.95);
+        border-color: var(--color-primary);
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), var(--glow-primary);
     }
 
     .availability-banner.show {
@@ -221,8 +219,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "");
         background: var(--color-background-card);
         border: 1px solid var(--color-border);
         color: var(--color-text);
-        box-shadow: var(--shadow-lg);
-        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-md);
         cursor: pointer;
         z-index: 98;
         transform: translateY(120px);

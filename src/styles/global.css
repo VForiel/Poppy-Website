@@ -3,20 +3,20 @@
 @import './typography.css';
 
 :root {
-    /* Primary: Sage & Emerald (Calm, Healing, Neuroscience) */
-    --color-primary: hsl(168, 68%, 34%);
-    --color-primary-light: hsl(168, 62%, 46%);
-    --color-primary-dark: hsl(168, 75%, 26%);
-    --color-primary-rgb: 20, 153, 137;
+    /* Primary: Deep Pine & Emerald (Authoritative, Clinical, Neuroscience) */
+    --color-primary: hsl(168, 80%, 28%);
+    --color-primary-light: hsl(168, 70%, 36%);
+    --color-primary-dark: hsl(168, 88%, 20%);
+    --color-primary-rgb: 14, 128, 114;
 
-    /* Accent: Gentle Rose & Terracotta (Childhood, Empathy, Warmth) */
-    --color-accent: hsl(348, 65%, 52%);
-    --color-accent-light: hsl(348, 70%, 65%);
-    --color-accent-dark: hsl(348, 70%, 42%);
-    --color-accent-rgb: 219, 48, 92;
+    /* Accent: Deep Crimson Rose (Empathy, Childhood, Warmth) */
+    --color-accent: hsl(348, 68%, 46%);
+    --color-accent-light: hsl(348, 72%, 58%);
+    --color-accent-dark: hsl(348, 75%, 36%);
+    --color-accent-rgb: 196, 38, 76;
 
     /* Secondary Support: Soft Amber */
-    --color-amber: hsl(42, 90%, 52%);
+    --color-amber: hsl(42, 90%, 48%);
 
     /* Light Theme Neutrals (Default) */
     --color-neutral-50: hsl(220, 20%, 10%);
@@ -28,24 +28,24 @@
     --color-neutral-600: hsl(220, 14%, 86%);
     --color-neutral-700: hsl(220, 16%, 92%);
     --color-neutral-800: hsl(220, 20%, 96%);
-    --color-neutral-900: hsl(40, 25%, 98%);
+    --color-neutral-900: hsl(40, 24%, 98%);
 
     /* Semantic - Light Theme (Default) */
-    --color-text: hsl(222, 30%, 14%);
-    --color-text-secondary: hsl(222, 14%, 36%);
-    --color-text-muted: hsl(222, 10%, 54%);
-    --color-background: hsl(40, 30%, 98%);
-    --color-background-secondary: hsl(40, 20%, 95%);
-    --color-background-card: hsla(0, 0%, 100%, 0.90);
-    --color-background-card-hover: hsla(0, 0%, 100%, 0.98);
+    --color-text: hsl(222, 38%, 13%);
+    --color-text-secondary: hsl(222, 16%, 32%);
+    --color-text-muted: hsl(222, 12%, 48%);
+    --color-background: hsl(40, 24%, 97.5%);
+    --color-background-secondary: hsl(40, 16%, 93.5%);
+    --color-background-card: #ffffff;
+    --color-background-card-hover: #ffffff;
     --color-border: hsl(218, 16%, 86%);
     --color-border-subtle: hsl(218, 18%, 92%);
-    --color-border-glow: hsla(168, 68%, 34%, 0.25);
+    --color-border-glow: hsla(168, 75%, 28%, 0.22);
 
     /* Aceternity UI Glows */
-    --glow-primary: 0 0 35px hsla(168, 68%, 34%, 0.15);
-    --glow-accent: 0 0 30px hsla(348, 65%, 52%, 0.12);
-    --glow-card: 0 8px 30px 0 rgba(0, 0, 0, 0.06);
+    --glow-primary: 0 8px 24px hsla(168, 75%, 28%, 0.12);
+    --glow-accent: 0 8px 24px hsla(348, 68%, 46%, 0.10);
+    --glow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
 
     /* Typography Scale */
     --text-xs: 0.75rem;
@@ -189,14 +189,29 @@ body {
 
 /* Gradient text utility */
 .gradient-text {
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+    background: linear-gradient(135deg, hsl(168, 85%, 22%) 0%, hsl(348, 72%, 38%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+[data-theme="dark"] .gradient-text {
+    background: linear-gradient(135deg, hsl(168, 68%, 62%) 0%, hsl(348, 80%, 74%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .gradient-text-subtle {
-    background: linear-gradient(135deg, var(--color-text), var(--color-primary));
+    background: linear-gradient(135deg, hsl(222, 38%, 14%) 0%, hsl(168, 82%, 26%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="dark"] .gradient-text-subtle {
+    background: linear-gradient(135deg, hsl(220, 20%, 95%) 0%, hsl(168, 62%, 55%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -220,32 +235,56 @@ body {
 }
 
 .button--primary {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    color: hsl(222, 28%, 10%);
-    box-shadow: 0 0 20px hsla(168, 62%, 52%, 0.35);
-}
-
-:global(.light-theme) .button--primary,
-[data-theme="light"] .button--primary {
-    color: white;
+    background: linear-gradient(135deg, hsl(168, 82%, 27%) 0%, hsl(168, 88%, 21%) 100%);
+    color: #ffffff !important;
+    border: 1px solid hsla(168, 85%, 16%, 0.25);
+    box-shadow: 0 4px 14px rgba(14, 128, 114, 0.28), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .button--primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px hsla(168, 62%, 52%, 0.55);
+    background: linear-gradient(135deg, hsl(168, 86%, 24%) 0%, hsl(168, 92%, 18%) 100%);
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(14, 128, 114, 0.38), 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] .button--primary {
+    background: linear-gradient(135deg, hsl(168, 65%, 50%), hsl(168, 75%, 40%));
+    color: hsl(222, 35%, 8%) !important;
+    border-color: transparent;
+    box-shadow: 0 0 22px hsla(168, 65%, 52%, 0.35);
+}
+
+[data-theme="dark"] .button--primary:hover {
+    box-shadow: 0 0 30px hsla(168, 65%, 52%, 0.55);
 }
 
 .button--secondary {
-    background: var(--color-background-card);
+    background: #ffffff;
     color: var(--color-text);
-    border-color: var(--color-border);
-    backdrop-filter: blur(8px);
+    border-color: hsl(218, 16%, 82%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .button--secondary:hover {
+    background: hsl(168, 55%, 98%);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 128, 114, 0.12);
+}
+
+[data-theme="dark"] .button--secondary {
+    background: var(--color-background-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+    box-shadow: none;
+}
+
+[data-theme="dark"] .button--secondary:hover {
     background: var(--color-background-card-hover);
     border-color: var(--color-primary);
-    transform: translateY(-2px);
+    color: var(--color-text);
 }
 
 /* Aceternity UI: Shimmer border button */
@@ -264,16 +303,16 @@ body {
     100% { background-position: -200% 0; }
 }
 
-/* Aceternity UI: Bento Grid Card */
+/* Aceternity UI: Bento Grid Card (Zero-blur GPU optimized) */
 .bento-card {
     background: var(--color-background-card);
-    backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-8);
-    transition: all var(--transition-base);
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
 .bento-card::before {
@@ -292,13 +331,23 @@ body {
 }
 
 .bento-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-primary);
-    box-shadow: var(--glow-primary), var(--shadow-lg);
+    transform: translateY(-3px);
+    border-color: var(--color-primary-light);
+    box-shadow: var(--glow-primary), var(--shadow-md);
 }
 
 .bento-card:hover::before {
     opacity: 1;
+}
+
+[data-theme="dark"] .bento-card {
+    background: hsla(224, 22%, 14%, 0.95);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+[data-theme="dark"] .bento-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--glow-primary), var(--shadow-lg);
 }
 
 /* Live Status Radar Pill */
@@ -307,14 +356,20 @@ body {
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-1) var(--space-3);
-    background: hsla(168, 62%, 52%, 0.12);
-    border: 1px solid hsla(168, 62%, 52%, 0.3);
+    background: hsla(168, 75%, 28%, 0.08);
+    border: 1px solid hsla(168, 75%, 28%, 0.22);
     border-radius: var(--radius-full);
     font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-primary);
+    font-weight: 700;
+    color: hsl(168, 85%, 23%);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .status-pill {
+    background: hsla(168, 62%, 52%, 0.12);
+    border-color: hsla(168, 62%, 52%, 0.3);
+    color: var(--color-primary);
 }
 
 .pulse-dot {

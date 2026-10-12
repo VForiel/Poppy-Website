@@ -229,8 +229,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
     .pillar-card--featured {
         grid-column: span 3;
-        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
-        border-color: hsla(168, 62%, 52%, 0.3);
+        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 75%, 28%, 0.04));
+        border-color: hsla(168, 75%, 28%, 0.25);
     }
 
     .pillar-icon {
@@ -326,8 +326,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .cta-box {
         text-align: center;
         padding: var(--space-12) var(--space-8);
+        background: #ffffff;
+        border: 1px solid hsla(168, 80%, 28%, 0.22);
+        box-shadow: 0 10px 30px -10px rgba(14, 128, 114, 0.15), 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    :global([data-theme="dark"]) .cta-box {
         background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
-        border: 1px solid var(--color-primary);
+        border-color: var(--color-primary);
         box-shadow: var(--glow-primary);
     }
 

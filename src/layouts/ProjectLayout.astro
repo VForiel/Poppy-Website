@@ -116,12 +116,18 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .tag-pill {
         display: inline-block;
         padding: 4px 10px;
-        background: hsla(168, 62%, 52%, 0.12);
-        border: 1px solid hsla(168, 62%, 52%, 0.25);
-        color: var(--color-primary);
+        background: hsla(168, 75%, 28%, 0.07);
+        border: 1px solid hsla(168, 75%, 28%, 0.18);
+        color: hsl(168, 85%, 23%);
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
         font-weight: 600;
+    }
+
+    :global([data-theme="dark"]) .tag-pill {
+        background: hsla(168, 62%, 52%, 0.12);
+        border-color: hsla(168, 62%, 52%, 0.25);
+        color: var(--color-primary);
     }
 
     .project-featured-image {
