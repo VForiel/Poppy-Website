@@ -10,7 +10,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         <title>Philippine Villard - Redirection...</title>
         <meta http-equiv="refresh" content={`0; url=${base}fr/`} />
 
-        <script define:vars={{ base }}>
+        <script>
+            // Script traité par Astro (et non define:vars, toujours inline) pour qu'il figure dans la CSP
+            const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             const userLang = (navigator.language || "").toLowerCase();
             const targetPath = userLang.startsWith("en") ? `${base}en/` : `${base}fr/`;
             window.location.replace(targetPath);
