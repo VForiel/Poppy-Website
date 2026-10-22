@@ -10,15 +10,6 @@ export const strings: Record<Locale, {
         contact: string;
     };
     headerTagline: string;
-    fullName: string;
-    hero: {
-        title1: string;
-        title2: string;
-        badge: string;
-        description: string;
-        ctaProjects: string;
-        ctaContact: string;
-    };
     banner: {
         badge: string;
         title: string;
@@ -32,7 +23,6 @@ export const strings: Record<Locale, {
     };
 }> = {
     fr: {
-        fullName: "Philippine Villard",
         headerTagline: "Doctorante en psychologie",
         nav: {
             home: "Accueil",
@@ -41,14 +31,6 @@ export const strings: Record<Locale, {
             portfolio: "Travaux & Recherche",
             cv: "CV",
             contact: "Contact",
-        },
-        hero: {
-            badge: "Hôpital Lenval (CE2P) • Soutenance 2027 • Comparaison TCC & EMDR (3-6 ans)",
-            title1: "Doctorante en Psychologie",
-            title2: "Psychotraumatisme chez les 3 à 6 ans",
-            description: "Psychologue clinicienne et chercheuse à l'Hôpital Lenval (Nice). Ma thèse compare l'efficacité des approches TCC et EMDR dans la prise en charge du psychotraumatisme chez l'enfant de 3 à 6 ans, tout en œuvrant pour la reconnaissance précoce des indicateurs formels auprès du soin et de la justice.",
-            ctaProjects: "Découvrir mes travaux",
-            ctaContact: "Prendre contact",
         },
         banner: {
             badge: "Recherche & Enseignement",
@@ -63,7 +45,6 @@ export const strings: Record<Locale, {
         },
     },
     en: {
-        fullName: "Philippine Villard",
         headerTagline: "Doctorante en psychologie",
         nav: {
             home: "Home",
@@ -72,14 +53,6 @@ export const strings: Record<Locale, {
             portfolio: "Research & Work",
             cv: "CV",
             contact: "Contact",
-        },
-        hero: {
-            badge: "Lenval Children's Hospital (CE2P) • PhD Defense 2027 • CBT vs EMDR (Ages 3-6)",
-            title1: "Doctoral Researcher in Psychology",
-            title2: "Early Childhood Psychotrauma (3-6 years)",
-            description: "Clinical psychologist and doctoral researcher at Lenval Children's Hospital (Nice, France). My doctoral thesis compares the efficacy of CBT and EMDR in treating trauma among 3-to-6-year-old children, advocating for early recognition of non-verbal clinical markers in healthcare and judicial systems.",
-            ctaProjects: "Explore my work",
-            ctaContact: "Get in touch",
         },
         banner: {
             badge: "Research & Training",

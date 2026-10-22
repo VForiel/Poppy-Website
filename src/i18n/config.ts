@@ -1,8 +1,5 @@
 export type Locale = 'fr' | 'en';
 
-export const SUPPORTED_LOCALES: Locale[] = ['fr', 'en'];
-export const DEFAULT_LOCALE: Locale = 'fr';
-
 export function detectLocaleFromPath(pathname: string): Locale {
     const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     let pathWithoutLocale = pathname;
