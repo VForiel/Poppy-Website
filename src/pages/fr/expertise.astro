@@ -1,7 +1,7 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 const allServices = await getCollection("services", ({ data }) => {
     return data.locale === "fr";
@@ -11,7 +11,7 @@ const services = allServices.sort((a, b) => a.data.order - b.data.order);
 const renderedServices = await Promise.all(
     services.map(async (service) => ({
         data: service.data,
-        Content: (await service.render()).Content,
+        Content: (await render(service)).Content,
     })),
 );
 

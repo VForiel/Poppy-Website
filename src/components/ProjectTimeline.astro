@@ -57,7 +57,7 @@ const labels = {
 
     <div class="timeline" id="timelineList">
         {projects.map((project) => {
-            const cleanSlug = project.slug.replace(/\.?(fr|en)$/, "");
+            const cleanSlug = project.id.replace(/\.?(fr|en)$/, "");
             const dateLabel = buildDateLabel(project.data["start-date"], project.data["end-date"], lang);
             const projectLink = `${base}${lang}/projects/${cleanSlug}`;
 

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
 export async function getStaticPaths() {
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 
     return projects.map((project) => {
         // Strip .en or en suffix from slug (e.g. "these-lenval-ce2p.en" -> "these-lenval-ce2p")
-        const cleanSlug = project.slug.replace(/\.?(fr|en)$/, "");
+        const cleanSlug = project.id.replace(/\.?(fr|en)$/, "");
         return {
             params: { slug: cleanSlug },
             props: { project },
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
+const { Content } = await render(project);
 const {
     title,
     description,

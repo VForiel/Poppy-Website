@@ -1,4 +1,6 @@
-import { z, defineCollection } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const partialDate = z.preprocess((val) => {
     if (val instanceof Date) return val.toISOString().slice(0, 10);
@@ -7,7 +9,7 @@ const partialDate = z.preprocess((val) => {
 }, z.string());
 
 const projectsCollection = defineCollection({
-    type: 'content',
+    loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
     schema: z.object({
         locale: z.enum(['fr', 'en']).default('fr'),
         title: z.string(),
@@ -22,7 +24,7 @@ const projectsCollection = defineCollection({
 });
 
 const servicesCollection = defineCollection({
-    type: 'content',
+    loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
     schema: z.object({
         locale: z.enum(['fr', 'en']).default('fr'),
         title: z.string(),

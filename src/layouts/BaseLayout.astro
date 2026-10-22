@@ -11,6 +11,9 @@ const {
     lang = "fr",
 } = Astro.props;
 
+// Polices auto-hébergées : aucune requête vers Google Fonts (adresse IP des visiteurs)
+import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/outfit";
 import "../styles/global.css";
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
@@ -28,26 +31,22 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content={`${base}profile-picture.jpg`} />
+        <meta property="og:image" content={new URL(`${base}profile-picture.jpg`, Astro.site)} />
+        <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+        <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${base}profile-picture.jpg`} />
+        <meta name="twitter:image" content={new URL(`${base}profile-picture.jpg`, Astro.site)} />
 
-        <!-- Resource Hints & Font Preconnects for Instant Loading -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- Resource Hints -->
         <link
             rel="preload"
             as="image"
             href={`${base}profile-picture-sm.webp`}
             type="image/webp"
-        />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap"
         />
 
         <!-- Favicon -->
