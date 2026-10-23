@@ -11,7 +11,7 @@ Déployé automatiquement sur GitHub Pages : [https://vforiel.github.io/Poppy-We
 Inspiré de l'architecture et des technologies du site personnel de Vincent Foriel, ce site a été conçu sur mesure pour Philippine Villard avec une identité visuelle clinique, chaleureuse et bienveillante, intégrant les patterns visuels d'**Aceternity UI** :
 
 - **Bento Grid** : Organisation modulaire en cartes lumineuses, bordures irisées et hiérarchies claires.
-- **Fond Interactif Synaptique** : Canvas 60fps modélisant des synapses et connexions neuronales bienveillantes (adieu aux étoiles cosmiques et chiffres binaires, place aux neurosciences et à la psychologie du développement), sans aucun easter egg.
+- **Fond zen** : papier washi, halo de soleil, collines au lavis, branche de prunier à l'encre et quelques pétales qui tombent (canvas léger, désactivé si les animations sont réduites).
 - **Bilingue Intégral (FR / EN)** : Commutateur de langue fluide avec préservation de la route courante (`/fr/*` et `/en/*`).
 - **Thème Clair / Sombre (Light & Dark)** : Thème sombre clinique immersif (`hsl(224, 28%, 9%)`) et thème clair apaisant (`hsl(40, 30%, 98%)`), persistant via `localStorage`.
 - **Bannière d'Opportunité (Aceternity style)** : Modal et pastille d'information en temps réel sur la recherche de post-doctorat, l'ouverture du cabinet libéral à Nice (2027) et les missions de formation.

@@ -3,7 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Banner from "../components/Banner.astro";
-import ParticlesBackground from "../components/ParticlesBackground.astro";
+import ZenBackground from "../components/ZenBackground.astro";
 import { detectLocaleFromPath } from "../i18n/config";
 
 interface Props {
@@ -18,7 +18,7 @@ const lang = detectLocaleFromPath(path);
 ---
 
 <BaseLayout title={title} description={description} lang={lang}>
-    <ParticlesBackground />
+    <ZenBackground />
     <Header currentPath={path} lang={lang} />
     <main class="page-main">
         <slot />

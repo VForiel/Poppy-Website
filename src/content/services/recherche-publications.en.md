@@ -2,7 +2,7 @@
 locale: en
 title: "Translational Research & Scientific Writing"
 description: "Design of clinical research protocols, peer-reviewed publications, and evidence-based dissemination on early childhood psychotrauma."
-icon: "📚"
+icon: "books"
 order: 4
 available: true
 status: "Active research"

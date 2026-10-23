@@ -2,7 +2,7 @@
 locale: fr
 title: "Formations & Conférences Professionnelles"
 description: "Modules pédagogiques et interventions pour soignants, magistrats, avocats d'enfants et professionnels de la petite enfance."
-icon: "🎓"
+icon: "cap"
 order: 3
 available: true
 status: "Disponible sur demande"

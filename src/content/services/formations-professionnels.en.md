@@ -2,7 +2,7 @@
 locale: en
 title: "Professional Training & Seminars"
 description: "Specialized workshops and training sessions for clinicians, magistrates, child advocates, and early childhood professionals."
-icon: "🎓"
+icon: "cap"
 order: 3
 available: true
 status: "Available upon request"

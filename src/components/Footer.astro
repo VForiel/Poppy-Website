@@ -19,7 +19,7 @@ const year = new Date().getFullYear();
                 <p class="footer__tagline">{t.headerTagline}</p>
                 <p class="footer__advocacy">« {t.footer.advocacy} »</p>
                 <div class="footer__affiliation">
-                    <span>🏥 {t.footer.affiliations}</span>
+                    <span>{t.footer.affiliations}</span>
                 </div>
             </div>
 
@@ -43,14 +43,14 @@ const year = new Date().getFullYear();
                         : "For research collaborations, training requests, or clinical inquiries:"}
                 </p>
                 <a href="mailto:philippine.villard@hotmail.com" class="footer__email">
-                    ✉️ philippine.villard@hotmail.com
+                    philippine.villard@hotmail.com
                 </a>
-                <span class="footer__location">📍 Nice, Alpes-Maritimes, France</span>
+                <span class="footer__location">Nice, Alpes-Maritimes, France</span>
             </div>
         </div>
 
         <div class="footer__bottom">
-            <p>© {year} Philippine Villard. {t.footer.rights}</p>
+            <p>{year} Philippine Villard. {t.footer.rights}</p>
             <p class="footer__sub">Fait avec soin & rigueur clinique</p>
         </div>
     </div>
@@ -58,7 +58,7 @@ const year = new Date().getFullYear();
 
 <style>
     .footer {
-        background: hsla(224, 28%, 8%, 0.95);
+        background: color-mix(in srgb, var(--color-background) 95%, transparent);
         border-top: 1px solid var(--color-border);
         padding-block: var(--space-12) var(--space-8);
         position: relative;
@@ -68,7 +68,7 @@ const year = new Date().getFullYear();
 
     :global(.light-theme) .footer,
     [data-theme="light"] .footer {
-        background: hsla(40, 20%, 95%, 0.95);
+        background: color-mix(in srgb, var(--color-background) 95%, transparent);
     }
 
     .footer__grid {
@@ -80,7 +80,7 @@ const year = new Date().getFullYear();
 
     .footer__brand {
         font-size: var(--text-xl);
-        font-weight: 700;
+        font-weight: 600;
         color: var(--color-text);
         margin-bottom: var(--space-1);
     }
@@ -94,7 +94,7 @@ const year = new Date().getFullYear();
 
     .footer__advocacy {
         font-size: var(--text-sm);
-        font-style: italic;
+        font-family: var(--font-heading);
         color: var(--color-text-secondary);
         margin-bottom: var(--space-4);
         max-width: 40ch;

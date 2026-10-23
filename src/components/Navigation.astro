@@ -72,6 +72,8 @@ const isActiveLink = (href: string) => {
   }
 
   .nav__link {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -79,21 +81,45 @@ const isActiveLink = (href: string) => {
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-text-secondary);
-    border-radius: var(--radius-full);
-    transition: all var(--transition-fast);
+    transition: color var(--transition-fast);
     text-decoration: none;
     line-height: 1.3;
   }
 
+  /* trait de pinceau sous le lien : esquissé au survol, plein sur la page courante */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: var(--space-2);
+    right: var(--space-2);
+    bottom: 1px;
+    height: 0.55em;
+    z-index: -1;
+    background-color: color-mix(in srgb, var(--color-sage) 55%, transparent);
+    -webkit-mask: var(--paint-stroke) center / 100% 100% no-repeat;
+    mask: var(--paint-stroke) center / 100% 100% no-repeat;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--transition-slow);
+  }
+
   .nav__link:hover {
     color: var(--color-text);
-    background: hsla(168, 62%, 52%, 0.08);
+  }
+
+  .nav__link:hover::after {
+    transform: scaleX(0.6);
   }
 
   .nav__link--active {
-    color: var(--color-primary);
-    font-weight: 600;
-    background: hsla(168, 62%, 52%, 0.12);
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .nav__link--active::after,
+  .nav__link--active:hover::after {
+    transform: scaleX(1);
+    background-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
   }
 
   /* Specific styles for Mobile Drawer navigation */
@@ -117,20 +143,20 @@ const isActiveLink = (href: string) => {
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-base);
     font-weight: 500;
-    border-radius: var(--radius-lg);
-    border: 1px solid transparent;
+  }
+
+  .nav--mobile .nav__link::after {
+    right: auto;
+    width: 9em;
   }
 
   .nav--mobile .nav__link:hover,
   .nav--mobile .nav__link:active {
-    background: hsla(168, 62%, 52%, 0.08);
     color: var(--color-text);
   }
 
   .nav--mobile .nav__link--active {
-    background: hsla(168, 62%, 52%, 0.12);
-    border-color: hsla(168, 62%, 52%, 0.25);
-    color: var(--color-primary);
+    color: var(--color-text);
     font-weight: 700;
   }
 

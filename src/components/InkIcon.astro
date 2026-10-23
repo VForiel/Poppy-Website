@@ -1,0 +1,93 @@
+---
+// Pictogramme tracé à l'encre, posé sur une tache de couleur légèrement décalée
+// (même principe que les boutons peints). Remplace les emojis du site.
+interface Props {
+    name: string;
+    tone?: "sage" | "petal" | "gold" | "sky";
+    // la CSP du site interdit les attributs style : la taille passe par une classe
+    size?: "sm" | "md" | "lg" | "xl";
+    class?: string;
+}
+
+const ICONS: Record<string, string> = {
+    hospital: '<path d="M4 21V7h16v14"/><path d="M2 21h20"/><path d="M12 10v6M9 13h6"/><path d="M9 7V4h6v3"/>',
+    puzzle: '<path d="M5 8h3a2 2 0 1 1 4 0h3v3a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H5v-4a2 2 0 1 0 0-4z"/>',
+    scales: '<path d="M12 4v16M8 20h8M5 7h14"/><path d="M5 7l-3 6a3 2.2 0 0 0 6 0z"/><path d="M19 7l-3 6a3 2.2 0 0 0 6 0z"/>',
+    cap: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>',
+    brain: '<path d="M12 5a3 3 0 0 0-5.6 1.5A3 3 0 0 0 4 10a3 3 0 0 0 1 5 3 3 0 0 0 4 3.5 2.5 2.5 0 0 0 3 .5z"/><path d="M12 5a3 3 0 0 1 5.6 1.5A3 3 0 0 1 20 10a3 3 0 0 1-1 5 3 3 0 0 1-4 3.5 2.5 2.5 0 0 1-3 .5z"/><path d="M12 5v14"/>',
+    bear: '<circle cx="12" cy="13.5" r="6"/><circle cx="6.8" cy="7.5" r="2.4"/><circle cx="17.2" cy="7.5" r="2.4"/><path d="M10.4 16c.9.8 2.3.8 3.2 0"/><path d="M10 12.2h.01M14 12.2h.01"/>',
+    books: '<path d="M4 19V5a1 1 0 0 1 1-1h4v16H5a1 1 0 0 1-1-1z"/><path d="M9 4h4v16H9"/><path d="M14.5 5.6l3.4-.9 3.4 13.4-3.4.9z"/>',
+    mail: '<rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/>',
+    pin: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+    clock: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.6 2.4"/><path d="M9.5 2.5h5M12 2.5V5"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    speech: '<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/>',
+    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+    printer: '<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="1"/><path d="M6 14h12v7H6z"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="3.8" ry="9"/><path d="M3 12h18"/>',
+    sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/>',
+};
+
+// couleur de la tache par défaut, pour varier d'une carte à l'autre
+const TONES: Record<string, NonNullable<Props["tone"]>> = {
+    hospital: "sage", puzzle: "sky", scales: "gold", cap: "petal", brain: "petal", bear: "gold",
+    books: "sky", mail: "sage", pin: "petal", clock: "gold", user: "sage", speech: "sky",
+    target: "petal", printer: "sage", globe: "sky", sparkle: "gold",
+};
+
+const { name, size = "lg", class: className } = Astro.props;
+const key = ICONS[name] ? name : "sparkle";
+const tone = Astro.props.tone ?? TONES[key];
+---
+
+<span class:list={["ink-icon", `ink-icon--${tone}`, `ink-icon--${size}`, className]} aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" set:html={ICONS[key]} />
+</span>
+
+<style>
+    .ink-icon {
+        position: relative;
+        isolation: isolate;
+        display: inline-grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: var(--ink-icon-size, 3rem);
+        height: var(--ink-icon-size, 3rem);
+        --ink-icon-paint: color-mix(in srgb, var(--color-sage) 55%, transparent);
+    }
+
+    /* la tache de couleur, décalée du trait */
+    .ink-icon::before {
+        content: '';
+        position: absolute;
+        inset: 6%;
+        z-index: -1;
+        background-color: var(--ink-icon-paint);
+        -webkit-mask: var(--paint-blob) center / 100% 100% no-repeat;
+        mask: var(--paint-blob) center / 100% 100% no-repeat;
+        transform: translate(9%, 7%) rotate(-8deg);
+        transition: transform var(--transition-slow);
+    }
+
+    .ink-icon--sm { --ink-icon-size: 1.6rem; }
+    .ink-icon--md { --ink-icon-size: 2.3rem; }
+    .ink-icon--lg { --ink-icon-size: 3rem; }
+    .ink-icon--xl { --ink-icon-size: 3.5rem; }
+
+    .ink-icon--petal { --ink-icon-paint: color-mix(in srgb, var(--color-petal) 70%, transparent); }
+    .ink-icon--gold { --ink-icon-paint: color-mix(in srgb, var(--color-amber) 45%, transparent); }
+    .ink-icon--sky { --ink-icon-paint: color-mix(in srgb, var(--color-sky) 60%, transparent); }
+
+    .ink-icon svg {
+        width: 58%;
+        height: 58%;
+        stroke: var(--color-ink);
+        stroke-width: 1.5;
+    }
+
+    /* au survol de la carte ou du lien qui la contient, la couleur se recale sous le trait */
+    :global(.bento-card:hover) .ink-icon::before,
+    :global(a:hover) .ink-icon::before {
+        transform: translate(0, 0) rotate(0deg);
+    }
+</style>

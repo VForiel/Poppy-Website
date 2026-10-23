@@ -2,7 +2,7 @@
 locale: fr
 title: "Recherche translationnelle & Rédaction scientifique"
 description: "Élaboration de protocoles de recherche, publications d'articles cliniques et vulgarisation scientifique de pointe sur le trauma précoce."
-icon: "📚"
+icon: "books"
 order: 4
 available: true
 status: "Recherche active"

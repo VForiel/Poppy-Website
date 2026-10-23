@@ -234,7 +234,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .header {
         position: sticky;
         top: 0;
-        background-color: hsla(40, 24%, 98%, 0.94);
+        background-color: color-mix(in srgb, var(--color-background) 94%, transparent);
         border-bottom: 1px solid var(--color-border);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
@@ -243,7 +243,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     }
 
     :global([data-theme="dark"]) .header {
-        background-color: hsla(224, 28%, 9%, 0.92);
+        background-color: color-mix(in srgb, var(--color-background) 92%, transparent);
     }
 
     .header__content {
@@ -267,9 +267,20 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         position: relative;
         padding: 2px;
         border-radius: var(--radius-full);
-        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-        box-shadow: 0 0 14px hsla(168, 62%, 52%, 0.3);
         flex-shrink: 0;
+        isolation: isolate;
+    }
+
+    /* petite tache peinte décalée derrière l'avatar, comme sur le portrait de l'accueil */
+    .avatar-ring::before {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        z-index: -1;
+        background-color: color-mix(in srgb, var(--color-sage) 65%, transparent);
+        -webkit-mask: var(--paint-blob) center / 100% 100% no-repeat;
+        mask: var(--paint-blob) center / 100% 100% no-repeat;
+        transform: translate(3px, 2px) rotate(-12deg);
     }
 
     .header__avatar {
@@ -294,7 +305,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
     .header__name {
         font-family: var(--font-heading);
-        font-weight: 700;
+        font-weight: 600;
         font-size: var(--text-base);
         color: var(--color-text);
         line-height: 1.2;
@@ -344,7 +355,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
     .mobile-menu-btn:hover,
     .mobile-menu-btn:focus-visible {
-        background: hsla(168, 62%, 52%, 0.08);
+        background: color-mix(in srgb, var(--color-primary) 8%, transparent);
         border-color: var(--color-border);
     }
 
@@ -388,7 +399,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         width: 100%;
         height: calc(100dvh - 100%);
         min-height: calc(100vh - 100%);
-        background: hsla(40, 24%, 98%, 0.98);
+        background: color-mix(in srgb, var(--color-background) 98%, transparent);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-top: 1px solid var(--color-border);
@@ -403,7 +414,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     }
 
     :global([data-theme="dark"]) .mobile-menu {
-        background: hsla(224, 28%, 9%, 0.98);
+        background: color-mix(in srgb, var(--color-background) 98%, transparent);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
 
@@ -500,8 +511,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: var(--radius-xl);
-        box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), 0 0 35px hsla(168, 62%, 52%, 0.25);
-        border: 2px solid hsla(168, 62%, 52%, 0.3);
+        box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65);
+        border: 2px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
         transform: scale(0.92) translateY(12px);
         opacity: 0;
         transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1);

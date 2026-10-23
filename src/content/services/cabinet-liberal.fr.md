@@ -2,7 +2,7 @@
 locale: fr
 title: "Pratique clinique en cabinet libéral (Nice)"
 description: "Consultations psychologiques spécialisées pour les tout-petits et leurs familles, guidance parentale et psychothérapie intégrative du trauma précoce."
-icon: "🧸"
+icon: "bear"
 order: 2
 available: false
 status: "Projet d'installation 2027"

@@ -1,4 +1,6 @@
 ---
+import HomeHero from "../../components/HomeHero.astro";
+import InkIcon from "../../components/InkIcon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
@@ -23,25 +25,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 >
     <!-- Hero Section -->
     <Section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">
-                Doctoral Researcher in Psychology<br />
-                <span class="gradient-text">Psychotrauma in Children (Ages 3 to 6)</span>
-            </h1>
-
-            <p class="hero-description">
-                Clinical psychologist and researcher at Lenval Children's Hospital (Nice). My doctoral research compares the clinical efficacy of CBT and EMDR in treating psychotrauma in children aged 3 to 6, while advocating for formal preverbal indicators across healthcare and judicial systems.
-            </p>
-
-            <div class="hero-actions">
-                <a href={`${base}en/portfolio`} class="button button--primary">
-                    Explore My Research & Work
-                </a>
-                <a href={`${base}en/contact`} class="button button--secondary">
-                    Get in Touch
-                </a>
-            </div>
-        </div>
+        <HomeHero lang="en" />
     </Section>
 
     <!-- Bento Grid Pillars -->
@@ -53,7 +37,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
         <div class="bento-pillars-grid">
             <div class="bento-card pillar-card pillar-card--featured">
-                <div class="pillar-icon">🏥</div>
+                <div class="pillar-icon"><InkIcon name="hospital" size="xl" /></div>
                 <span class="pillar-tag">Hospital Research</span>
                 <h3>PhD at CE2P: CBT vs EMDR (Ages 3-6)</h3>
                 <p>
@@ -65,7 +49,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             </div>
 
             <div class="bento-card pillar-card">
-                <div class="pillar-icon">🧩</div>
+                <div class="pillar-icon"><InkIcon name="puzzle" size="xl" /></div>
                 <span class="pillar-tag">Specialized Clinic</span>
                 <h3>Formal Preverbal Indicators</h3>
                 <p>
@@ -74,7 +58,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             </div>
 
             <div class="bento-card pillar-card">
-                <div class="pillar-icon">⚖️</div>
+                <div class="pillar-icon"><InkIcon name="scales" size="xl" /></div>
                 <span class="pillar-tag">Advocacy & Law</span>
                 <h3>Judicial Sensitization</h3>
                 <p>
@@ -83,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
             </div>
 
             <div class="bento-card pillar-card">
-                <div class="pillar-icon">🎓</div>
+                <div class="pillar-icon"><InkIcon name="cap" size="xl" /></div>
                 <span class="pillar-tag">2027 Horizons</span>
                 <h3>Post-Doctoral Research & Training</h3>
                 <p>
@@ -103,7 +87,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         <div class="services-grid">
             {topServices.map((service) => (
                 <div class="bento-card service-card">
-                    <div class="service-card__icon">{service.data.icon}</div>
+                    <div class="service-card__icon"><InkIcon name={service.data.icon ?? ""} /></div>
                     <div class="service-card__header">
                         <h3 class="service-card__title">{service.data.title}</h3>
                         {service.data.status && (
@@ -169,7 +153,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
                         Get in Touch
                     </a>
                     <a href="mailto:philippine.villard@hotmail.com" class="button button--secondary">
-                        ✉️ philippine.villard@hotmail.com
+                        philippine.villard@hotmail.com
                     </a>
                 </div>
             </div>
@@ -183,35 +167,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         text-align: center;
     }
 
-    .hero-content {
-        max-width: 820px;
-        margin-inline: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        margin-bottom: var(--space-6);
-        line-height: 1.2;
-    }
-
-    .hero-description {
-        font-size: var(--text-lg);
-        color: var(--color-text-secondary);
-        line-height: 1.7;
-        margin-bottom: var(--space-8);
-        max-width: 72ch;
-    }
-
-    .hero-actions {
-        display: flex;
-        gap: var(--space-4);
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
     .bento-pillars-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -220,12 +175,11 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
     .pillar-card--featured {
         grid-column: span 3;
-        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 75%, 28%, 0.04));
-        border-color: hsla(168, 75%, 28%, 0.25);
+        background: linear-gradient(135deg, var(--color-background-card), color-mix(in srgb, var(--color-primary) 4%, transparent));
+        border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
     }
 
     .pillar-icon {
-        font-size: 2.2rem;
         margin-bottom: var(--space-3);
     }
 
@@ -269,7 +223,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     }
 
     .service-card__icon {
-        font-size: 2rem;
         margin-bottom: var(--space-3);
     }
 
@@ -286,8 +239,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .service-status-pill {
         display: inline-block;
         padding: 2px 8px;
-        background: hsla(168, 62%, 52%, 0.1);
-        border: 1px solid hsla(168, 62%, 52%, 0.2);
+        background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
         color: var(--color-primary);
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
@@ -317,15 +270,15 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .cta-box {
         text-align: center;
         padding: var(--space-12) var(--space-8);
-        background: #ffffff;
-        border: 1px solid hsla(168, 80%, 28%, 0.22);
-        box-shadow: 0 10px 30px -10px rgba(14, 128, 114, 0.15), 0 2px 8px rgba(0, 0, 0, 0.04);
+        background: var(--color-background-card);
+        border: 1px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+        box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--color-primary) 15%, transparent), 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     :global([data-theme="dark"]) .cta-box {
-        background: linear-gradient(135deg, var(--color-background-card), hsla(168, 62%, 52%, 0.08));
+        background: linear-gradient(135deg, var(--color-background-card), color-mix(in srgb, var(--color-primary) 8%, transparent));
         border-color: var(--color-primary);
-        box-shadow: var(--glow-primary);
+        box-shadow: none;
     }
 
     .cta-box h2 {

@@ -1,4 +1,5 @@
 ---
+import InkIcon from "../../components/InkIcon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 
@@ -30,7 +31,7 @@ const email = "philippine.villard@hotmail.com";
 
                 <div class="contact-methods">
                     <div class="contact-method">
-                        <div class="contact-method__icon">✉️</div>
+                        <div class="contact-method__icon"><InkIcon name="mail" /></div>
                         <div class="contact-method__details">
                             <span class="contact-method__label">Courriel professionnel</span>
                             <a href={`mailto:${email}`} class="contact-method__link">
@@ -40,7 +41,7 @@ const email = "philippine.villard@hotmail.com";
                     </div>
 
                     <div class="contact-method">
-                        <div class="contact-method__icon">📍</div>
+                        <div class="contact-method__icon"><InkIcon name="pin" /></div>
                         <div class="contact-method__details">
                             <span class="contact-method__label">Localisation</span>
                             <span class="contact-method__text">
@@ -50,7 +51,7 @@ const email = "philippine.villard@hotmail.com";
                     </div>
 
                     <div class="contact-method">
-                        <div class="contact-method__icon">⏱️</div>
+                        <div class="contact-method__icon"><InkIcon name="clock" /></div>
                         <div class="contact-method__details">
                             <span class="contact-method__label">Délai indicatif de réponse</span>
                             <span class="contact-method__text">
@@ -65,27 +66,27 @@ const email = "philippine.villard@hotmail.com";
                     <div class="quick-mail-pills">
                         <a
                             href={`mailto:${email}?subject=${encodeURIComponent("[Post-Doc] Opportunité de recherche / Collaboration")}`}
-                            class="mail-pill"
+                            class="button button--secondary mail-pill"
                         >
-                            🎓 Recherche Post-Doc
+                            Recherche Post-Doc
                         </a>
                         <a
                             href={`mailto:${email}?subject=${encodeURIComponent("[Formation] Demande d'intervention pour notre équipe")}`}
-                            class="mail-pill"
+                            class="button button--secondary mail-pill"
                         >
-                            📚 Formation Spécialisée
+                            Formation Spécialisée
                         </a>
                         <a
                             href={`mailto:${email}?subject=${encodeURIComponent("[Cabinet Nice] Demande d'information consultations 2027")}`}
-                            class="mail-pill"
+                            class="button button--secondary mail-pill"
                         >
-                            🧸 Cabinet Libéral (Nice)
+                            Cabinet Libéral (Nice)
                         </a>
                         <a
                             href={`mailto:${email}?subject=${encodeURIComponent("[Échange] Prise de contact clinique ou recherche")}`}
-                            class="mail-pill"
+                            class="button button--secondary mail-pill"
                         >
-                            💬 Échange Scientifique
+                            Échange Scientifique
                         </a>
                     </div>
                 </div>
@@ -177,15 +178,6 @@ const email = "philippine.villard@hotmail.com";
     }
 
     .contact-method__icon {
-        font-size: 2rem;
-        background: hsla(168, 62%, 52%, 0.1);
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-lg);
-        border: 1px solid hsla(168, 62%, 52%, 0.2);
         flex-shrink: 0;
     }
 
@@ -233,24 +225,12 @@ const email = "philippine.villard@hotmail.com";
     }
 
     .mail-pill {
-        display: inline-flex;
-        align-items: center;
-        padding: var(--space-3) var(--space-4);
-        background: var(--color-background-secondary);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-full);
         font-size: var(--text-sm);
-        font-weight: 600;
-        color: var(--color-text);
-        text-decoration: none;
-        transition: all var(--transition-fast);
+        padding: var(--space-3) var(--space-6);
     }
 
     .mail-pill:hover {
-        background: hsla(168, 62%, 52%, 0.12);
-        border-color: var(--color-primary);
-        color: var(--color-primary);
-        transform: translateY(-2px);
+        color: var(--color-text);
     }
 
     .contact-sidebar {
@@ -264,8 +244,8 @@ const email = "philippine.villard@hotmail.com";
     }
 
     .info-card--opportunity {
-        border-color: hsla(168, 62%, 52%, 0.4);
-        background: hsla(168, 62%, 52%, 0.05);
+        border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+        background: color-mix(in srgb, var(--color-primary) 5%, transparent);
     }
 
     .badge-tag {
@@ -273,16 +253,16 @@ const email = "philippine.villard@hotmail.com";
         font-size: var(--text-xs);
         padding: 3px 10px;
         border-radius: var(--radius-full);
-        background: hsla(168, 75%, 28%, 0.08);
-        border: 1px solid hsla(168, 75%, 28%, 0.22);
-        color: hsl(168, 85%, 23%);
+        background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+        color: var(--color-primary-dark);
         font-weight: 700;
         margin-bottom: var(--space-3);
     }
 
     :global([data-theme="dark"]) .badge-tag {
-        background: hsla(168, 62%, 52%, 0.12);
-        border-color: hsla(168, 62%, 52%, 0.3);
+        background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+        border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
         color: var(--color-primary);
     }
 

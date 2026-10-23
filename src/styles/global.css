@@ -3,49 +3,57 @@
 @import './typography.css';
 
 :root {
-    /* Primary: Deep Pine & Emerald (Authoritative, Clinical, Neuroscience) */
-    --color-primary: hsl(168, 80%, 28%);
-    --color-primary-light: hsl(168, 70%, 36%);
-    --color-primary-dark: hsl(168, 88%, 20%);
-    --color-primary-rgb: 14, 128, 114;
+    /* Primary: vert mousse */
+    --color-primary: #4F6A45;
+    --color-primary-light: #627F57;
+    --color-primary-dark: #3D5435;
+    --color-primary-rgb: 79, 106, 69;
 
-    /* Accent: Deep Crimson Rose (Empathy, Childhood, Warmth) */
-    --color-accent: hsl(348, 68%, 46%);
-    --color-accent-light: hsl(348, 72%, 58%);
-    --color-accent-dark: hsl(348, 75%, 36%);
-    --color-accent-rgb: 196, 38, 76;
+    /* Accent: rouge garance (fleur de prunier, tampon) */
+    --color-accent: #B4533A;
+    --color-accent-light: #C96E55;
+    --color-accent-dark: #8E3F2B;
+    --color-accent-rgb: 180, 83, 58;
 
-    /* Secondary Support: Soft Amber */
-    --color-amber: hsl(42, 90%, 48%);
+    /* Secondary Support: or kintsugi */
+    --color-amber: #B8923F;
 
-    /* Light Theme Neutrals (Default) */
-    --color-neutral-50: hsl(220, 20%, 10%);
-    --color-neutral-100: hsl(220, 16%, 20%);
-    --color-neutral-200: hsl(220, 14%, 32%);
-    --color-neutral-300: hsl(220, 12%, 48%);
-    --color-neutral-400: hsl(220, 10%, 62%);
-    --color-neutral-500: hsl(220, 10%, 75%);
-    --color-neutral-600: hsl(220, 14%, 86%);
-    --color-neutral-700: hsl(220, 16%, 92%);
-    --color-neutral-800: hsl(220, 20%, 96%);
-    --color-neutral-900: hsl(40, 24%, 98%);
+    /* Fond zen : encre, pétales, collines, soleil */
+    --color-ink: #3A372E;
+    --color-petal: #EDB1A4;
+    --color-petal-edge: #D78676;
+    --color-sage: #9DB08A;
+    --color-sun: #F4C9A0;
+    --color-sky: #8FC6D6;
+
+    /* Light Theme Neutrals (Default) : papier washi chaud */
+    --color-neutral-50: #22211C;
+    --color-neutral-100: #36352D;
+    --color-neutral-200: #4D4B41;
+    --color-neutral-300: #6E6C5E;
+    --color-neutral-400: #918E7E;
+    --color-neutral-500: #B3AF9E;
+    --color-neutral-600: #D2CCBB;
+    --color-neutral-700: #E1DBCC;
+    --color-neutral-800: #EBE5D8;
+    --color-neutral-900: #F3EEE4;
 
     /* Semantic - Light Theme (Default) */
-    --color-text: hsl(222, 38%, 13%);
-    --color-text-secondary: hsl(222, 16%, 32%);
-    --color-text-muted: hsl(222, 12%, 48%);
-    --color-background: hsl(40, 24%, 97.5%);
-    --color-background-secondary: hsl(40, 16%, 93.5%);
-    --color-background-card: #ffffff;
-    --color-background-card-hover: #ffffff;
-    --color-border: hsl(218, 16%, 86%);
-    --color-border-subtle: hsl(218, 18%, 92%);
-    --color-border-glow: hsla(168, 75%, 28%, 0.22);
+    --color-text: #2B2A24;
+    --color-text-secondary: #545348;
+    --color-text-muted: #7A786A;
+    --color-background: #EFE9DC;
+    --color-background-secondary: #E5E2D1;
+    --color-background-card: #F6F2E8;
+    --color-background-card-hover: #F9F6EF;
+    --color-border: #D8D1BF;
+    --color-border-subtle: #E3DDCE;
+    --color-border-glow: color-mix(in srgb, var(--color-primary) 24%, transparent);
 
     /* Aceternity UI Glows */
-    --glow-primary: 0 8px 24px hsla(168, 75%, 28%, 0.12);
-    --glow-accent: 0 8px 24px hsla(348, 68%, 46%, 0.10);
-    --glow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+    --glow-primary: 0 8px 24px color-mix(in srgb, var(--color-primary) 12%, transparent);
+    --glow-accent: 0 8px 24px color-mix(in srgb, var(--color-accent) 10%, transparent);
+    --glow-card: 0 4px 20px -2px rgba(43, 42, 36, 0.06), 0 2px 6px -1px rgba(43, 42, 36, 0.04);
 
     /* Typography Scale */
     --text-xs: 0.75rem;
@@ -99,42 +107,49 @@
 
 /* Dark Theme Override */
 [data-theme="dark"] {
-    --color-primary: hsl(168, 62%, 52%);
-    --color-primary-light: hsl(168, 72%, 66%);
-    --color-primary-dark: hsl(168, 65%, 40%);
-    --color-primary-rgb: 45, 212, 191;
+    --color-primary: #97B583;
+    --color-primary-light: #AFC99D;
+    --color-primary-dark: #7D9B6B;
+    --color-primary-rgb: 151, 181, 131;
 
-    --color-accent: hsl(348, 78%, 70%);
-    --color-accent-light: hsl(348, 85%, 78%);
-    --color-accent-dark: hsl(348, 70%, 55%);
-    --color-accent-rgb: 244, 114, 182;
+    --color-accent: #DE8A72;
+    --color-accent-light: #E9A48F;
+    --color-accent-dark: #C26E57;
+    --color-accent-rgb: 222, 138, 114;
 
-    --color-amber: hsl(42, 90%, 62%);
+    --color-amber: #D9B45E;
 
-    --color-neutral-50: hsl(220, 16%, 96%);
-    --color-neutral-100: hsl(220, 14%, 88%);
-    --color-neutral-200: hsl(220, 12%, 75%);
-    --color-neutral-300: hsl(220, 10%, 60%);
-    --color-neutral-400: hsl(220, 10%, 45%);
-    --color-neutral-500: hsl(220, 12%, 30%);
-    --color-neutral-600: hsl(220, 16%, 22%);
-    --color-neutral-700: hsl(222, 20%, 16%);
-    --color-neutral-800: hsl(224, 25%, 12%);
-    --color-neutral-900: hsl(224, 28%, 9%);
+    --color-ink: #CFC9B8;
+    --color-petal: #E2A194;
+    --color-petal-edge: #C47A6C;
+    --color-sage: #5D7853;
+    --color-sun: #6E6544;
+    --color-sky: #4F8494;
 
-    --color-text: hsl(220, 20%, 95%);
-    --color-text-secondary: hsl(220, 14%, 72%);
-    --color-text-muted: hsl(220, 10%, 54%);
-    --color-background: hsl(224, 28%, 9%);
-    --color-background-secondary: hsl(224, 22%, 13%);
-    --color-background-card: hsla(224, 22%, 14%, 0.85);
-    --color-background-card-hover: hsla(224, 24%, 18%, 0.95);
-    --color-border: hsl(222, 16%, 20%);
-    --color-border-subtle: hsl(222, 18%, 15%);
-    --color-border-glow: hsla(168, 62%, 52%, 0.35);
+    --color-neutral-50: #F1ECE0;
+    --color-neutral-100: #DCD8CA;
+    --color-neutral-200: #BDBBA9;
+    --color-neutral-300: #9C9B8A;
+    --color-neutral-400: #77786A;
+    --color-neutral-500: #4E544A;
+    --color-neutral-600: #374036;
+    --color-neutral-700: #2A332B;
+    --color-neutral-800: #212A23;
+    --color-neutral-900: #1A211C;
 
-    --glow-primary: 0 0 35px hsla(168, 62%, 52%, 0.25);
-    --glow-accent: 0 0 30px hsla(348, 78%, 70%, 0.2);
+    --color-text: #ECE7DA;
+    --color-text-secondary: #BDBBA9;
+    --color-text-muted: #8F8E7E;
+    --color-background: #1A211C;
+    --color-background-secondary: #212A23;
+    --color-background-card: #232D25;
+    --color-background-card-hover: #2A352C;
+    --color-border: #344036;
+    --color-border-subtle: #29322B;
+    --color-border-glow: color-mix(in srgb, var(--color-primary) 35%, transparent);
+
+    --glow-primary: 0 0 35px color-mix(in srgb, var(--color-primary) 22%, transparent);
+    --glow-accent: 0 0 30px color-mix(in srgb, var(--color-accent) 20%, transparent);
     --glow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
@@ -192,189 +207,195 @@ body.lightbox-open {
     }
 }
 
-/* Gradient text utility */
+/* Ancien texte en dégradé : couleur unie */
 .gradient-text {
-    background: linear-gradient(135deg, hsl(168, 85%, 22%) 0%, hsl(348, 72%, 38%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 800;
-}
-
-[data-theme="dark"] .gradient-text {
-    background: linear-gradient(135deg, hsl(168, 68%, 62%) 0%, hsl(348, 80%, 74%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-primary);
+    font-weight: inherit;
 }
 
 .gradient-text-subtle {
-    background: linear-gradient(135deg, hsl(222, 38%, 14%) 0%, hsl(168, 82%, 26%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-text);
 }
 
-[data-theme="dark"] .gradient-text-subtle {
-    background: linear-gradient(135deg, hsl(220, 20%, 95%) 0%, hsl(168, 62%, 55%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+/* Boutons peints : aplat à la brosse décalé d'un trait d'encre libre */
+:root {
+    --kintsugi-crack: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20160%2016'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.8'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%20vector-effect%3D'non-scaling-stroke'%20d%3D'M2%2C8%20L18%2C6.5%20L31%2C9.5%20L47%2C7%20L60%2C8.5%20L74%2C5.5%20L90%2C9%20L104%2C7.5%20L118%2C10%20L133%2C7%20L158%2C8%20M74%2C5.5%20L82%2C2%20L90%2C1.5%20M104%2C7.5%20L111%2C12%20L120%2C14'%2F%3E%3C%2Fsvg%3E");
+    --paint-blob: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20d%3D'M52%2C6%20C70%2C5%2088%2C16%2093%2C34%20C98%2C52%2095%2C70%2082%2C84%20C70%2C96%2050%2C97%2034%2C92%20C17%2C86%206%2C72%205%2C54%20C4%2C36%2012%2C20%2027%2C11%20C35%2C7%2044%2C6%2052%2C6%20Z%20M90%2C20%20C94%2C22%2095%2C26%2092%2C27%20Z'%2F%3E%3C%2Fsvg%3E");
+    --paint-stroke: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20200%2020'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20d%3D'M3%2C11%20C30%2C7%2070%2C9%20110%2C7%20C140%2C6%20170%2C7%20196%2C8%20C199%2C9%20199%2C12%20195%2C12.5%20C165%2C14%20130%2C13%2095%2C14.5%20C60%2C16%2030%2C15%206%2C15%20C1%2C15%200%2C12%203%2C11%20Z'%2F%3E%3C%2Fsvg%3E");
+    --paint-brush: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20300%2080'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20d%3D'M10%2C20%20C30%2C13%2060%2C17%2092%2C12%20C130%2C7%20170%2C13%20205%2C9%20C240%2C6%20268%2C12%20287%2C15%20C296%2C17%20299%2C24%20291%2C28%20C298%2C35%20296%2C44%20293%2C49%20C299%2C56%20294%2C66%20280%2C69%20C250%2C74%20220%2C68%20180%2C72%20C140%2C76%20100%2C70%2064%2C74%20C40%2C76%2022%2C72%2012%2C69%20C3%2C66%202%2C59%209%2C55%20C1%2C50%203%2C41%208%2C37%20C2%2C31%203%2C23%2010%2C20%20Z%20M283%2C26%20C290%2C30%20291%2C33%20286%2C35%20Z'%2F%3E%3C%2Fsvg%3E");
+    --ink-frame: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20300%2080'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.7'%20stroke-linecap%3D'round'%20vector-effect%3D'non-scaling-stroke'%20d%3D'M2.3%2C12.8%20C90.0%2C-3.2%20195.0%2C20.8%20295.5%2C8.0%20M290.3%2C1.6%20C294.8%2C28.0%20289.5%2C56.0%20292.5%2C76.0%20M298.5%2C68.8%20C210.0%2C81.6%20105.0%2C59.2%201.5%2C72.0%20M10.5%2C78.4%20C3.0%2C56.0%2012.0%2C28.0%207.5%2C3.2'%2F%3E%3C%2Fsvg%3E");
+    --ink-frame-card: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20400%20300'%20preserveAspectRatio%3D'none'%3E%20%3Cpath%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.7'%20stroke-linecap%3D'round'%20vector-effect%3D'non-scaling-stroke'%20d%3D'M0.7%2C2.9%20C120.0%2C0.9%20260.0%2C2.8%20398.6%2C1.8%20M396.9%2C0.4%20C398.3%2C105.0%20396.6%2C210.0%20397.6%2C299.1%20M399.5%2C297.5%20C280.0%2C299.0%20140.0%2C297.2%200.5%2C298.2%20M3.4%2C299.6%20C1.0%2C210.0%203.8%2C105.0%202.4%2C0.7'%2F%3E%3C%2Fsvg%3E");
 }
 
-/* Aceternity UI: Buttons */
 .button {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-2);
-    padding: var(--space-3) var(--space-6);
-    border-radius: var(--radius-full);
+    padding: var(--space-3) var(--space-8);
+    border: 0;
+    border-radius: 0;
+    background: none;
     font-size: var(--text-sm);
-    font-weight: 600;
-    transition: all var(--transition-fast);
-    cursor: pointer;
-    border: 1px solid transparent;
-    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     line-height: 1.2;
+    color: var(--color-text);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color var(--transition-base);
+    --button-paint: transparent;
+}
+
+/* l'aplat de couleur */
+.button::before,
+.button::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    transition: transform var(--transition-slow), background-color var(--transition-base);
+}
+
+.button::before {
+    inset: -3px -8px;
+    background-color: var(--button-paint);
+    -webkit-mask: var(--paint-brush) center / 100% 100% no-repeat;
+    mask: var(--paint-brush) center / 100% 100% no-repeat;
+    transform: translate(4px, 3px) rotate(-0.6deg);
+}
+
+/* le trait d'encre */
+.button::after {
+    inset: 0;
+    background-color: var(--color-ink);
+    -webkit-mask: var(--ink-frame) center / 100% 100% no-repeat;
+    mask: var(--ink-frame) center / 100% 100% no-repeat;
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+    transform: translate(0, 0) rotate(0deg);
+}
+
+.button:hover::after,
+.button:focus-visible::after {
+    transform: rotate(0.5deg);
 }
 
 .button--primary {
-    background: linear-gradient(135deg, hsl(168, 82%, 27%) 0%, hsl(168, 88%, 21%) 100%);
-    color: #ffffff !important;
-    border: 1px solid hsla(168, 85%, 16%, 0.25);
-    box-shadow: 0 4px 14px rgba(14, 128, 114, 0.28), 0 1px 3px rgba(0, 0, 0, 0.08);
+    --button-paint: var(--color-primary);
+    color: var(--color-neutral-900) !important;
 }
 
 .button--primary:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, hsl(168, 86%, 24%) 0%, hsl(168, 92%, 18%) 100%);
-    color: #ffffff !important;
-    box-shadow: 0 6px 20px rgba(14, 128, 114, 0.38), 0 2px 6px rgba(0, 0, 0, 0.12);
+    --button-paint: var(--color-primary-dark);
 }
 
 [data-theme="dark"] .button--primary {
-    background: linear-gradient(135deg, hsl(168, 65%, 50%), hsl(168, 75%, 40%));
-    color: hsl(222, 35%, 8%) !important;
-    border-color: transparent;
-    box-shadow: 0 0 22px hsla(168, 65%, 52%, 0.35);
+    color: var(--color-background) !important;
 }
 
 [data-theme="dark"] .button--primary:hover {
-    box-shadow: 0 0 30px hsla(168, 65%, 52%, 0.55);
+    --button-paint: var(--color-primary-light);
 }
 
 .button--secondary {
-    background: #ffffff;
-    color: var(--color-text);
-    border-color: hsl(218, 16%, 82%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --button-paint: color-mix(in srgb, var(--color-sage) 30%, transparent);
 }
 
 .button--secondary:hover {
-    background: hsl(168, 55%, 98%);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(14, 128, 114, 0.12);
+    --button-paint: color-mix(in srgb, var(--color-petal) 55%, transparent);
 }
 
-[data-theme="dark"] .button--secondary {
-    background: var(--color-background-card);
-    border-color: var(--color-border);
-    color: var(--color-text);
-    box-shadow: none;
-}
-
-[data-theme="dark"] .button--secondary:hover {
-    background: var(--color-background-card-hover);
-    border-color: var(--color-primary);
-    color: var(--color-text);
-}
-
-/* Aceternity UI: Shimmer border button */
-.button--shimmer {
+/* Étiquettes : un coup de surligneur au pinceau plutôt qu'une pastille arrondie.
+   :not(#_) donne à la règle le poids d'un identifiant, pour passer devant les styles des pages */
+:is(.tag-pill, .badge-tag, .status-tag, .service-status-pill, .lang-level, .cv-quality):not(#_) {
     position: relative;
-    overflow: hidden;
-    background: linear-gradient(110deg, var(--color-background-card), 45%, hsla(168, 62%, 52%, 0.2), 55%, var(--color-background-card));
-    background-size: 200% 100%;
-    animation: shimmer 3s infinite linear;
-    border: 1px solid var(--color-border);
+    isolation: isolate;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 2px 8px;
     color: var(--color-text);
+    font-weight: 600;
+    --tag-paint: color-mix(in srgb, var(--color-sage) 50%, transparent);
 }
 
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+:is(.tag-pill, .badge-tag, .status-tag, .service-status-pill, .lang-level, .cv-quality):not(#_)::before {
+    content: '';
+    position: absolute;
+    inset: 22% -2px 0;
+    z-index: -1;
+    background-color: var(--tag-paint);
+    -webkit-mask: var(--paint-stroke) center / 100% 100% no-repeat;
+    mask: var(--paint-stroke) center / 100% 100% no-repeat;
 }
 
-/* Aceternity UI: Bento Grid Card (Zero-blur GPU optimized) */
+.status-tag--project:not(#_) {
+    --tag-paint: color-mix(in srgb, var(--color-petal) 60%, transparent);
+}
+
+/* Titres de section soulignés d'une fêlure d'or (kintsugi) */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 9rem;
+    height: 0.9rem;
+    margin: var(--space-3) auto 0;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--color-amber) 70%, var(--color-ink)), var(--color-amber) 45%, color-mix(in srgb, var(--color-amber) 45%, #fff6d8) 60%, color-mix(in srgb, var(--color-amber) 70%, var(--color-ink)));
+    -webkit-mask: var(--kintsugi-crack) center / 100% 100% no-repeat;
+    mask: var(--kintsugi-crack) center / 100% 100% no-repeat;
+}
+
+/* Apparition douce des cartes au défilement (navigateurs compatibles uniquement) */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .bento-card,
+        .section-title {
+            animation: rise-in linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 40%;
+        }
+    }
+}
+
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(24px); }
+}
+
+/* Cartes : papier plat, cadre tracé à main levée */
 .bento-card {
     background: var(--color-background-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
+    border: 0;
+    border-radius: 3px;
     padding: var(--space-8);
-    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
     position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
+    transition: transform var(--transition-base), background-color var(--transition-base);
 }
 
 .bento-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, transparent 40%, var(--color-border-glow) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    inset: -2px;
+    background-color: color-mix(in srgb, var(--color-ink) 45%, transparent);
+    -webkit-mask: var(--ink-frame-card) center / 100% 100% no-repeat;
+    mask: var(--ink-frame-card) center / 100% 100% no-repeat;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity var(--transition-base);
+    transition: background-color var(--transition-base);
 }
 
 .bento-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-primary-light);
-    box-shadow: var(--glow-primary), var(--shadow-md);
+    transform: translateY(-2px);
+    background: var(--color-background-card-hover);
 }
 
 .bento-card:hover::before {
-    opacity: 1;
-}
-
-[data-theme="dark"] .bento-card {
-    background: hsla(224, 22%, 14%, 0.95);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-[data-theme="dark"] .bento-card:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--glow-primary), var(--shadow-lg);
-}
-
-.pulse-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--color-primary);
-    position: relative;
-}
-
-.pulse-dot::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 1px solid var(--color-primary);
-    animation: pulseRadar 2s infinite ease-out;
-}
-
-@keyframes pulseRadar {
-    0% { transform: scale(0.8); opacity: 1; }
-    100% { transform: scale(2.4); opacity: 0; }
+    background-color: color-mix(in srgb, var(--color-ink) 85%, transparent);
 }
 
 /* Section helper */

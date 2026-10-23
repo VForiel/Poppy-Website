@@ -2,7 +2,7 @@
 locale: en
 title: "Private Clinical Practice (Nice, France)"
 description: "Specialized psychological consultations for young children and families, parental guidance, and integrative psychotherapy for early trauma."
-icon: "🧸"
+icon: "bear"
 order: 2
 available: false
 status: "Opening planned for 2027"
