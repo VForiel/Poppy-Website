@@ -1,0 +1,359 @@
+---
+// Animation du hero : un bol tracé au pinceau à l'encre, rehaussé d'un lavis céladon décalé
+// (clin d'œil aux aplats de Luc Villard), dont la fêlure se remplit d'or (kintsugi).
+// Analogie avec le psychotraumatisme : la blessure n'est pas effacée, elle est réparée et reste visible.
+// Géométrie calculée au build ; animations en CSS, sans style ni script en ligne (CSP).
+
+type P = [number, number];
+const f = (q: P) => `${q[0].toFixed(1)},${q[1].toFixed(1)}`;
+let seed = 7;
+const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+const bez = (p: P[], u: number): P => {
+    const v = 1 - u;
+    return [0, 1].map((k) => v * v * v * p[0][k] + 3 * v * v * u * p[1][k] + 3 * v * u * u * p[2][k] + u * u * u * p[3][k]) as P;
+};
+const bezierPts = (segs: P[][], n: number): P[] => {
+    const out: P[] = [];
+    segs.forEach((s, i) => {
+        for (let k = i ? 1 : 0; k <= n; k++) out.push(bez(s, k / n));
+    });
+    return out;
+};
+const arcPts = (cx: number, cy: number, rx: number, ry: number, a0: number, a1: number, n: number): P[] =>
+    Array.from({ length: n + 1 }, (_, k) => {
+        const a = ((a0 + ((a1 - a0) * k) / n) * Math.PI) / 180;
+        return [cx + Math.cos(a) * rx, cy + Math.sin(a) * ry] as P;
+    });
+
+// léger tremblement de la main
+const wobble = (pts: P[], amp: number): P[] => {
+    const ph = rand() * 10;
+    return pts.map(([x, y], i) => [x + Math.sin(i * 0.7 + ph) * amp, y + Math.cos(i * 0.9 + ph) * amp] as P);
+};
+
+// trait de pinceau : attaque, gonflement, puis effilé en fin de geste
+const brush = (pts: P[], wmax: number, taper = 0.85): string => {
+    const L: P[] = [], R: P[] = [];
+    pts.forEach((p, i) => {
+        const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
+        const dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1;
+        const s = i / (pts.length - 1);
+        const w = wmax * (0.45 + 0.55 * Math.sin(Math.PI * Math.min(1, s * 1.1))) * (1 - Math.pow(s, 3) * taper);
+        const h = Math.max(0.25, w / 2) * (1 + 0.12 * Math.sin(i * 1.7) + 0.06 * Math.sin(i * 4.3));
+        L.push([p[0] - (dy / len) * h, p[1] + (dx / len) * h]);
+        R.push([p[0] + (dy / len) * h, p[1] - (dx / len) * h]);
+    });
+    return "M" + L.map(f).join("L") + "L" + R.reverse().map(f).join("L") + "Z";
+};
+const line = (pts: P[]) => "M" + pts.map(f).join("L");
+
+// les six gestes du bol, dans l'ordre où le pinceau les trace
+const INK_WIDTHS = [2.4, 3.2, 1.3, 3.6, 3.4, 2.2];
+const strokes = [
+    arcPts(200, 118, 146, 28, 176, 366, 60), // bord arrière
+    arcPts(200, 118, 146, 28, 8, 184, 60), // bord avant
+    arcPts(200, 120, 136, 22, 26, 154, 40), // lèvre
+    bezierPts([[[54, 121], [56, 210], [114, 264], [198, 272]]], 50), // flanc gauche
+    bezierPts([[[346, 121], [344, 210], [286, 264], [204, 271]]], 50), // flanc droit
+    bezierPts([[[153, 267], [154, 281], [157, 290], [164, 293]], [[164, 293], [190, 294], [212, 293], [237, 293]], [[237, 293], [243, 290], [246, 281], [247, 267]]], 14), // pied
+].map((pts, i) => {
+    const wav = wobble(pts, 0.6);
+    return { ink: brush(wav, INK_WIDTHS[i]), center: line(wav), width: INK_WIDTHS[i] * 2 + 8 };
+});
+
+// silhouette du corps (sous le bord) et ouverture du bol
+const BODY = "M54,118 C56,215 122,268 200,272 C278,268 344,215 346,118 A146,28 0 0 1 54,118 Z";
+
+// fêlure : marche aléatoire organique, du bord avant vers le pied, avec deux ramifications
+const walk = (start: P, target: P, steps: number, stepLen: number, jitter: number): P[] => {
+    const pts: P[] = [start];
+    let dir = Math.atan2(target[1] - start[1], target[0] - start[0]);
+    for (let i = 0; i < steps; i++) {
+        const [x, y] = pts[pts.length - 1];
+        const want = Math.atan2(target[1] - y, target[0] - x);
+        dir += (want - dir) * 0.35 + (rand() - 0.5) * jitter;
+        const len = stepLen * (0.6 + rand() * 0.8);
+        pts.push([x + Math.cos(dir) * len, y + Math.sin(dir) * len]);
+    }
+    return pts;
+};
+const rimStart: P = [200 + Math.cos(1.08) * 146, 118 + Math.sin(1.08) * 28];
+const mainPts = walk(rimStart, [226, 262], 24, 6.5, 0.9);
+// tirage conservé (et non affiché) pour garder la même forme de fêlure ; l'or ne déborde plus du bord
+walk(rimStart, [rimStart[0] + 6, 104], 4, 4.5, 0.6);
+const branchA = walk(mainPts[9], [mainPts[9][0] + 44, mainPts[9][1] + 26], 7, 6, 0.8);
+const branchB = walk(mainPts[16], [mainPts[16][0] - 40, mainPts[16][1] + 4], 6, 6, 0.8);
+const gold = [
+    { pts: mainPts, w: 3.6, taper: 0.8 },
+    { pts: branchA, w: 2.2, taper: 0.9 },
+    { pts: branchB, w: 1.9, taper: 0.9 },
+].map((g) => ({ shape: brush(g.pts, g.w, g.taper), center: line(g.pts), width: g.w * 2 + 6 }));
+const sparkles: P[] = [mainPts[5], branchA[branchA.length - 1], mainPts[mainPts.length - 2]];
+const star = ([x, y]: P, r: number) =>
+    `M${x},${y - r}L${x + r * 0.22},${y - r * 0.22}L${x + r},${y}L${x + r * 0.22},${y + r * 0.22}L${x},${y + r}L${x - r * 0.22},${y + r * 0.22}L${x - r},${y}L${x - r * 0.22},${y - r * 0.22}Z`;
+---
+
+<div class="hero-bowl" role="img" aria-label="Un bol peint dont la fêlure est réparée à l'or, à la manière du kintsugi">
+    <span class="hero-bowl__blob" aria-hidden="true"></span>
+    <svg class="hero-bowl__svg" viewBox="20 70 360 250" aria-hidden="true">
+        <defs>
+            <filter id="hb-watercolor" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="4" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" result="bleed" />
+                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain" />
+                <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.7 1.1" result="grainAlpha" />
+                <feComposite in="bleed" in2="grainAlpha" operator="in" />
+            </filter>
+            <filter id="hb-ink" x="-5%" y="-5%" width="110%" height="110%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="t" />
+                <feDisplacementMap in="SourceGraphic" in2="t" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <filter id="hb-glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="2.2" result="blur" />
+                <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+            <filter id="hb-soft"><feGaussianBlur stdDeviation="5" /></filter>
+            <filter id="hb-feather"><feGaussianBlur stdDeviation="18" /></filter>
+
+            <linearGradient id="hb-celadon" x1="0.1" y1="0" x2="0.75" y2="1">
+                <stop offset="0" class="hb-stop-celadon-light" />
+                <stop offset="1" class="hb-stop-celadon-deep" />
+            </linearGradient>
+            <linearGradient id="hb-inside" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" class="hb-stop-inside-back" />
+                <stop offset="1" class="hb-stop-inside-front" />
+            </linearGradient>
+            <linearGradient id="hb-gold" x1="0" y1="0" x2="0.3" y2="1">
+                <stop offset="0" class="hb-stop-gold-light" />
+                <stop offset="0.45" class="hb-stop-gold" />
+                <stop offset="1" class="hb-stop-gold-deep" />
+            </linearGradient>
+
+            <!-- le lavis s'épanouit depuis le bas à gauche, bord flou -->
+            <mask id="hb-bloom" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="340">
+                <circle class="hb-bloom" cx="130" cy="250" r="330" fill="#fff" filter="url(#hb-feather)" />
+            </mask>
+            {strokes.map((s, i) => (
+                <mask id={`hb-reveal-${i}`} maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="340">
+                    <path class={`hb-reveal hb-step-${i}`} d={s.center} stroke-width={s.width} pathLength="1" />
+                </mask>
+            ))}
+            {gold.map((g, i) => (
+                <mask id={`hb-gold-reveal-${i}`} maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="340">
+                    <path class={`hb-reveal hb-gold-step-${i}`} d={g.center} stroke-width={g.width} pathLength="1" />
+                </mask>
+            ))}
+        </defs>
+
+        <ellipse class="hb-shadow" cx="206" cy="302" rx="118" ry="9" filter="url(#hb-soft)" />
+
+        <!-- lavis céladon, volontairement décalé du trait -->
+        <g class="hb-wash" mask="url(#hb-bloom)">
+            <g transform="translate(9 7)" filter="url(#hb-watercolor)">
+                <path d={BODY} fill="url(#hb-celadon)" />
+                <ellipse cx="200" cy="118" rx="144" ry="27.5" fill="url(#hb-inside)" />
+                <path class="hb-foot-wash" d="M154,266 C156,280 158,288 164,290 L236,290 C242,288 244,280 246,266 Z" />
+                <path class="hb-highlight" d="M74,150 C80,195 104,232 140,254" />
+            </g>
+        </g>
+
+        <!-- contour à l'encre, geste par geste -->
+        <g class="hb-ink" filter="url(#hb-ink)">
+            {strokes.map((s, i) => <path d={s.ink} mask={`url(#hb-reveal-${i})`} />)}
+        </g>
+
+        <!-- fêlure : trait d'encre fin, puis l'or qui s'y coule -->
+        <path class="hb-fissure" d={gold[0].center} pathLength="1" />
+        <g class="hb-kintsugi" filter="url(#hb-glow)">
+            {gold.map((g, i) => <path class="hb-gold" d={g.shape} mask={`url(#hb-gold-reveal-${i})`} />)}
+            <path class="hb-glint" d={gold[0].center} pathLength="1" />
+        </g>
+        {sparkles.map((p, i) => <path class={`hb-sparkle hb-sparkle-${i}`} d={star(p, 5)} />)}
+    </svg>
+</div>
+
+<style>
+    .hero-bowl {
+        position: relative;
+        width: 100%;
+        max-width: 28rem;
+        justify-self: end;
+        margin-top: var(--space-12);
+        isolation: isolate;
+    }
+
+    /* grande tache de couleur décalée derrière le bol */
+    .hero-bowl__blob {
+        position: absolute;
+        z-index: -1;
+        left: 22%;
+        top: -10%;
+        width: 74%;
+        aspect-ratio: 1;
+        background-color: color-mix(in srgb, var(--color-petal) 34%, transparent);
+        -webkit-mask: var(--paint-blob) center / 100% 100% no-repeat;
+        mask: var(--paint-blob) center / 100% 100% no-repeat;
+        transform: rotate(-14deg);
+        animation: hb-blob 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .hero-bowl__svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    .hb-shadow {
+        fill: var(--color-ink);
+        opacity: 0.1;
+        animation: hb-fade 1.2s 1.6s both;
+    }
+
+    /* couleurs de la céramique : propres à l'objet, identiques dans les deux thèmes */
+    .hb-stop-celadon-light { stop-color: #D3DEC3; }
+    .hb-stop-celadon-deep { stop-color: #8DA582; }
+    .hb-stop-inside-back { stop-color: #7E9873; }
+    .hb-stop-inside-front { stop-color: #A9BD9C; }
+    .hb-foot-wash { fill: #8DA582; }
+    .hb-highlight { fill: none; stroke: #fff; stroke-opacity: 0.35; stroke-width: 9; stroke-linecap: round; }
+    .hb-wash { opacity: 0.94; }
+
+    .hb-bloom {
+        transform-box: view-box;
+        transform-origin: 130px 250px;
+        animation: hb-bloom 1.5s 1.3s cubic-bezier(0.3, 0.6, 0.2, 1) both;
+    }
+
+    .hb-ink {
+        fill: color-mix(in srgb, var(--color-ink) 92%, transparent);
+    }
+
+    .hb-reveal {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: hb-draw 0.75s cubic-bezier(0.45, 0.05, 0.3, 1) forwards;
+    }
+
+    .hb-step-0 { animation-delay: 0.3s; }
+    .hb-step-1 { animation-delay: 0.65s; }
+    .hb-step-2 { animation-delay: 1s; animation-duration: 0.5s; }
+    .hb-step-3 { animation-delay: 1.15s; }
+    .hb-step-4 { animation-delay: 1.4s; }
+    .hb-step-5 { animation-delay: 1.85s; animation-duration: 0.55s; }
+
+    /* l'or coule : du bord vers le pied, puis dans les ramifications */
+    .hb-gold-step-0 { animation-delay: 3.3s; animation-duration: 2s; animation-timing-function: cubic-bezier(0.35, 0, 0.35, 1); }
+    .hb-gold-step-1 { animation-delay: 4.3s; animation-duration: 0.9s; }
+    .hb-gold-step-2 { animation-delay: 4.9s; animation-duration: 0.8s; }
+
+    .hb-fissure {
+        fill: none;
+        stroke: var(--color-ink);
+        stroke-width: 0.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: hb-draw 0.45s 2.8s cubic-bezier(0.6, 0, 0.9, 0.6) forwards;
+    }
+
+    .hb-stop-gold-light { stop-color: #FCEBB0; }
+    .hb-stop-gold { stop-color: var(--color-amber); }
+    .hb-stop-gold-deep { stop-color: color-mix(in srgb, var(--color-amber) 72%, #3A2A0A); }
+
+    .hb-gold {
+        fill: url(#hb-gold);
+    }
+
+    .hb-kintsugi {
+        transition: filter 0.6s ease;
+    }
+
+    /* reflet qui parcourt l'or de temps en temps */
+    .hb-glint {
+        fill: none;
+        stroke: #FFF6D6;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 0.06 2;
+        stroke-dashoffset: 0.06;
+        animation: hb-glint 7s 6.5s linear infinite;
+    }
+
+    .hb-sparkle {
+        fill: #FCEBB0;
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: scale(0);
+        animation: hb-twinkle 2.8s ease-in-out infinite;
+    }
+
+    .hb-sparkle-0 { animation-delay: 5.6s; }
+    .hb-sparkle-1 { animation-delay: 6.3s; }
+    .hb-sparkle-2 { animation-delay: 7.1s; }
+
+    /* au survol, l'or s'éclaire */
+    .hero-bowl:hover .hb-kintsugi {
+        filter: url(#hb-glow) brightness(1.2) saturate(1.15);
+    }
+
+    @keyframes hb-draw {
+        to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes hb-bloom {
+        from { transform: scale(0); }
+        to { transform: scale(1); }
+    }
+
+    @keyframes hb-blob {
+        from { transform: rotate(-40deg) scale(0.5); opacity: 0; }
+    }
+
+    @keyframes hb-fade {
+        from { opacity: 0; }
+    }
+
+    @keyframes hb-glint {
+        0% { stroke-dashoffset: 0.06; }
+        25%, 100% { stroke-dashoffset: -1; }
+    }
+
+    @keyframes hb-twinkle {
+        0%, 60%, 100% { transform: scale(0); opacity: 0; }
+        75% { transform: scale(1) rotate(30deg); opacity: 1; }
+    }
+
+    @media (max-width: 860px) {
+        .hero-bowl {
+            margin-top: 0;
+            max-width: 22rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-bowl__blob,
+        .hb-shadow,
+        .hb-bloom,
+        .hb-reveal,
+        .hb-fissure,
+        .hb-glint,
+        .hb-sparkle {
+            animation: none;
+        }
+
+        .hb-reveal,
+        .hb-fissure {
+            stroke-dashoffset: 0;
+        }
+    }
+</style>

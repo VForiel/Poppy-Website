@@ -1,5 +1,7 @@
 ---
-// Accroche de l'accueil : portrait cerclé d'un ensō à l'encre, nom souligné d'une fêlure d'or (kintsugi)
+// Accroche de l'accueil : nom souligné d'une fêlure d'or, et bol peint réparé à l'or (kintsugi)
+import HeroBowl from "./HeroBowl.astro";
+
 interface Props {
     lang: "fr" | "en";
 }
@@ -8,46 +10,27 @@ const { lang } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const t = {
     fr: {
+        eyebrow: "Psychologie clinique · Petite enfance",
         role: "Doctorante en psychotrauma chez les 3-6 ans",
-        lead: "Ma thèse compare l'efficacité des thérapies TCC et EMDR dans la prise en charge du psychotraumatisme du jeune enfant.",
         primary: "Découvrir mes travaux",
         secondary: "Prendre contact",
-        alt: "Portrait de Philippine Villard",
     },
     en: {
+        eyebrow: "Clinical psychology · Early childhood",
         role: "PhD candidate in psychotrauma in children aged 3 to 6",
-        lead: "My thesis compares the efficacy of CBT and EMDR therapies in treating psychotrauma in young children.",
         primary: "Explore my work",
         secondary: "Get in touch",
-        alt: "Portrait of Philippine Villard",
     },
 }[lang];
 
-const ENSO = "M46.7,176.2L43.1,173.8L39.6,171.2L36.3,168.4L33.1,165.5L30.1,162.4L27.1,159.2L24.3,155.9L21.7,152.4L19.4,148.7L17.3,144.9L15.4,141.0L13.7,137.0L12.3,132.9L11.0,128.7L10.0,124.5L9.2,120.3L8.6,116.0L8.2,111.8L8.1,107.5L8.1,103.2L8.3,99.0L8.7,94.7L9.1,90.5L9.8,86.4L10.5,82.2L11.3,78.1L12.3,73.9L13.4,69.9L14.7,65.8L16.1,61.8L17.8,57.8L19.6,53.9L21.6,50.2L23.9,46.5L26.3,43.0L29.0,39.6L31.9,36.3L34.9,33.3L38.1,30.4L41.5,27.7L44.9,25.1L48.5,22.7L52.1,20.5L55.8,18.3L59.6,16.3L63.5,14.5L67.5,12.7L71.5,11.2L75.6,9.8L79.7,8.6L84.0,7.6L88.2,6.9L92.6,6.4L96.9,6.3L101.2,6.4L105.5,6.8L109.8,7.5L114.0,8.5L118.1,9.6L122.2,11.0L126.2,12.6L130.0,14.2L133.8,16.1L137.6,18.0L141.2,20.0L144.8,22.1L148.4,24.2L151.8,26.5L155.3,28.9L158.6,31.4L161.8,34.0L164.9,36.8L167.9,39.8L170.7,42.9L173.4,46.2L175.8,49.6L178.1,53.2L180.2,56.8L182.1,60.6L183.7,64.5L185.3,68.4L186.6,72.4L187.8,76.4L188.9,80.5L189.8,84.6L190.6,88.7L191.2,92.9L191.6,97.1L191.8,101.4L191.9,105.6L191.6,109.9L191.2,114.1L190.5,118.3L189.5,122.5L188.3,126.6L186.8,130.6L185.0,134.4L183.1,138.2L181.0,141.9L178.7,145.4L176.2,148.8L173.6,152.1L170.9,155.3L168.1,158.4L165.2,161.3L162.2,164.2L159.1,166.9L155.9,169.5L152.6,171.9L149.1,174.2L145.6,176.3L142.0,178.3L138.2,180.0L134.4,181.5L130.6,182.8L126.6,183.9L122.7,184.9L118.7,185.6L114.7,186.2L110.6,186.4L110.5,185.5L114.4,184.7L118.3,183.9L122.1,182.9L126.0,181.9L129.7,180.6L133.4,179.2L137.1,177.5L140.6,175.7L144.0,173.7L147.3,171.5L150.5,169.1L153.5,166.6L156.5,164.0L159.4,161.2L162.1,158.4L164.8,155.5L167.4,152.5L169.8,149.5L172.2,146.3L174.5,143.0L176.7,139.7L178.7,136.2L180.5,132.6L182.2,128.9L183.6,125.2L184.7,121.3L185.6,117.3L186.3,113.4L186.6,109.3L186.7,105.3L186.5,101.3L186.2,97.3L185.6,93.3L184.8,89.4L183.9,85.6L182.9,81.8L181.7,78.0L180.4,74.3L179.0,70.7L177.5,67.1L175.8,63.6L174.0,60.2L172.1,56.8L170.0,53.5L167.7,50.4L165.3,47.3L162.7,44.4L160.0,41.7L157.1,39.1L154.2,36.6L151.1,34.3L147.9,32.1L144.7,30.0L141.4,28.1L138.0,26.3L134.6,24.5L131.1,22.9L127.5,21.4L123.9,20.0L120.3,18.8L116.5,17.7L112.7,16.8L108.9,16.0L105.0,15.5L101.1,15.2L97.2,15.1L93.3,15.3L89.4,15.7L85.5,16.3L81.6,17.1L77.8,18.1L74.1,19.3L70.4,20.7L66.8,22.2L63.3,23.9L59.8,25.7L56.4,27.6L53.2,29.8L50.0,32.0L46.9,34.4L44.0,37.0L41.2,39.8L38.6,42.7L36.2,45.7L34.0,48.9L32.0,52.2L30.2,55.6L28.5,59.1L27.0,62.6L25.7,66.1L24.4,69.7L23.3,73.3L22.3,76.9L21.4,80.5L20.5,84.2L19.7,87.9L19.0,91.6L18.5,95.3L18.1,99.1L17.8,102.9L17.7,106.7L17.9,110.5L18.3,114.3L18.9,118.1L19.8,121.9L20.9,125.6L22.2,129.2L23.7,132.7L25.4,136.1L27.2,139.5L29.2,142.8L31.2,146.0L33.2,149.3L35.3,152.6L37.5,155.8L39.9,158.9L42.3,161.9L45.0,164.9L47.7,167.7L50.7,170.4Z";
-const ENSO_CENTER = "M48.7,173.3L45.4,170.8L42.3,168.0L39.3,165.2L36.5,162.2L33.8,159.1L31.2,155.9L28.8,152.6L26.5,149.2L24.3,145.8L22.3,142.2L20.4,138.6L18.7,134.8L17.2,131.0L15.9,127.2L14.9,123.2L14.0,119.2L13.4,115.2L13.1,111.1L12.9,107.1L13.0,103.0L13.2,99.0L13.6,95.0L14.1,91.0L14.7,87.1L15.5,83.2L16.4,79.3L17.3,75.4L18.4,71.6L19.6,67.8L20.9,64.0L22.4,60.2L24.0,56.5L25.9,52.9L27.9,49.3L30.2,45.9L32.6,42.7L35.3,39.5L38.1,36.5L41.1,33.7L44.2,31.1L47.4,28.6L50.8,26.2L54.3,24.1L57.8,22.0L61.5,20.1L65.2,18.3L68.9,16.7L72.8,15.2L76.7,14.0L80.7,12.9L84.7,12.0L88.8,11.3L92.9,10.9L97.0,10.7L101.2,10.8L105.3,11.2L109.4,11.8L113.4,12.6L117.3,13.7L121.2,14.9L125.0,16.3L128.8,17.8L132.4,19.5L136.1,21.3L139.6,23.1L143.1,25.1L146.5,27.1L149.9,29.3L153.2,31.6L156.4,34.0L159.5,36.6L162.5,39.3L165.3,42.1L168.0,45.1L170.5,48.3L172.9,51.6L175.1,55.0L177.1,58.5L178.9,62.1L180.6,65.8L182.1,69.5L183.5,73.3L184.8,77.2L185.9,81.1L186.9,85.1L187.7,89.1L188.4,93.1L188.9,97.2L189.2,101.3L189.3,105.5L189.1,109.6L188.7,113.7L188.1,117.8L187.1,121.9L185.9,125.9L184.5,129.7L182.8,133.5L180.9,137.2L178.8,140.8L176.6,144.2L174.2,147.6L171.7,150.8L169.1,153.9L166.4,156.9L163.7,159.9L160.8,162.7L157.8,165.4L154.7,168.0L151.5,170.5L148.2,172.8L144.8,175.0L141.3,177.0L137.6,178.7L133.9,180.3L130.1,181.7L126.3,182.9L122.4,183.9L118.5,184.7L114.5,185.4L110.6,185.9";
 const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.4,9.5L167.8,8.8L191.9,12.8L223.1,10.9L242.5,9.5L272.2,12.8L299.1,11.8L320.9,10.3L351.6,7.6L372.7,12.7L398.0,11.0","M90.4,12.2L98.4,6.8L106.4,3.2","M272.2,12.8L282.2,17.6L292.2,20.8"];
 ---
 
 <div class="home-hero">
-    <div class="home-hero__portrait">
-        <span class="home-hero__paint" aria-hidden="true"></span>
-        <picture>
-            <source srcset={`${base}profile-picture-md.webp`} type="image/webp" />
-            <img src={`${base}profile-picture-md.jpg`} width="640" height="640" alt={t.alt} fetchpriority="high" />
-        </picture>
-        <svg class="home-hero__enso" viewBox="-6 -6 212 212" aria-hidden="true">
-            <defs>
-                <mask id="home-hero-enso" maskUnits="userSpaceOnUse" x="-10" y="-10" width="220" height="220">
-                    <path class="home-hero__enso-reveal" d={ENSO_CENTER} pathLength="1" />
-                </mask>
-            </defs>
-            <path class="home-hero__enso-ink" d={ENSO} mask="url(#home-hero-enso)" />
-        </svg>
-    </div>
-
     <div class="home-hero__text">
+        <p class="home-hero__eyebrow">{t.eyebrow}</p>
         <h1 class="home-hero__name">Philippine Villard</h1>
-        <svg class="home-hero__crack" viewBox="0 0 400 24" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="home-hero__crack" viewBox="0 0 400 24" aria-hidden="true">
             <defs>
                 <linearGradient id="home-hero-gold" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0" class="gold-deep" />
@@ -61,71 +44,33 @@ const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.
             ))}
         </svg>
         <p class="home-hero__role">{t.role}</p>
-        <p class="home-hero__lead">{t.lead}</p>
         <div class="home-hero__actions">
             <a href={`${base}${lang}/portfolio`} class="button button--primary">{t.primary}</a>
             <a href={`${base}${lang}/contact`} class="button button--secondary">{t.secondary}</a>
         </div>
     </div>
+
+    <HeroBowl />
 </div>
 
 <style>
     .home-hero {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 30rem);
         align-items: center;
         gap: clamp(2rem, 6vw, 5rem);
-        max-width: 980px;
+        max-width: 1080px;
         margin-inline: auto;
         text-align: left;
     }
 
-    .home-hero__portrait {
-        position: relative;
-        width: clamp(210px, 26vw, 330px);
-        aspect-ratio: 1;
-    }
-
-    /* tache peinte décalée derrière le portrait */
-    .home-hero__paint {
-        position: absolute;
-        inset: -4%;
-        background-color: color-mix(in srgb, var(--color-sage) 55%, transparent);
-        -webkit-mask: var(--paint-blob) center / 100% 100% no-repeat;
-        mask: var(--paint-blob) center / 100% 100% no-repeat;
-        transform: translate(7%, 6%) rotate(-10deg);
-        animation: hero-paint 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    .home-hero__portrait img {
-        position: absolute;
-        inset: 9%;
-        width: 82%;
-        height: 82%;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-
-    .home-hero__enso {
-        position: absolute;
-        inset: -3%;
-        width: 106%;
-        height: 106%;
-        overflow: visible;
-    }
-
-    .home-hero__enso-ink {
-        fill: var(--color-ink);
-    }
-
-    .home-hero__enso-reveal {
-        fill: none;
-        stroke: #fff;
-        stroke-width: 28;
-        stroke-linecap: round;
-        stroke-dasharray: 1;
-        stroke-dashoffset: 1;
-        animation: hero-draw 1.6s 0.25s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
+    .home-hero__eyebrow {
+        margin: 0 0 var(--space-4);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
     }
 
     .home-hero__name {
@@ -137,7 +82,8 @@ const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.
     .home-hero__crack {
         display: block;
         width: min(100%, 400px);
-        height: 18px;
+        height: auto;
+        aspect-ratio: 400 / 24;
         margin-block: var(--space-3) var(--space-4);
         overflow: visible;
     }
@@ -152,30 +98,23 @@ const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.
         stroke-width: 2.6;
         stroke-linecap: round;
         stroke-linejoin: round;
-        vector-effect: non-scaling-stroke;
         stroke-dasharray: 1;
         stroke-dashoffset: 1;
-        animation: hero-draw 1.4s 1.2s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+        animation: hero-draw 1.4s 0.4s cubic-bezier(0.5, 0, 0.2, 1) forwards;
     }
 
     .home-hero__seam--branch {
         stroke-width: 1.6;
-        animation-delay: 2.2s;
+        animation-delay: 1.4s;
         animation-duration: 0.6s;
     }
 
     .home-hero__role {
-        margin: 0;
+        margin: 0 0 var(--space-8);
         font-family: var(--font-heading);
         font-size: clamp(var(--text-lg), 2.4vw, var(--text-xl));
         color: var(--color-primary);
         text-wrap: balance;
-    }
-
-    .home-hero__lead {
-        margin: var(--space-4) 0 var(--space-8);
-        max-width: 46ch;
-        font-size: var(--text-lg);
     }
 
     .home-hero__actions {
@@ -188,11 +127,7 @@ const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.
         to { stroke-dashoffset: 0; }
     }
 
-    @keyframes hero-paint {
-        from { transform: translate(0, 0) rotate(-30deg) scale(0.6); opacity: 0; }
-    }
-
-    @media (max-width: 760px) {
+    @media (max-width: 860px) {
         .home-hero {
             grid-template-columns: 1fr;
             justify-items: center;
@@ -203,18 +138,16 @@ const CRACK = ["M2.0,12.0L22.0,7.5L47.2,10.3L65.9,15.2L90.4,12.2L115.9,11.8L138.
             margin-inline: auto;
         }
 
-        .home-hero__lead {
-            margin-inline: auto;
-        }
-
         .home-hero__actions {
             justify-content: center;
+        }
+
+        .home-hero :global(.hero-bowl) {
+            justify-self: center;
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .home-hero__paint,
-        .home-hero__enso-reveal,
         .home-hero__seam {
             animation: none;
             stroke-dashoffset: 0;
