@@ -67,12 +67,20 @@
             sway: 0.3 + Math.random() * 0.5,
         });
 
-        const resize = () => {
-            const dpr = Math.min(2, window.devicePixelRatio || 1);
+        // Mode allégé (data-perf="low", voir BaseLayout) : canvas en 1× et pause pendant le défilement
+        const isLow = () => document.documentElement.dataset.perf === 'low';
+        let scrollPauseUntil = 0;
+
+        const resize = (force = false) => {
+            // Sur mobile, la barre d'adresse change la hauteur pendant le défilement : on ne
+            // réalloue le canvas que si la largeur change ou si la hauteur augmente (le surplus est masqué)
+            if (!force && window.innerWidth === width && window.innerHeight <= height) return;
+            const dpr = isLow() ? 1 : Math.min(2, window.devicePixelRatio || 1);
             width = window.innerWidth;
             height = window.innerHeight;
             canvas.width = width * dpr;
             canvas.height = height * dpr;
+            canvas.style.height = `${height}px`;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             const count = Math.round(Math.min(16, Math.max(7, (width * height) / 90000)));
             while (petals.length < count) petals.push(spawn(true));
@@ -107,6 +115,10 @@
         const tick = (now: number) => {
             if (!running) return;
             requestAnimationFrame(tick);
+            if (now < scrollPauseUntil) {
+                last = now;
+                return;
+            }
             if (now - last < 32) return;
             const step = last ? Math.min((now - last) / 16.7, 3) : 1;
             last = now;
@@ -128,6 +140,10 @@
             clearTimeout(resizeTimeout);
             resizeTimeout = window.setTimeout(resize, 150);
         }, { passive: true });
+        window.addEventListener('scroll', () => {
+            if (isLow()) scrollPauseUntil = performance.now() + 200;
+        }, { passive: true });
+        document.addEventListener('perf-low', () => resize(true));
         new MutationObserver(readColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         document.addEventListener('visibilitychange', () => {
             running = !document.hidden;
@@ -200,12 +216,11 @@
         width: min(36vw, 500px);
         height: auto;
         opacity: 0.9;
-    }
-
-    .zen-branch :global(.zen-sway) {
-        transform-box: view-box;
-        transform-origin: 600px 0;
+        /* Le balancement s'applique au <svg> entier (transformation composée par le GPU) et non
+           à un groupe interne, qui obligeait à recalculer le filtre d'encre à chaque image */
+        transform-origin: 100% 0;
         animation: zen-sway 9s ease-in-out infinite alternate;
+        will-change: transform;
     }
 
     .zen-branch :global(.zen-wood) {
@@ -226,7 +241,8 @@
 
     .zen-petals {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
     }
@@ -248,9 +264,16 @@
         to { transform: rotate(1.2deg); }
     }
 
+    /* Mode allégé : plus de calques animés en continu */
+    :global([data-perf="low"]) .zen-sun,
+    :global([data-perf="low"]) .zen-branch {
+        animation: none;
+        will-change: auto;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .zen-sun,
-        .zen-branch :global(.zen-sway) {
+        .zen-branch {
             animation: none;
         }
     }

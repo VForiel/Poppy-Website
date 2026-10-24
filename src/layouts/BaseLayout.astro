@@ -76,6 +76,36 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
                 }
             })();
         </script>
+        <script is:inline>
+            // Mode allégé pour les machines modestes (GPU intégré + écran très haute densité) :
+            // si trop d'images dépassent ~22 ms juste après le chargement, data-perf="low" coupe
+            // les effets décoratifs continus. Mémorisé pour la session : les pages suivantes partent allégées.
+            (function () {
+                var root = document.documentElement;
+                try {
+                    if (sessionStorage.getItem("perf") === "low") {
+                        root.dataset.perf = "low";
+                        return;
+                    }
+                } catch (e) {}
+                var last = 0, frames = 0, slow = 0;
+                function sample(now) {
+                    if (last) {
+                        frames++;
+                        if (now - last > 22) slow++;
+                    }
+                    last = now;
+                    if (frames < 90) return requestAnimationFrame(sample);
+                    if (slow / frames < 0.25) return;
+                    root.dataset.perf = "low";
+                    try { sessionStorage.setItem("perf", "low"); } catch (e) {}
+                    document.dispatchEvent(new Event("perf-low"));
+                }
+                addEventListener("load", function () {
+                    setTimeout(function () { requestAnimationFrame(sample); }, 500);
+                });
+            })();
+        </script>
     </head>
     <body>
         <slot />

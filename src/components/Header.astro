@@ -234,16 +234,16 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .header {
         position: sticky;
         top: 0;
-        background-color: color-mix(in srgb, var(--color-background) 94%, transparent);
+        /* Fond presque opaque, sans backdrop-filter : le flou de ce qui défile dessous
+           était recalculé à chaque image (défilement, pétales) pour un effet imperceptible */
+        background-color: color-mix(in srgb, var(--color-background) 96%, transparent);
         border-bottom: 1px solid var(--color-border);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
         z-index: 100;
         transition: background-color var(--transition-base), border-color var(--transition-base);
     }
 
     :global([data-theme="dark"]) .header {
-        background-color: color-mix(in srgb, var(--color-background) 92%, transparent);
+        background-color: color-mix(in srgb, var(--color-background) 95%, transparent);
     }
 
     .header__content {
@@ -400,8 +400,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         height: calc(100dvh - 100%);
         min-height: calc(100vh - 100%);
         background: color-mix(in srgb, var(--color-background) 98%, transparent);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         border-top: 1px solid var(--color-border);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;

@@ -3,6 +3,7 @@
 // (clin d'œil aux aplats de Luc Villard), dont la fêlure se remplit d'or (kintsugi).
 // Analogie avec le psychotraumatisme : la blessure n'est pas effacée, elle est réparée et reste visible.
 // Géométrie calculée au build ; animations en CSS, sans style ni script en ligne (CSP).
+// Un clic sur le bol rejoue toute l'animation.
 
 type P = [number, number];
 const f = (q: P) => `${q[0].toFixed(1)},${q[1].toFixed(1)}`;
@@ -166,15 +167,33 @@ const star = ([x, y]: P, r: number) =>
             {strokes.map((s, i) => <path d={s.ink} mask={`url(#hb-reveal-${i})`} />)}
         </g>
 
-        <!-- fêlure : trait d'encre fin, puis l'or qui s'y coule -->
-        <path class="hb-fissure" d={gold[0].center} pathLength="1" />
+        <!-- fêlure : trait d'encre fin (tronc puis ramifications), puis l'or qui s'y coule -->
+        {gold.map((g, i) => <path class={`hb-fissure hb-fissure-${i}`} d={g.center} pathLength="1" />)}
         <g class="hb-kintsugi" filter="url(#hb-glow)">
             {gold.map((g, i) => <path class="hb-gold" d={g.shape} mask={`url(#hb-gold-reveal-${i})`} />)}
+        </g>
+    </svg>
+    <!-- reflet et étincelles en boucle : dans un calque à part, pour que leur animation
+         ne force pas à recalculer sans cesse les filtres d'aquarelle et d'encre du bol -->
+    <svg class="hero-bowl__svg hero-bowl__shine" viewBox="20 70 360 250" aria-hidden="true">
+        <g class="hb-kintsugi" filter="url(#hb-glow)">
             <path class="hb-glint" d={gold[0].center} pathLength="1" />
         </g>
         {sparkles.map((p, i) => <path class={`hb-sparkle hb-sparkle-${i}`} d={star(p, 5)} />)}
     </svg>
 </div>
+
+<script>
+    // Clic sur le bol : toutes les animations (tracé, lavis, fêlure, or, reflets) repartent de zéro, délais compris
+    document.querySelectorAll<HTMLElement>(".hero-bowl").forEach((bowl) => {
+        bowl.addEventListener("click", () => {
+            for (const animation of bowl.getAnimations({ subtree: true })) {
+                animation.cancel();
+                animation.play();
+            }
+        });
+    });
+</script>
 
 <style>
     .hero-bowl {
@@ -184,6 +203,7 @@ const star = ([x, y]: P, r: number) =>
         justify-self: end;
         margin-top: var(--space-12);
         isolation: isolate;
+        cursor: pointer;
     }
 
     /* grande tache de couleur décalée derrière le bol */
@@ -206,6 +226,14 @@ const star = ([x, y]: P, r: number) =>
         width: 100%;
         height: auto;
         overflow: visible;
+    }
+
+    .hero-bowl__shine {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        will-change: transform;
     }
 
     .hb-shadow {
@@ -265,6 +293,10 @@ const star = ([x, y]: P, r: number) =>
         stroke-dashoffset: 1;
         animation: hb-draw 0.45s 2.8s cubic-bezier(0.6, 0, 0.9, 0.6) forwards;
     }
+
+    /* les ramifications partent quand le tronc atteint leur point de départ, avant que l'or ne coule */
+    .hb-fissure-1 { stroke-width: 0.75; animation-delay: 3.08s; animation-duration: 0.3s; }
+    .hb-fissure-2 { stroke-width: 0.7; animation-delay: 3.18s; animation-duration: 0.28s; }
 
     .hb-stop-gold-light { stop-color: #FCEBB0; }
     .hb-stop-gold { stop-color: var(--color-amber); }

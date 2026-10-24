@@ -363,6 +363,12 @@ body.lightbox-open {
     }
 }
 
+/* Mode allégé (data-perf="low", voir BaseLayout) : pas d'apparition au défilement,
+   qui crée et rastérise un calque par carte pendant le défilement */
+[data-perf="low"] :is(.bento-card, .section-title) {
+    animation: none;
+}
+
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(24px); }
 }
