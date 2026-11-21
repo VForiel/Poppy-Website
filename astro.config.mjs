@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync } from 'node:fs';
 
@@ -46,6 +47,8 @@ export default defineConfig({
             },
         },
     },
+    // Plan du site pour les moteurs de recherche (sitemap-index.xml), annoncé dans public/robots.txt
+    integrations: [sitemap()],
     markdown: {
         shikiConfig: {
             theme: 'nord',
