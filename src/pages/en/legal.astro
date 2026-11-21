@@ -1,0 +1,63 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+---
+
+<PageLayout
+    title="Legal notice - Philippine Villard"
+    description="Legal notice of Philippine Villard's website: publisher, host and credits."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <article class="legal bento-card">
+            <h1>Legal notice</h1>
+
+            <h2>Publisher</h2>
+            <p>
+                This is the personal and academic website of Philippine Villard, who is also its director of
+                publication.<br />
+                Contact: <a href="mailto:philippine.villard@hotmail.com">philippine.villard@hotmail.com</a>
+            </p>
+
+            <h2>Hosting</h2>
+            <p>
+                GitHub, Inc. (GitHub Pages service)<br />
+                88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States<br />
+                <a href="https://github.com">github.com</a>
+            </p>
+
+            <h2>Credits</h2>
+            <p>
+                Website designed and developed by <a href="https://vincent.foriel.pro">Vincent Foriel</a>.
+            </p>
+
+            <h2>Intellectual property</h2>
+            <p>
+                The texts and photographs of this website belong to Philippine Villard unless stated otherwise. Any
+                reproduction requires her prior consent; short quotations with the source remain free.
+            </p>
+
+            <h2>Personal data</h2>
+            <p>
+                See the <a href="/en/privacy">Privacy</a> page.
+            </p>
+        </article>
+    </Section>
+</PageLayout>
+
+<style>
+    .legal {
+        max-width: 72ch;
+        margin-inline: auto;
+    }
+
+    .legal h2 {
+        font-size: var(--text-lg);
+        margin-block: var(--space-8) var(--space-3);
+    }
+
+    .legal p {
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+</style>

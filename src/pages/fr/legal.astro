@@ -1,0 +1,64 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+---
+
+<PageLayout
+    title="Mentions légales - Philippine Villard"
+    description="Mentions légales du site de Philippine Villard : éditrice, hébergeur et réalisation."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <article class="legal bento-card">
+            <h1>Mentions légales</h1>
+
+            <h2>Éditrice du site</h2>
+            <p>
+                Ce site est le site personnel et académique de Philippine Villard, qui en est aussi la directrice de la
+                publication.<br />
+                Contact : <a href="mailto:philippine.villard@hotmail.com">philippine.villard@hotmail.com</a>
+            </p>
+
+            <h2>Hébergement</h2>
+            <p>
+                GitHub, Inc. (service GitHub Pages)<br />
+                88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis<br />
+                <a href="https://github.com">github.com</a>
+            </p>
+
+            <h2>Réalisation</h2>
+            <p>
+                Site conçu et développé par <a href="https://vincent.foriel.pro">Vincent Foriel</a>.
+            </p>
+
+            <h2>Propriété intellectuelle</h2>
+            <p>
+                Les textes et photographies de ce site appartiennent à Philippine Villard, sauf mention contraire.
+                Toute reproduction demande son accord préalable. Les citations courtes avec mention de la source
+                restent bien sûr libres.
+            </p>
+
+            <h2>Données personnelles</h2>
+            <p>
+                Voir la page <a href="/fr/privacy">Confidentialité</a>.
+            </p>
+        </article>
+    </Section>
+</PageLayout>
+
+<style>
+    .legal {
+        max-width: 72ch;
+        margin-inline: auto;
+    }
+
+    .legal h2 {
+        font-size: var(--text-lg);
+        margin-block: var(--space-8) var(--space-3);
+    }
+
+    .legal p {
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+</style>

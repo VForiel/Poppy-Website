@@ -1,0 +1,68 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../../components/Section.astro";
+---
+
+<PageLayout
+    title="Confidentialité - Philippine Villard"
+    description="Politique de confidentialité du site de Philippine Villard : aucune mesure d'audience, aucun cookie, aucun formulaire."
+    currentPath={Astro.url.pathname}
+>
+    <Section>
+        <article class="legal bento-card">
+            <h1>Confidentialité</h1>
+
+            <h2>Ce que ce site collecte</h2>
+            <p>
+                Rien. Ce site n'utilise ni cookie, ni mesure d'audience, ni formulaire, et ne charge aucune ressource
+                depuis un autre site (polices et images comprises).
+            </p>
+            <p>
+                Deux préférences peuvent être enregistrées dans votre propre navigateur (stockage local) : le thème
+                clair ou sombre, et la fermeture du bandeau d'information. Elles ne quittent jamais votre appareil et
+                vous pouvez les effacer à tout moment depuis les réglages de votre navigateur.
+            </p>
+
+            <h2>Hébergement</h2>
+            <p>
+                Comme tout hébergeur, GitHub (qui sert ce site) reçoit l'adresse IP des visiteurs pour afficher les pages
+                et protéger son service. Ce traitement relève de GitHub, décrit dans sa
+                <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement">déclaration de confidentialité</a>.
+            </p>
+
+            <h2>Si vous m'écrivez</h2>
+            <p>
+                Les messages envoyés à <a href="mailto:philippine.villard@hotmail.com">philippine.villard@hotmail.com</a>
+                servent uniquement à vous répondre et ne sont transmis à personne.
+            </p>
+
+            <h2>Vos droits</h2>
+            <p>
+                Pour toute question sur vos données, ou pour demander l'accès, la correction ou la suppression d'un
+                échange, écrivez à l'adresse ci-dessus. Vous pouvez aussi adresser une réclamation à la CNIL
+                (<a href="https://www.cnil.fr">cnil.fr</a>).
+            </p>
+        </article>
+    </Section>
+</PageLayout>
+
+<style>
+    .legal {
+        max-width: 72ch;
+        margin-inline: auto;
+    }
+
+    .legal h2 {
+        font-size: var(--text-lg);
+        margin-block: var(--space-8) var(--space-3);
+    }
+
+    .legal p {
+        color: var(--color-text-secondary);
+        line-height: 1.7;
+    }
+
+    .legal p + p {
+        margin-top: var(--space-3);
+    }
+</style>
